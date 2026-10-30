@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>eBooks</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <style>
+        .ebooks-container {
+            padding: 20px;
+            max-width: 1100px;
+            margin: 20px auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .ebooks-container h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .ebook-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Adjust card size */
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .ebook-row { display: flex; align-items: center; justify-content: space-between; gap: 12px 16px; padding: 12px 4px; border-bottom: 1px solid var(--border-color); }
+        .ebook-row-main { flex: 1; min-width: 0; }
+        .ebook-row-main h3 { margin: 0 0 4px; font-size: 1.05em; color: var(--primary-color); }
+        .ebook-row-main p { margin: 0; font-size: 0.9em; color: var(--text-color); line-height: 1.5; }
+        .ebook-row-actions { flex: 0 0 auto; display: flex; gap: 8px; }
+        .ebook-row-actions .ebook-button { flex: 0 0 auto; padding: 8px 14px; }
+
+        .ebook-button {
+            padding: 8px 12px;
+            font-size: 0.9em;
+            color: var(--button-text);
+            background-color: var(--accent-color);
+            flex-grow: 1; /* Make buttons fill space */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-align: center;
+        }
+         .ebook-button.preview {
+             background-color: var(--secondary-color);
+         }
+
+        .ebook-button:hover {
+            opacity: 0.9;
+        }
+         .ebook-button:disabled {
+             background-color: var(--input-border);
+             color: var(--text-color);
+             cursor: not-allowed;
+             opacity: 0.6;
+         }
+
+        .ebook-intro { text-align: center; margin-bottom: 14px; line-height: 1.5; }
+        .ebook-toolbar { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px 16px; margin-bottom: 16px; }
+        .ebook-toolbar label, .ebook-setup-controls > label { font-weight: bold; }
+        .ebook-toolbar select, .ebook-setup select { margin-left: 6px; padding: 7px 10px; }
+        .ebook-bulk-button { padding: 9px 15px; color: var(--button-text); background: var(--accent-color); border: 0; border-radius: 5px; font-weight: 700; cursor: pointer; }
+        .ebook-bulk-button:disabled { opacity: .6; cursor: wait; }
+        .ebook-master-button { padding: 9px 15px; color: var(--button-text); background: var(--primary-color); border: 0; border-radius: 5px; font-weight: 700; cursor: pointer; }
+        .ebook-master-button:disabled { opacity: .6; cursor: wait; }
+        .ebook-setup { border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; margin: 0 0 20px; background: var(--bg-color); }
+        .ebook-setup-header { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 12px; }
+        .ebook-setup-header h2 { margin: 0; font-size: 1.05rem; color: var(--primary-color); }
+        .ebook-setup-header p { margin: 0; color: var(--text-color); font-size: .9em; }
+        .ebook-setup-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+        #ebook-tuning-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; flex-basis: 100%; }
+        .ebook-string-setting { display: grid; gap: 4px; color: var(--text-color); font-size: .82rem; }
+        .ebook-string-setting select { width: 100%; margin: 0; }
+        #ebook-batch-status { min-height: 1.2em; margin: 10px 0 18px; color: var(--text-color); font-size: .9em; }
+        #ebook-list { display: block; }
+        .ebook-group + .ebook-group { margin-top: 28px; }
+        .ebook-group h2 { margin: 0 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border-color); color: var(--primary-color); font-size: 1.25rem; }
+        .ebook-rows { display: flex; flex-direction: column; }
+        @media (max-width: 600px) {
+            .ebook-setup { padding: 12px; }
+            .ebook-toolbar { align-items: stretch; }
+            .ebook-toolbar label, .ebook-bulk-button, .ebook-master-button { width: 100%; }
+            .ebook-toolbar select { width: 100%; margin: 5px 0 0; }
+            .ebook-row { flex-wrap: wrap; }
+            .ebook-row-actions { width: 100%; }
+            .ebook-row-actions .ebook-button { width: 100%; }
+        }
+        .return-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .return-button:hover {
+            background-color: var(--secondary-color);
+        }
+    </style>
+    <link rel="stylesheet" href="site.css">
+    <script src="site.js" defer></script>
+<link rel="stylesheet" href="standalone.css">
+<style>.ebook-setup{display:none!important}</style>
+</head>
+<body>
+    <div class="top-header">
+        <div class="top-header-content">
+            
+            <div class="header-nav">
+                <a href="home.html" class="header-link">Home</a>
+                <a href="scales.html" class="header-link">Scales</a>
+                <a href="chords.html" class="header-link">Chords</a>
+                <a href="intervals.html" class="header-link">Intervals</a>
+                <a href="ebooks.html" class="header-link">eBooks</a>
+                <a href="progress.html" class="header-link">Progress</a>
+                <a href="favorites.html" class="header-link">Favorites</a>
+                <a href="data.html" class="header-link">Data</a>
+                <a href="about.html" class="header-link">About</a>
+            </div>
+            <div class="sidebar-toggle-container">
+                <button id="sidebar-toggle" aria-expanded="false" onclick="window.location.href='fretboard.html'">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="sr-only">Go to App</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="ebooks-container">
+        <h1>Music Theory eBooks</h1>
+        <p class="ebook-intro">Browse grouped study guides with music theory reference, examples in all 12 keys, and fretboard diagrams.</p>
+        <div class="ebook-toolbar">
+            <label>Group <select id="ebook-group-filter"><option value="all">All groups</option></select></label>
+            <label>Example key <select id="ebook-key"></select></label>
+            <button type="button" id="ebook-download-all" class="ebook-bulk-button">Download All eBooks</button>
+            <button type="button" id="ebook-master-download" class="ebook-master-button">Create Full App Data eBook</button>
+            <span id="ebook-count" role="status" aria-live="polite"></span>
+        </div>
+        <section class="ebook-setup" aria-labelledby="ebook-setup-title">
+            <div class="ebook-setup-header">
+                <h2 id="ebook-setup-title">Fretboard diagram setup</h2>
+                <p>Choose a string count and tune each string from lowest to highest. This setup is applied to every PDF.</p>
+            </div>
+            <div class="ebook-setup-controls">
+                <label>Number of strings <select id="ebook-string-count"></select></label>
+                <label>Tuning preset <select id="ebook-tuning-preset"></select></label>
+                <div id="ebook-tuning-fields" role="group" aria-label="Tune individual strings"></div>
+            </div>
+        </section>
+        <div id="ebook-batch-status" role="status" aria-live="polite"></div>
+        <div class="ebook-list" id="ebook-list"></div>
+    </div>
+
+    <script src="music-theory-data.js"></script>
+    <script src="scales-data-standard.js"></script>
+    <script src="scales-data-numeric.js"></script>
+    <script src="scales-data-advanced-1.js"></script>
+    <script src="scales-data-advanced-2.js"></script>
+    <script src="scales-data-advanced-3.js"></script>
+    <script src="scales-data-advanced-4.js"></script>
+    <script src="scales-data-advanced-5.js"></script>
+    <script src="scales-data-advanced-6.js"></script>
+    <script src="scales-data-advanced-7a.js"></script>
+    <script src="scales-data-advanced-7b.js"></script>
+    <script src="scales-data-advanced-8.js"></script>
+    <script src="scales-data-advanced-10.js"></script>
+    <script src="scales-data-advanced-11.js"></script>
+    <script src="music-theory.js"></script>
+    <script src="music-theory-logic.js"></script>
+    <script src="music-theory-chords.js"></script>
+    <script src="music-theory-descriptions.js"></script>
+    <script src="vendor/jspdf.umd.min.js"></script>
+    <script src="vendor/jszip.min.js"></script>
+    <script src="ebooks-app.js"></script>
+</body>
+</html>

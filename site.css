@@ -1,0 +1,300 @@
+/* Project-wide typeface, including form controls and SVG labels. */
+*,*::before,*::after{font-family:"Arial Narrow",Arial,sans-serif!important}
+
+/* Shared navigation and page chrome. */
+.site-brand{display:inline-flex;align-items:center;flex:0 0 auto;color:#fff;text-decoration:none;font-weight:800;letter-spacing:.015em;white-space:nowrap}
+.site-brand:hover{color:#fff;text-decoration:none}
+.site-brand:focus-visible{outline:3px solid #ddd;outline-offset:3px;border-radius:3px}
+.st-nav{display:flex;align-items:center;justify-content:center;gap:3px;flex:1 1 auto;margin:0 8px;position:relative;min-width:0}
+.st-nav a,.st-nav .st-dd>button{display:inline-flex;align-items:center;justify-content:center;gap:7px;width:auto;height:40px;padding:8px 10px;border-radius:9px;background:transparent;border:1px solid transparent;color:#fff;text-decoration:none;font-family:inherit;font-size:.86em;font-weight:650;line-height:1.2;white-space:nowrap;cursor:pointer;touch-action:manipulation;transition:background-color .16s ease,border-color .16s ease,color .16s ease}
+.st-nav .st-icon,.st-nav-toggle .st-icon{display:block;width:17px;height:17px;flex:0 0 17px}
+.st-nav-label{display:inline}
+.st-nav a:focus-visible,.st-nav .st-dd>button:focus-visible,.st-nav-toggle:focus-visible{outline:3px solid #ddd;outline-offset:2px}
+.st-nav a:hover,.st-nav .st-dd>button:hover,.st-nav a.active,.st-nav .st-dd.has-active>button{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.2)}
+.st-nav a.active,.st-nav .st-dd.has-active>button{background:rgba(255,255,255,.2)}
+.st-nav .st-dd>button::after{content:"";width:6px;height:6px;margin:-3px 0 0 1px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);opacity:.72}
+.st-dd{position:relative}
+.st-dd-menu{display:none;position:absolute;top:100%;left:0;min-width:210px;background:#fff;color:#222;border:1px solid rgba(0,0,0,.12);border-radius:12px;box-shadow:0 14px 34px rgba(0,0,0,.2);padding:6px;z-index:10000;margin-top:7px}
+.st-dd:nth-last-child(-n+2) .st-dd-menu{left:auto;right:0}
+.st-dd.open .st-dd-menu{display:block}
+.st-dd-menu a{display:flex;align-items:center;gap:10px;width:100%;height:auto;color:#262626 !important;padding:10px 11px;font-weight:550;border-radius:8px;white-space:normal}
+.st-dd-menu .st-icon{width:17px;height:17px;flex:0 0 17px;color:#444}.st-dd-menu .st-nav-label{display:inline}
+.st-dd-menu a:hover,.st-dd-menu a.active{background:#e6e6e6;color:#222 !important}
+.st-dd-menu a:focus-visible{outline:2px solid #444;outline-offset:1px}
+.st-nav a.st-rn{border-color:rgba(255,255,255,.3)}
+.st-nav a.st-rn .st-offline-dot{width:7px;height:7px;margin-left:0}
+.st-nav-toggle{display:none;align-items:center;justify-content:center;gap:8px;width:auto;min-width:42px;height:40px;padding:8px 11px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:9px;cursor:pointer;touch-action:manipulation;font-family:inherit;font-size:.86em;font-weight:600;line-height:1}
+.st-nav-toggle-label{display:inline}
+.header-play-pattern{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;flex:0 0 44px;padding:10px;border:1px solid rgba(255,255,255,.45);border-radius:8px;background:rgba(255,255,255,.14);color:#fff;cursor:pointer;touch-action:manipulation}
+.header-play-pattern svg,.header-stop-pattern svg{width:20px;height:20px}
+.header-play-pattern:hover,.header-play-pattern.is-playing,.header-stop-pattern:hover:not(:disabled){background:#444}
+.header-play-pattern:focus-visible,.header-stop-pattern:focus-visible{outline:3px solid #ddd;outline-offset:2px}
+.header-play-pattern:disabled,.header-stop-pattern:disabled{cursor:default;opacity:.55}
+.header-stop-pattern{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;flex:0 0 44px;padding:10px;border:1px solid rgba(255,255,255,.45);border-radius:8px;background:rgba(255,255,255,.14);color:#fff;cursor:pointer;touch-action:manipulation}
+.st-view-toggle{display:inline-flex;align-items:center;justify-content:center;width:auto;min-width:72px;min-height:40px;padding:8px 11px;border:1px solid rgba(255,255,255,.38);border-radius:7px;background:rgba(255,255,255,.12);color:#fff;font-family:inherit;font-size:.84em;font-weight:600;line-height:1.2;white-space:nowrap;cursor:pointer}
+.st-view-toggle:hover{background:rgba(255,255,255,.22)}
+.st-orientation-toggle{display:none;align-items:center;justify-content:center;min-width:76px;min-height:40px;padding:8px 11px;border:1px solid rgba(255,255,255,.38);border-radius:7px;background:rgba(255,255,255,.12);color:#fff;font-family:inherit;font-size:.84em;font-weight:600;line-height:1.2;cursor:pointer;touch-action:manipulation}
+.st-orientation-toggle:focus-visible{outline:3px solid #ddd;outline-offset:2px}
+@media(pointer:coarse){.st-orientation-toggle{display:inline-flex}}
+.st-view-toggle:focus-visible{outline:3px solid #ddd;outline-offset:2px}
+.st-view-dot{flex:0 0 34px;width:34px;min-width:34px;height:34px;min-height:34px;margin-left:auto;padding:0;border:2px solid rgba(255,255,255,.6);border-radius:50%;background:transparent}
+.st-view-dot[aria-pressed="true"]{background:#fff;border-color:#fff}
+.top-header .st-view-toggle.st-view-dot{border-radius:50%!important}
+.st-offline-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#777;margin-left:6px;vertical-align:middle;box-shadow:0 0 0 2px rgba(255,255,255,.4)}
+.st-offline-dot.off{background:#777}
+.st-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#222;color:#fff;padding:10px 16px;border-radius:8px;font-size:14px;z-index:100000;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transition:opacity .25s;pointer-events:none;max-width:90vw;text-align:center}
+.st-toast.show{opacity:1}
+@media (max-width:1000px) and (min-width:769px){
+  .st-nav a,.st-nav .st-dd>button{gap:0;padding:8px;font-size:.8em}
+  .st-nav .st-icon{display:none}
+}
+@media (max-width:768px){
+  .header-nav.st-nav{display:none !important}
+  .st-nav-toggle{display:inline-flex}
+  .header-nav.st-nav.mobile-open{display:flex !important;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;background:var(--primary-color,#333);padding:8px;margin:0;z-index:9999;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+  .header-nav.st-nav.mobile-open .st-dd-menu{position:static;box-shadow:none;margin:0 0 4px 12px;background:rgba(255,255,255,.95)}
+  .header-nav.st-nav.mobile-open .st-dd>button{width:100%;height:44px;justify-content:flex-start;text-align:left}
+  .header-nav.st-nav.mobile-open .st-nav-label{display:inline;position:static;width:auto;height:auto;padding:0;margin:0;overflow:visible;clip:auto;white-space:normal}
+  .header-nav.st-nav.mobile-open .st-dd-menu a{min-height:42px}
+  .st-nav-toggle{min-width:42px}
+  .st-orientation-toggle{display:inline-flex}
+}
+@media print{.top-header,.st-toast,.sidebar,.bottom-footer{display:none !important}}
+
+/* Shared responsive layout for every app page. */
+body{container-name:app-mobile;container-type:inline-size}
+.mobile-view-button{display:block;width:auto;min-height:44px;margin:0 auto 28px;padding:10px 18px;border:0;border-radius:7px;background:#333;color:#fff;font-family:inherit;font-size:15px;font-weight:700;line-height:1.2;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.14)}
+.mobile-view-button:hover{background:#555}
+.home-actions{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin:0 auto 14px}
+.home-actions .mobile-view-button{margin:0}
+.offline-package-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border:1px solid #555;border-radius:8px;background:#333;color:#fff;font-family:inherit;font-size:15px;font-weight:700;line-height:1.2;cursor:pointer;touch-action:manipulation}
+.offline-package-button:hover{background:#555}
+.offline-package-button:focus-visible{outline:3px solid #ddd;outline-offset:2px}
+.offline-package-button:disabled{opacity:.65;cursor:wait}
+.offline-package-status{display:block;margin:0 auto 20px;color:var(--secondary-color,#52616b);font-size:.9rem;text-align:center}
+.offline-package-status.is-error{color:#555}
+.explorer-about{margin:0 0 20px;padding:12px 14px;border:1px solid var(--border-color);border-radius:8px;background:var(--card-bg,#fff);color:var(--text-color)}
+.explorer-about summary{color:var(--primary-color);font-weight:700;cursor:pointer}
+.explorer-about p{margin:8px 0 0;line-height:1.55}
+.rn-package-action{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0 18px}
+.rn-package-action .offline-package-status{margin:0;text-align:left}
+.mobile-view-button:focus-visible,.st-nav-toggle:focus-visible{outline:3px solid #ddd;outline-offset:3px}
+@media(max-width:768px){
+  body{padding:0;overflow-x:hidden}
+  .app-container{padding:10px;border-radius:0;box-shadow:none}
+  .main-content{min-width:0}
+  .top-header{margin-bottom:10px;padding:5px 0}
+  .top-header-content{min-height:44px;padding:4px 10px;gap:7px;flex-wrap:wrap;justify-content:space-between}
+  .top-header h1.main-title{font-size:1.05em;white-space:normal;text-align:left}
+  .sidebar-toggle-container{position:static;top:auto;right:auto;margin:0;gap:6px}
+  .header-nav.st-nav{display:none!important}
+  .st-nav-toggle{display:inline-flex;order:3;width:auto;min-height:40px;padding:8px 12px}
+  .header-nav.st-nav.mobile-open{display:flex!important;top:100%;left:0;right:0;width:100%;max-height:75vh;overflow-y:auto;gap:3px;padding:8px}
+  .header-nav.st-nav.mobile-open a,.header-nav.st-nav.mobile-open .st-dd>button{display:flex;width:100%;height:auto;min-height:42px;justify-content:flex-start;padding:10px 12px;text-align:left}
+  .header-nav.st-nav.mobile-open .st-dd-menu{min-width:0}
+  .home-container,.about-container,.chords-container,.intervals-container,.scales-container,.lessons-container,.practice-container,.progress-container,.favorites-container,.data-container,.settings-container,.courses-container,.quizzes-container,.tests-container,.exams-container,.ebooks-container,.ideas-container,.rn-container{width:auto;max-width:100%;margin:10px;padding:18px 14px;border-radius:8px}
+  .home-container h1{font-size:1.8em;line-height:1.2}
+  .home-intro{font-size:1em;line-height:1.5}
+  .page-link-grid,.features-grid,.chord-grid,.interval-grid,.scale-grid,.fav-grid,.rn-grid,.course-list,.quiz-list,.test-list,.stq-exam-list,.ebook-list,.lesson-list,.scale-list,.chord-list,.interval-list{grid-template-columns:minmax(0,1fr)!important;gap:12px}
+  .rn{padding:18px 14px;margin:10px auto}
+  .page-link-card{padding:16px}
+  .fretboard-container,#fretboard,.piano-container,.table-wrap,.data-table-wrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  #fretboard{padding:10px}
+  table{display:block;max-width:100%;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+  input,select,textarea,button{max-width:100%;font-size:16px}
+  button,.page-link-button{min-height:42px}
+  .control-group,.form-row,.idea-row,.ld-head,.ld-nav,.stq-actions,.ebook-navigation{min-width:0;flex-wrap:wrap}
+  .lesson-container,.scale-editor,.ebook-container,.lesson-overlay,.editor-overlay,.ebook-overlay{width:100%;max-width:100%;max-height:100dvh;border-radius:0}
+  .lesson-container,.scale-editor,.ebook-container{padding:16px}
+  .lesson-content,.ebook-content{padding:14px 0}
+  .ebook-toc{width:100%;max-height:32vh;padding:12px;border-right:0;border-bottom:1px solid var(--border-color)}
+  .bottom-footer,.appearance-bottom-section{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;padding:12px}
+  .bottom-footer .control-group{flex-wrap:wrap}
+  .button-pair-container{flex-wrap:wrap}
+  .button-pair-container>*{flex:1 1 130px}
+  .heat-grid{max-width:100%;overflow-x:auto}
+  .mobile-view-button{margin-bottom:20px}
+  .home-actions{display:grid;grid-template-columns:1fr;max-width:360px;gap:8px}
+  .home-actions>*{width:100%;min-height:46px}
+  .offline-package-status{text-align:left;padding:0 6px}
+  .rn-package-action{align-items:stretch}
+  .rn-package-action .offline-package-button{width:100%}
+}
+/* The landing-page switch previews the same narrow layout on desktop. */
+body.mobile-view{width:min(100%,480px);min-height:100vh;margin:0 auto;padding:0;overflow-x:hidden;box-shadow:0 0 32px rgba(0,0,0,.12)}
+body.mobile-view .app-container{padding:10px;border-radius:0;box-shadow:none}
+body.mobile-view .main-content{min-width:0}
+body.mobile-view .top-header{margin-bottom:10px;padding:5px 0}
+body.mobile-view .top-header-content{min-height:44px;padding:4px 10px;gap:7px;flex-wrap:wrap;justify-content:space-between}
+body.mobile-view .top-header h1.main-title{font-size:1.05em;white-space:normal;text-align:left}
+body.mobile-view .sidebar-toggle-container{position:static;top:auto;right:auto;margin:0;gap:6px}
+body.mobile-view .header-nav.st-nav{display:none!important}
+body.mobile-view .st-nav-toggle{display:inline-flex;order:3;width:auto;min-height:40px;padding:8px 12px}
+body.mobile-view .header-nav.st-nav.mobile-open{display:flex!important;position:absolute;top:100%;left:0;right:0;width:100%;max-height:75vh;overflow-y:auto;flex-direction:column;align-items:stretch;background:var(--primary-color,#333);padding:8px;margin:0;z-index:9999;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+body.mobile-view .home-container,body.mobile-view .about-container,body.mobile-view .chords-container,body.mobile-view .intervals-container,body.mobile-view .scales-container,body.mobile-view .lessons-container,body.mobile-view .practice-container,body.mobile-view .progress-container,body.mobile-view .favorites-container,body.mobile-view .data-container,body.mobile-view .settings-container,body.mobile-view .courses-container,body.mobile-view .quizzes-container,body.mobile-view .tests-container,body.mobile-view .exams-container,body.mobile-view .ebooks-container,body.mobile-view .ideas-container,body.mobile-view .rn-container{width:auto;max-width:100%;margin:10px;padding:18px 14px}
+body.mobile-view .home-container h1{font-size:1.8em;line-height:1.2}
+body.mobile-view .page-link-grid,body.mobile-view .features-grid,body.mobile-view .chord-grid,body.mobile-view .interval-grid,body.mobile-view .scale-grid,body.mobile-view .fav-grid,body.mobile-view .rn-grid,body.mobile-view .course-list,body.mobile-view .quiz-list,body.mobile-view .test-list,body.mobile-view .stq-exam-list,body.mobile-view .ebook-list,body.mobile-view .lesson-list,body.mobile-view .scale-list,body.mobile-view .chord-list,body.mobile-view .interval-list{grid-template-columns:minmax(0,1fr)!important;gap:12px}
+body.mobile-view .rn{padding:18px 14px;margin:10px auto}
+body.mobile-view .fretboard-container,body.mobile-view #fretboard,body.mobile-view .piano-container,body.mobile-view table{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+body.mobile-view table{display:block;white-space:nowrap}
+body.mobile-view input,body.mobile-view select,body.mobile-view textarea,body.mobile-view button{max-width:100%;font-size:16px}
+body.mobile-view .lesson-container,body.mobile-view .scale-editor,body.mobile-view .ebook-container{width:100%;max-width:100%;max-height:100vh;border-radius:0;padding:16px}
+body.mobile-view .ebook-toc{width:100%;max-height:32vh;padding:12px;border-right:0;border-bottom:1px solid var(--border-color)}
+body.mobile-view .bottom-footer,body.mobile-view .appearance-bottom-section{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;padding:12px}
+body.mobile-view .button-pair-container{flex-wrap:wrap}
+body.mobile-view .button-pair-container>*{flex:1 1 130px}
+/* Mobile refinements 1-10: page layouts adapt to actual and previewed narrow widths. */
+@container app-mobile (max-width:768px){
+  /* 1. A safe-area-aware navigation rail stays available while browsing. */
+  .top-header{position:sticky;top:0;z-index:1025;padding-top:env(safe-area-inset-top);box-shadow:0 3px 14px rgba(0,0,0,.16)}
+  .top-header-content{min-height:48px;gap:8px}
+  .header-nav.st-nav.mobile-open{max-height:calc(100dvh - 64px);overscroll-behavior:contain;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+  .st-nav-toggle,#sidebar-toggle,#toggle-bottom{min-height:42px;touch-action:manipulation}
+  :target{scroll-margin-top:76px}
+
+  /* 2. The landing page becomes a focused launch board, not a squeezed desktop grid. */
+  .home-container{margin:0;padding:22px 14px 30px;border-radius:0;box-shadow:none}
+  .home-container>h1{font-size:clamp(1.65rem,8vw,2.15rem);text-wrap:balance}
+  .page-link-grid{gap:10px}
+  .page-link-card{border-radius:12px;border-inline-start:3px solid var(--primary-color);padding:16px}
+  .page-link-card:first-child{background:color-mix(in srgb,var(--primary-color) 7%,var(--card-bg));border-color:var(--accent-color)}
+  .page-link-card h2{font-size:1.2rem}
+  .page-link-button,.mobile-view-button{width:100%;min-height:48px;border-radius:9px}
+
+  /* 3. Fretboard tools open as a bottom sheet; the neck keeps playable proportions. */
+  .app-container{padding:8px}
+  .app-container .sidebar{left:0;top:auto;right:0;bottom:0;width:100%;height:min(82dvh,720px);max-height:82dvh;padding:18px 14px calc(18px + env(safe-area-inset-bottom));border:1px solid var(--border-color);border-bottom:0;border-radius:20px 20px 0 0;transform:translateY(105%);visibility:hidden;transition:transform .25s ease,visibility .25s;z-index:1010}
+  .app-container .sidebar.sidebar-visible{left:0;transform:translateY(0);visibility:visible}
+  #fretboard{padding:8px;overscroll-behavior-x:contain;scrollbar-width:thin}
+  #fretboard svg{min-width:620px;max-width:none;touch-action:pan-x pan-y}
+  #current-pattern-display{position:sticky;left:0;font-size:1rem!important}
+  .bottom-footer{padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+
+  /* 4. Theory discovery keeps filters compact and results easy to scan. */
+  .scales-container,.chords-container,.intervals-container{margin:8px;padding:14px 12px}
+  .scale-filters,.chord-filters,.interval-filters{padding:12px;gap:12px;border-radius:12px}
+  .scales-container .interval-filter-list,.chords-container .interval-filter-list{display:flex;flex-wrap:nowrap;gap:7px;overflow-x:auto;padding:7px;scroll-snap-type:x proximity;overscroll-behavior-inline:contain;scrollbar-width:thin}
+  .scales-container .interval-filter-item,.chords-container .interval-filter-item{flex:0 0 auto;min-width:54px;min-height:42px;scroll-snap-align:start}
+  .favorite-filter{width:100%;min-height:44px}
+  .favorite-filter input[type=checkbox]{width:22px;height:22px;flex:0 0 22px}
+  .button-pair-container{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .button-pair-container>*{width:100%;min-height:46px}
+  .scale-item,.chord-item,.interval-item{border-radius:12px;padding:14px}
+  .scale-item h3,.chord-item h3{padding-right:46px}
+  .favorite-button{width:44px;height:44px;top:5px;right:5px}
+
+  /* 5. Data editing uses reachable tabs and preserves table readability. */
+  .data-container{margin:8px;padding:14px 10px}
+  .data-heading{font-size:1.8rem}
+  .data-container .tabs{position:sticky;top:54px;z-index:1000;display:flex;flex-wrap:nowrap;gap:4px;overflow-x:auto;margin:0 -10px 14px;padding:7px 10px;background:var(--card-bg);scroll-snap-type:x proximity;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+  .data-container .tab-link{flex:0 0 auto;width:auto;min-width:92px;min-height:46px;padding:8px 12px;scroll-snap-align:start}
+  .data-container .data-table{display:block;width:100%;max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain;white-space:normal}
+  .data-container .data-table th,.data-container .data-table td{min-width:96px;padding:10px}
+  .data-container .export-buttons-container{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .data-container .export-button{width:100%;min-height:44px;margin:0}
+  .data-container td[contenteditable=true]{min-width:120px}
+
+  /* 6. Course paths and assessments put the next action within thumb reach. */
+  .course-item,.quiz-item,.test-item,.exam-item,.stq-item{border-radius:14px;overflow:hidden}
+  .course-item,.quiz-list>* ,.test-list>* ,.stq-exam-list>*{min-width:0}
+  .course-details,.quiz-item,.test-item,.exam-item{padding:16px}
+  .course-meta{flex-wrap:wrap;gap:6px}
+  .course-actions{flex-direction:column}
+  .course-actions .enroll-button,.course-toggle{width:100%;min-height:46px}
+  .stq-runner{padding:16px 13px;border-radius:14px}
+  .stq-top{position:sticky;top:54px;z-index:2;padding:8px 0;background:var(--card-bg,#fff)}
+  .stq-q{font-size:1.12rem;line-height:1.45}
+  .stq-opt{min-height:52px;padding:14px;border-radius:12px;touch-action:manipulation}
+  .stq-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .stq-btn,.stq-start{width:100%;min-height:46px}
+
+  /* 7. Practice controls form a compact two-column instrument panel. */
+  .practice-container{margin:8px;padding:18px 13px}
+  .practice-heading{font-size:1.8rem}
+  .pd{padding:12px;border-width:1px;border-radius:14px}
+  .pd-head{align-items:flex-start;flex-wrap:wrap}
+  .pd-head h2{font-size:1.12rem}
+  .pd-head button{width:auto;min-height:44px}
+  .pd-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .pd-tools .pd-grow{display:none}
+  .pd-tools label{display:flex;align-items:center;justify-content:space-between;gap:5px;margin:0;padding:7px 9px;border:1px solid var(--border-color);border-radius:8px}
+  .pd-tools input{width:76px;min-height:42px;font-size:16px}
+  .pd-tools button{width:100%;min-height:46px;padding:8px}
+  #pd-time{align-self:center;text-align:center;font-size:1.25rem}
+  .practice-text{font-size:1rem;line-height:1.75}
+
+  /* 8. Progress and saved items read as compact personal dashboards. */
+  .progress-container,.favorites-container{margin:8px;padding:18px 12px!important}
+  .progress-heading,.favorites-heading{font-size:1.8rem}
+  .progress-sections{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:16px}
+  .progress-card{padding:12px;border-radius:12px;min-width:0}
+  .progress-card h3{font-size:1rem;margin-bottom:8px}
+  .progress-stat{font-size:1.25rem}
+  .heat-grid{width:100%;gap:4px;padding:7px 0;overflow-x:auto;grid-template-columns:repeat(14,minmax(14px,1fr));scrollbar-width:thin}
+  .heat-cell{min-width:14px;min-height:14px}
+  .progress-table{display:block;max-width:100%;overflow-x:auto;white-space:nowrap}
+  .fav-card{padding:14px;border-radius:12px}
+  .fav-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fav-btn{min-height:44px;display:flex;align-items:center;justify-content:center}
+
+  /* 9. Lessons and reference reading get calmer typography and reader-first cards. */
+  .lesson-item{padding:16px;border-radius:12px;min-height:0}
+  .view-lesson-button{align-self:stretch;width:100%;min-height:46px}
+  .lesson-detail{padding:15px;border-width:1px;border-radius:14px;scroll-margin-top:76px}
+  .ld-head{align-items:flex-start}
+  .ld-close{width:44px;height:44px}
+  .ld-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ld-facts div{min-width:0;padding:8px;border-radius:9px}
+  .ld-nav{display:grid;grid-template-columns:1fr 1fr}
+  .ld-nav button{min-height:46px}
+  .ebook-item{display:grid;grid-template-columns:88px minmax(0,1fr);border-radius:12px}
+  .ebook-cover{height:100%;min-height:156px;padding:8px;font-size:.85rem}
+  .ebook-cover::before{font-size:2rem;margin-bottom:5px}
+  .ebook-cover span{padding:4px;margin-top:4px}
+  .ebook-details{padding:12px}
+  .ebook-actions{flex-direction:column;gap:6px}
+  .ebook-button{min-height:44px}
+  .rn{margin:8px auto;padding:18px 14px;line-height:1.72}
+  .rn-toc{flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;padding:8px 0;scrollbar-width:thin}
+  .rn-fixes{padding-left:24px}
+  .rn-tag{min-width:0}
+  .about-container{font-size:1rem;line-height:1.75}
+  .about-container h1{font-size:2rem}
+
+  /* 10. Favorites, notes, settings and progressions become one-handed workspaces. */
+  .ideas-container,.settings-container{margin:8px;padding:16px 12px}
+  .ideas-container textarea{min-height:140px}
+  .idea-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .idea-row button{min-height:46px}
+  #idea-list li{padding:14px;border-radius:12px}
+  .settings-section{padding:14px 12px;margin-bottom:12px;border-radius:12px}
+  .setting-group{display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:14px}
+  .settings-container .btn-primary,.settings-container .btn-danger{min-height:46px}
+  .settings-container .return-button{display:block;text-align:center}
+  .cp{margin:8px;padding:14px 10px;border-radius:14px}
+  .cp-bar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .cp-bar .grow{display:none}
+  #cp-palette{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+  #cp-prog,#cp-fb{max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain}
+  .cp-btn{min-height:46px}
+  .stq-exam-list,.course-list,.quiz-list,.test-list,.ebook-list,.lesson-list{gap:10px}
+  img,canvas,video,iframe{max-width:100%;height:auto}
+  body{padding-bottom:env(safe-area-inset-bottom)}
+}
+@media (max-width:768px) and (orientation:portrait) and (pointer:coarse){
+  html.st-orientation-landscape{overflow:hidden}
+  html.st-orientation-landscape body{position:fixed!important;top:0;left:0;width:100vh!important;width:100dvh!important;height:100vw!important;overflow:auto;overscroll-behavior:contain;transform:translateX(100vw) rotate(90deg);transform-origin:top left}
+  html.st-orientation-landscape body.mobile-view{width:100vh!important;width:100dvh!important}
+}
+@media (orientation:landscape) and (max-height:768px) and (pointer:coarse){
+  html.st-orientation-portrait body{width:min(100%,480px);margin-inline:auto}
+}
+@media(prefers-reduced-motion:reduce){.app-container .sidebar,.page-link-card,.st-nav,.st-nav-toggle{transition:none!important;scroll-behavior:auto!important}}
+
+header select,
+.top-header .st-dd-menu,
+.top-header .st-dd-menu a,
+.top-header .st-dd>button,
+.top-header .st-nav-toggle,
+.top-header .st-view-toggle{border-radius:0!important}
+

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101a28">
+  <title>Cadence Map</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script src="../site.js" defer data-offline-only></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <div class="cadence-shell">
+  <aside class="site-sidebar" aria-label="Site navigation">
+    <input type="checkbox" id="sidebar-check" class="sidebar-check">
+    <label for="sidebar-check" class="sidebar-toggle">SITE MENU</label>
+    <nav class="sidebar-nav" aria-label="Site navigation links">
+      <a class="sidebar-home" href="../index.html">Home</a>
+      <div class="sidebar-group"><p class="sidebar-heading">PLAY</p><a href="../fretboard.html">Neck Diagram Explorer</a><a href="../daw.html">Pattern Studio</a><a href="../theory-decks/index.html">Theory Decks Home</a><a href="../andalusian.html">Andalusian Cadence</a><a href="index.html" aria-current="page">Cadence Map</a><a href="../theory-decks/play.html">Practice Decks</a><a href="../theory-decks/daw.html">Theory Decks DAW</a><a href="../theory-decks/reference.html">Theory Reference</a><a href="../theory-decks/Fretboard%20Diagrams/index.html">Theory Decks Fretboard</a><a href="../dummy.html">Chord Progressions</a></div>
+      <div class="sidebar-group"><p class="sidebar-heading">EXPLORE</p><a href="../scales.html">Scales</a><a href="../chords.html">Chords</a><a href="../intervals.html">Intervals</a><a href="../theory-cards/index.html">Theory Cards</a><a href="../data.html">Application Data</a></div>
+      <div class="sidebar-group"><p class="sidebar-heading">LEARN</p><a href="../lessons.html">Lessons</a><a href="../courses.html">Courses</a><a href="../coursesquizzes.html">Quizzes</a><a href="../coursestests.html">Tests</a><a href="../coursesexams.html">Exams</a><a href="../practice.html">Practice</a><a href="../primer.html">Primer</a><a href="../ebooks.html">eBooks (PDF)</a><a href="../coursesideas.html">Ideas &amp; Notes</a></div>
+      <div class="sidebar-group"><p class="sidebar-heading">MY SPACE</p><a href="../favorites.html">Favorites</a><a href="../progress.html">Progress</a><a href="../settings.html">Settings</a></div>
+      <div class="sidebar-group"><p class="sidebar-heading">MORE</p><a href="../admin.html">Admin</a><a href="../site-map.html">Site Map</a><a href="../testing.html">In dept testing</a><a href="../about.html">About</a><a href="../release-notes.html">Release Notes</a></div>
+    </nav>
+  </aside>
+  <main class="atlas">
+    <header class="masthead">
+      <a class="brand" href="./"><span class="brand-glyph">CA</span><span>CADENCE<br>ATLAS</span></a>
+      <nav class="masthead-links" aria-label="App navigation"><a href="../index.html">Home</a></nav>
+      <span class="edition">HARMONY INDEX <i>01 / 12</i></span>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="kicker"><span></span> A TRANSPOSABLE PROGRESSION MAP</p>
+        <h1>Andalusian<br><em>&amp; beyond.</em></h1>
+        <p class="lede">Start with the Andalusian descent, or map diatonic chords from any major-scale mode.</p>
+      </div>
+      <div class="palette-stack">
+        <div class="palette-panel">
+          <div class="palette-head"><span>SIX-CHORD MINOR PALETTE</span><span id="palette-key">A MINOR REFERENCE</span></div>
+          <div id="chord-palette" class="chord-palette"></div>
+          <div class="palette-foot"><span>CORE CADENCE</span><b>i → ♭VII → ♭VI → V</b><span class="palette-divider"></span><span>ALTERNATE PATH</span><b>i → III → iv → V</b></div>
+        </div>
+        <div class="palette-panel major-panel">
+          <div class="palette-head major-palette-head"><span>MAJOR-SCALE MODES</span><select id="mode-select" aria-label="Select a major-scale mode"></select><span id="major-palette-key">A IONIAN REFERENCE</span></div>
+          <div id="major-chord-palette" class="chord-palette major-chord-palette"></div>
+          <div class="palette-foot"><span>MODE TRIADS</span><b>Built from the major scale</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="explorer" aria-label="Progression explorer">
+      <div class="section-index"><span>01</span><span>SET YOUR MAP</span></div>
+      <div class="filter-grid">
+        <label class="field"><span class="field-label">CHORD SOURCE</span><select id="chord-source" aria-label="Select progression chord source"><option value="cadence">Andalusian six-chord set</option><option value="modes">Major-scale mode triads</option></select></label>
+        <label class="field"><span class="field-label">TONIC</span><select id="key-select" aria-label="Select minor key"><option value="all">All 12 keys</option></select></label>
+        <label class="field"><span class="field-label">LENGTH <small>multi-select</small></span><select id="length-select" aria-label="Select one or more progression lengths" multiple size="4"></select></label>
+        <label class="field shape-field"><span class="field-label">CHORD-COUNT SHAPES <small id="combination-count"></small></span><select id="combination-select" aria-label="Select one or more chord-count shapes" multiple size="5"></select></label>
+      </div>
+      <div class="path-presets" role="group" aria-label="Featured progression patterns">
+        <span class="preset-label">QUICK PATHS</span>
+        <button type="button" class="preset active" data-preset="andalusian"><span class="preset-dot"></span> Andalusian <b>i · ♭VII · ♭VI · V</b></button>
+        <button type="button" class="preset" data-preset="other"><span class="preset-dot"></span> Other direction <b>i · III · iv · V</b></button>
+      </div>
+      <p class="coverage-note">Use Ctrl/Cmd-click to multi-select; Shift-click selects a range. All lengths and All chord-count shapes can be selected independently. A recipe only applies at its own length; results include every distinct ordering.</p>
+      <aside class="shape-definition" aria-live="polite"><span>CHORD-COUNT SHAPE DEFINITION</span><p id="shape-definition-text"></p></aside>
+    </section>
+
+    <section class="map-area">
+      <div class="map-heading">
+        <div><div class="section-index map-index"><span>02</span><span>PROGRESSION MAP</span></div><h2 id="map-title">All minor keys</h2></div>
+        <div class="map-actions"><div class="total-block"><strong id="total-count"></strong><span>ORDERS / TONIC</span></div><button id="export-selected" type="button">EXPORT SELECTED TXT ↓</button></div>
+      </div>
+      <div class="map-meta"><span id="pattern-summary"></span><span id="range-summary" role="status" aria-live="polite"></span></div>
+      <p id="playback-status" class="playback-status" aria-live="polite">READY · 4/4 at 100 BPM · one bar per chord. Press play to listen.</p>
+      <p id="export-status" class="export-status" aria-live="polite"></p>
+      <div id="key-groups" class="key-groups"></div>
+      <nav class="pagination" aria-label="Progression pages">
+        <button id="previous-page" type="button">← PREV</button>
+        <label>PAGE <input id="page-input" type="number" min="1" value="1" aria-label="Page number" aria-describedby="page-total page-status"> <span id="page-total"></span></label>
+        <button id="go-page" type="button">GO</button>
+        <button id="next-page" type="button">NEXT →</button>
+        <span id="page-status" class="pagination-status" role="status" aria-live="polite"></span>
+      </nav>
+      <p class="map-footnote">Long progressions are rank-generated. TXT exports expand up to 25,000 items; larger selections export as a complete compact recipe-and-rank index.</p>
+    </section>
+
+    <footer id="chord-legend" class="footer" aria-label="Current chord qualities"></footer>
+  </main>
+  </div>
+</body>
+</html>

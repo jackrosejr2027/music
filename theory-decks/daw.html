@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1f3a2c">
+<title>DAW</title>
+<link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="daw.css">
+<script defer src="offline-support.js"></script>
+<link rel="stylesheet" href="mobile.css">
+<link rel="stylesheet" href="../square-edges.css">
+<script defer src="mobile-view.js"></script>
+</head>
+<body class="daw-page">
+<header class="site-header">
+  <a class="wordmark" href="index.html">Theory Decks</a>
+  <nav aria-label="Main navigation"><a href="index.html">Home</a><a href="play.html" class="nav-play">Play</a><a href="daw.html" aria-current="page">DAW</a><a href="reference.html">Reference</a><a href="about.html">About</a><a href="release-notes.html">Release Notes</a><a href="settings.html">Settings</a><a href="Fretboard%20Diagrams/index.html">Fretboard</a><a href="../fretboard.html">Scales Fretboard</a><a href="author.html">From the Author</a></nav>
+</header>
+<main class="daw">
+  <div class="daw-bar daw-transport" role="toolbar" aria-label="Transport">
+    <button type="button" id="play" class="daw-play" title="Play (Space)">▶ Play</button>
+    <button type="button" id="play-bar" title="Play from the selected bar">▶ From bar</button>
+    <label class="daw-field">Play<select id="scope"><option value="song">Song (arrangement)</option><option value="section">This section</option></select></label>
+    <label class="daw-check"><input type="checkbox" id="loop"> Loop</label>
+    <label class="daw-check"><input type="checkbox" id="click"> Click</label>
+    <label class="daw-field">♩ =<input type="number" id="tempo" min="20" max="400" step="1"></label>
+    <label class="daw-field">Swing<select id="swing"><option value="0">Straight</option><option value="0.25">Light</option><option value="0.5">Medium</option><option value="0.75">Hard</option></select></label>
+    <label class="daw-field">Grid<select id="res"><option value="24" selected>1/4</option><option value="12">1/8</option><option value="8">1/8 triplet</option><option value="6">1/16</option><option value="4">1/16 triplet</option><option value="3">1/32</option><option value="2">1/32 triplet</option></select></label>
+    <label class="daw-field">Note<select id="len"><option value="2">1/32 triplet</option><option value="3">1/32</option><option value="4">1/16 triplet</option><option value="6">1/16</option><option value="8">1/8 triplet</option><option value="12" selected>1/8</option><option value="16">1/4 triplet</option><option value="18">Dotted 1/8</option><option value="24">1/4</option><option value="36">Dotted 1/4</option><option value="48">1/2</option><option value="72">Dotted 1/2</option><option value="96">Whole</option></select></label>
+    <span class="daw-spacer"></span>
+    <input type="text" id="title" class="daw-title" aria-label="Song title" maxlength="80">
+    <button type="button" id="undo" title="Undo (Ctrl+Z)">Undo</button>
+    <button type="button" id="redo" title="Redo (Ctrl+Y or Ctrl+Shift+Z)">Redo</button>
+    <button type="button" id="new">New</button>
+    <span class="daw-join"><select id="export-fmt" aria-label="Export format"><option value="json">JSON</option><option value="txt">TXT</option><option value="csv">CSV</option><option value="mid">MIDI</option><option value="pdf">PDF</option></select><button type="button" id="export">Export</button></span>
+    <label class="daw-file">Import<input type="file" id="import" accept=".json,application/json,.mid,.midi,audio/midi,audio/x-midi"></label>
+  </div>
+  <div id="newbox" class="daw-bar daw-new" hidden>
+    <b class="daw-tag">New</b>
+    <label class="daw-field">Start from<select id="new-from"></select></label>
+    <input type="search" id="new-find" class="daw-find" placeholder="Find (name, genre, I–V…)" aria-label="Find a progression">
+    <label class="daw-field" id="new-bars-wrap">Bars<input type="number" id="new-bars" min="1" max="64" value="8"></label>
+    <label class="daw-field">Key<select id="new-key"></select></label>
+    <label class="daw-field" id="new-scale-wrap">Scale<select id="new-scale"></select></label>
+    <label class="daw-field">Meter<input type="number" id="new-num" min="1" max="32" value="4"> / <select id="new-den"><option>2</option><option selected>4</option><option>8</option><option>16</option><option>32</option></select></label>
+    <label class="daw-field" id="new-per-wrap">Bars per chord<select id="new-per"><option value="0.5">½</option><option value="1" selected>1</option><option value="2">2</option><option value="4">4</option></select></label>
+    <label class="daw-field">♩ =<input type="number" id="new-tempo" min="20" max="400" value="100"></label>
+    <span id="new-preview" class="daw-preview"></span>
+    <button type="button" id="new-song" class="on">Create new song</button>
+    <button type="button" id="new-section">Add as section</button>
+    <button type="button" id="new-cancel">Cancel</button>
+  </div>
+  <div class="daw-bar daw-live" role="toolbar" aria-label="Live changes">
+    <b class="daw-tag">Live</b>
+    <label class="daw-field">Key<select id="live-key"></select></label>
+    <label class="daw-field">Scale<select id="live-scale"></select></label>
+    <span class="daw-field">Chord</span><span id="live-chords" class="daw-chips"></span>
+    <select id="live-size" aria-label="Live chord size"><option value="3">Triads</option><option value="4">4-tone (7ths)</option><option value="5">5-tone (9ths)</option></select>
+  </div>
+  <div class="daw-bar daw-sections">
+    <span class="daw-field">Sections</span><span id="sections" class="daw-chips"></span>
+    <button type="button" id="sec-add" title="New empty section">+ New</button>
+    <button type="button" id="sec-dup" title="Copy this section">Duplicate</button>
+    <input type="text" id="sec-name" class="daw-secname" aria-label="Section name" maxlength="40">
+    <button type="button" id="sec-del">Delete</button>
+    <span class="daw-sep"></span>
+    <span class="daw-field">Song</span><span id="arrangement" class="daw-chips"></span>
+    <button type="button" id="arr-add" title="Add this section to the end of the song">+ Add section</button>
+  </div>
+  <div class="daw-bar daw-all" role="toolbar" aria-label="Change all bars">
+    <b class="daw-tag">All bars</b>
+    <select id="all-scope" aria-label="Which bars"><option value="section">in this section</option><option value="song">in the whole song</option></select>
+    <span class="daw-field">Meter<input type="number" id="all-num" min="1" max="32" value="4" aria-label="Beats per bar"> / <select id="all-den" aria-label="Beat unit"><option>2</option><option selected>4</option><option>8</option><option>16</option><option>32</option></select><button type="button" data-all="meter">Set</button></span>
+    <span class="daw-field">Key<select id="all-key" aria-label="Key"></select><button type="button" data-all="key" title="Moves every bar to this key; chords and melody follow">Set</button><button type="button" data-all="up" title="Transpose up a semitone">+1</button><button type="button" data-all="down" title="Transpose down a semitone">−1</button></span>
+    <span class="daw-field">Scale<select id="all-scale" aria-label="Scale"></select><button type="button" data-all="scale">Set</button></span>
+    <span class="daw-field">Chord<select id="all-deg" aria-label="Chord degree"><option value="1">I</option><option value="2">II</option><option value="3">III</option><option value="4">IV</option><option value="5">V</option><option value="6">VI</option><option value="7">VII</option></select><select id="all-size" aria-label="Chord size"><option value="3">Triad</option><option value="4">4-tone</option><option value="5">5-tone</option></select><button type="button" data-all="chord" title="One chord for every bar">Set</button><button type="button" data-all="size" title="Keep each bar's degrees, change only triad / 4-tone / 5-tone">Size only</button></span>
+    <span class="daw-field">Tempo<button type="button" data-all="tempo" title="Clear per-bar tempo changes">Use song tempo</button></span>
+  </div>
+  <div id="grid" class="daw-grid" tabindex="0" aria-label="Note grid: arrow keys move, Enter adds or removes a note, C opens the chord menu"></div>
+  <section class="daw-fretboards" aria-label="Selected progression chord fretboards">
+    <figure class="daw-fretboard-card">
+      <figcaption><h2>Chord</h2><span id="daw-chord-caption">Choose a chord in the progression.</span></figcaption>
+      <div id="daw-chord-fretboard" class="daw-fretboard-board"></div>
+    </figure>
+    <figure class="daw-fretboard-card">
+      <figcaption><h2>Scale mode</h2><span id="daw-scale-caption">Choose a chord in the progression.</span></figcaption>
+      <div id="daw-scale-fretboard" class="daw-fretboard-board"></div>
+    </figure>
+    <figure class="daw-fretboard-card">
+      <figcaption><h2>Blues scale</h2><span id="daw-blues-caption">Choose a chord in the progression.</span></figcaption>
+      <div id="daw-blues-fretboard" class="daw-fretboard-board"></div>
+    </figure>
+    <figure class="daw-fretboard-card">
+      <figcaption><h2>Pentatonic scale</h2><span id="daw-pentatonic-caption">Choose a chord in the progression.</span></figcaption>
+      <div id="daw-pentatonic-fretboard" class="daw-fretboard-board"></div>
+    </figure>
+  </section>
+  <div id="menu" class="daw-menu" role="menu" hidden></div>
+  <div id="status" class="daw-status" aria-live="polite"></div>
+  <div class="daw-panels">
+    <section class="daw-panel" aria-labelledby="bar-h"><h2 id="bar-h">Bar</h2><div id="inspector"></div></section>
+    <section class="daw-panel" aria-labelledby="cards-h"><h2 id="cards-h">Cards</h2>
+      <div class="daw-cardtools">
+        <select id="card-deck" aria-label="Deck"></select>
+        <input type="search" id="card-filter" placeholder="Filter cards" aria-label="Filter cards">
+      </div>
+      <div id="card-list" class="daw-cardlist" role="listbox" aria-label="Cards"></div>
+      <div id="card-actions" class="daw-cardactions"></div>
+    </section>
+  </div>
+</main>
+<script defer src="theory.js"></script>
+<script defer src="data/scales.js"></script>
+<script defer src="data/modes.js"></script>
+<script defer src="data/keys.js"></script>
+<script defer src="data/intervals.js"></script>
+<script defer src="data/chords.js"></script>
+<script defer src="data/strings.js"></script>
+<script defer src="data/techniques.js"></script>
+<script defer src="data/andalusian.js"></script>
+<script defer src="data/progressions.js"></script>
+<script defer src="data/deceptive.js"></script>
+<script defer src="data/majorminor.js"></script>
+<script defer src="data/blues.js"></script>
+<script defer src="data/romannumerals.js"></script>
+<script defer src="data/melodicpatterns.js"></script>
+<script defer src="data/lefthand.js"></script>
+<script defer src="data/righthand.js"></script>
+<script defer src="decks.js"></script>
+<script defer src="tone.js"></script>
+<script defer src="sound.js"></script>
+<script defer src="daw-core.js"></script>
+<script defer src="daw-presets.js"></script>
+<script defer src="daw-midi.js"></script>
+<script defer src="daw-pdf.js"></script>
+<script defer src="daw.js"></script>
+</body>
+</html>

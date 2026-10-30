@@ -1,0 +1,47 @@
+.fb-shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 60px; }
+.fb-controls { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: flex-end; margin-bottom: 18px; }
+.fb-controls label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); }
+.fb-controls select, .fb-controls input[type=search] { font: inherit; font-size: 14px; color: var(--ink); padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.fb-controls input[type=search] { width: 180px; min-width: 0; }
+.fb-shape-count { color: var(--muted); font-size: 11px; padding-bottom: 8px; white-space: nowrap; }
+.fb-play { font: inherit; font-size: 14px; font-weight: 700; padding: 7px 14px; border-radius: 8px; border: 0; background: #333; color: #fff; cursor: pointer; }
+.fb-play:hover { background: var(--accent); }
+.fb-stop, .fb-export-button, .fb-favorite { min-height: 40px; padding: 7px 12px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.fb-stop:hover, .fb-export-button:hover, .fb-favorite:hover { border-color: var(--accent); color: var(--accent); }
+.fb-favorite[aria-pressed="true"] { background: #333; color: #fff; border-color: #333; }
+.fb-export-format { min-width: 120px; }
+.fb-export-format select { min-height: 40px; }
+#fb-export-status { flex: 1 1 100%; min-height: 1.4em; color: var(--muted); font-size: 12px; }
+.fb-board { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); border-radius: 12px; background: #f5f5f5; padding: 10px 6px 4px; }
+.fb-board svg { display: block; width: 100%; min-width: 640px; height: auto; user-select: none; -webkit-user-select: none; }
+.fb-board .dot { cursor: pointer; }
+.fb-board .dot:hover circle, .fb-board .dot:focus circle { stroke: var(--accent); stroke-width: 3; }
+.fb-board .dot:focus { outline: none; }
+.fb-info { margin: 16px 0 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.fb-info b { color: var(--ink); }
+
+.fb-controls input[type=number] { width: 86px; font: inherit; font-size: 14px; color: var(--ink); padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.fb-string-editor { margin: 0 0 14px; border: 1px solid var(--line); border-radius: 10px; background: #f5f5f5; }
+.fb-string-editor > summary { min-height: 44px; padding: 12px 14px; color: var(--ink); font-size: 13px; font-weight: 750; cursor: pointer; }
+.fb-string-hint { margin: 0; padding: 0 14px 10px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.fb-string-tunings { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 7px; padding: 0 10px 12px; }
+.fb-string-row { display: grid; grid-template-columns: 58px minmax(0, 1fr) 68px; gap: 6px; align-items: center; min-width: 0; }
+.fb-string-row b { color: var(--muted); font-size: 11px; }
+.fb-string-row select { min-width: 0; width: 100%; font: inherit; font-size: 13px; color: var(--ink); padding: 6px 5px; border: 1px solid var(--line); border-radius: 7px; background: #fff; }
+.fb-board svg { width: auto; min-width: 0; max-width: none; height: auto; }
+.fb-board .capo-marker { pointer-events: none; }
+@media (max-width: 700px) {
+  .fb-controls label { flex: 1 1 calc(50% - 8px); min-width: 0; }
+  .fb-controls select, .fb-controls input[type=number], .fb-controls input[type=search] { width: 100%; min-width: 0; min-height: 42px; }
+  .fb-controls .fb-export-format { flex: 1 1 calc(50% - 8px); min-width: 0; }
+  .fb-controls .fb-export-format select, .fb-controls .fb-export-button { width: 100%; min-height: 44px; }
+  #fb-export-status { flex-basis: 100%; }
+  .fb-shape-count { flex: 1 1 100%; padding: 0 0 2px; }
+  .fb-string-tunings { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .fb-string-row { grid-template-columns: minmax(44px, auto) minmax(0, 1fr) 58px; gap: 4px; }
+  .fb-string-row select { min-height: 42px; font-size: 12px; }
+  .fb-board { touch-action: pan-x pan-y; }
+}
+@media (max-width: 360px) {
+  .fb-string-tunings { grid-template-columns: 1fr; }
+}

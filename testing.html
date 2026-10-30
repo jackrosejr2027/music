@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <title>In dept testing</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="themes.css">
+    <link rel="stylesheet" href="site.css">
+    <link rel="stylesheet" href="testing.css">
+    <script src="theme-init.js"></script>
+    <script src="site.js" defer></script>
+</head>
+<body>
+    <header class="top-header"><div class="top-header-content">
+        <a class="site-brand" href="index.html">Scales Thesaurus</a>
+        <nav class="header-nav" aria-label="Main navigation"></nav>
+    </div></header>
+    <main class="testing-shell">
+        <div class="testing-heading"><div><a href="index.html">Home /</a><h1>In dept testing</h1></div><span class="testing-stamp">PAGE TEST SCRIPTS</span></div>
+        <p class="testing-intro">Follow a page's script, record results, then copy its feedback prompt to request changes. Marks and notes stay on this device.</p>
+        <div class="testing-toolbar">
+            <label for="test-search">Find a page<input id="test-search" type="search" placeholder="Page name or path" autocomplete="off"></label>
+            <button id="run-source-checks" type="button">Run source checks for all pages</button>
+        </div>
+        <p class="testing-scope">Source checks fetch HTML, assets and links without running the pages. They do not test playback, interactions, downloads or visual layout. Use the manual scripts for those. Back up data before any import/reset test.</p>
+        <p id="testing-overview" class="testing-overview" role="status" aria-live="polite"></p>
+        <div id="testing-pages"></div>
+        <p id="testing-empty" hidden>No pages match your search.</p>
+        <p id="testing-message" role="status" aria-live="polite"></p>
+        <noscript>Enable JavaScript to view the page test scripts and generate feedback prompts.</noscript>
+    </main>
+    <script type="module" src="testing.js"></script>
+</body>
+</html>

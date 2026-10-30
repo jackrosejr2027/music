@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Scales Thesaurus - Practice</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <style>
+        /* Reuse construction page styles */
+        .practice-container {
+            text-align: center;
+            padding: 50px 20px; 
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .practice-icon {
+            font-size: 80px; 
+            margin-bottom: 25px;
+            color: var(--primary-color);
+        }
+
+        .practice-heading {
+            font-size: 2.2em; 
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .practice-text {
+            font-size: 1.05em; 
+            margin-bottom: 30px;
+            line-height: 1.7; 
+            text-align: left; 
+            color: var(--text-color);
+        }
+
+        .practice-text ul {
+            list-style-type: disc; 
+            margin-left: 25px; 
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .practice-text li {
+            margin-bottom: 8px;
+        }
+        .practice-text h3 { /* Style for subheadings within practice text */
+            color: var(--secondary-color);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 3px;
+        }
+
+
+        .return-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .return-button:hover {
+            background-color: var(--secondary-color);
+        }
+    </style>
+    <link rel="stylesheet" href="mini-fretboard.css">
+    <style>
+        .pd { text-align: left; margin: 0 0 30px; padding: 16px; border: 2px solid var(--accent-color); border-radius: 8px; background: var(--bg-color); }
+        .pd-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .pd-head h2 { margin: 0; color: var(--primary-color); }
+        .pd button { padding: 7px 14px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); cursor: pointer; }
+        .pd-head button { background: var(--accent-color); color: #fff; border-color: transparent; font-weight: bold; }
+        .pd-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
+        .pd-tools input { width: 64px; padding: 5px; }
+        .pd-grow { flex: 1; }
+        #pd-time { font-variant-numeric: tabular-nums; font-weight: bold; }
+    </style>
+    <link rel="stylesheet" href="site.css">
+    <script src="site.js" defer></script>
+</head>
+<body>
+    <header class="top-header">
+        <div class="top-header-content">
+            <h1 class="main-title" style="margin-right: 15px;">Scales Thesaurus</h1>
+            <nav class="header-nav">
+                <a href="home.html" class="header-link">Home</a>
+                <a href="scales.html" class="header-link">Scales</a>
+                <a href="chords.html" class="header-link">Chords</a>
+                <a href="intervals.html" class="header-link">Intervals</a>
+                <a href="data.html" class="header-link">Data</a>
+                <a href="lessons.html" class="header-link">Lessons</a>
+                <a href="about.html" class="header-link">About</a>
+            </nav>
+            <div class="sidebar-toggle-container">
+                <button id="sidebar-toggle" aria-expanded="false" title="Back to Neck Diagram Explorer" onclick="window.location.href='fretboard.html'">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="sr-only">Go to App</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="practice-container">
+        <h1 class="practice-heading">Practice Room</h1>
+        <section class="pd">
+            <div class="pd-head"><h2 id="pd-title"></h2><button type="button" id="pd-new">New drill</button></div>
+            <div id="pd-fb"></div>
+            <div class="pd-tools">
+                <label>BPM <input type="number" id="pd-bpm" value="80" min="30" max="260" step="5"></label>
+                <button type="button" id="pd-metro">♩ Metronome</button>
+                <span class="pd-grow"></span>
+                <span id="pd-time">0:00</span>
+                <button type="button" id="pd-timer">⏱ Start session</button>
+            </div>
+        </section>
+        <div class="practice-text">
+            <p>Welcome to the Practice Room! This space is dedicated to helping you transform music theory knowledge into practical skill. Effective practice is key to musical growth, and this guide provides tips and strategies to make the most of your time.</p>
+
+            <h3>Principles of Effective Practice</h3>
+            <ul>
+                <li><strong>Consistency is Key:</strong> Short, regular practice sessions (e.g., 20-30 minutes daily) are often more effective than infrequent long sessions.</li>
+                <li><strong>Focused Practice:</strong> Identify specific areas you want to improve and concentrate on them. This is also known as deliberate practice.</li>
+                <li><strong>Set Clear Goals:</strong> Know what you want to achieve in each session (e.g., "memorize the C Major scale in 3 positions," "play the ii-V-I progression cleanly at 100bpm").</li>
+                <li><strong>Use a Metronome:</strong> Develop your sense of timing and rhythm by practicing scales, chords, and exercises with a metronome. Start slow and gradually increase the tempo.</li>
+                <li><strong>Slow Practice:</strong> Playing slowly allows your brain and muscles to learn patterns accurately. Speed will come naturally once accuracy is established.</li>
+                <li><strong>Record Yourself:</strong> Hearing yourself play can reveal areas for improvement that you might not notice while playing.</li>
+                <li><strong>Break Down Difficulties:</strong> If a passage or concept is challenging, break it into smaller, manageable parts. Master each part before combining them.</li>
+                <li><strong>Variety:</strong> Mix up your practice routine to keep things engaging. Include technical exercises, ear training, theory application, and playing music you enjoy.</li>
+                <li><strong>Mindful Repetition:</strong> Don't just repeat mindlessly. Actively listen and analyze each repetition, making small adjustments to improve.</li>
+                <li><strong>Patience and Persistence:</strong> Musical progress takes time and effort. Celebrate small victories and don't get discouraged by challenges.</li>
+            </ul>
+
+            <h3>Using the Scales Thesaurus for Practice</h3>
+            <p>The Scales Thesaurus offers several features to enhance your practice:</p>
+            <ul>
+                <li><strong>Neck Diagram Explorer:</strong> Actively visualize scales, chords, and intervals. Experiment with different keys, tunings, and display modes to deepen your understanding of how patterns shift and relate.</li>
+                <li><strong>Pattern Playback:</strong> Use the "Play Pattern" feature to hear how scales and chords sound. This helps connect the visual diagram with the auditory experience.</li>
+                <li><strong>Melodic Patterns:</strong> The "Melodic Patterns" section in the sidebar allows you to apply various sequences (e.g., "1 2 3", "1 3 5") to the currently selected scale. This is excellent for:
+                    <ul>
+                        <li>Improving finger dexterity and coordination.</li>
+                        <li>Developing your ear for melodic contours within a scale.</li>
+                        <li>Understanding how to create melodic lines from scale degrees.</li>
+                    </ul>
+                </li>
+                <li><strong>Slideshows:</strong> Create slideshows of specific diagrams (scales, chords, fretboard positions) for focused memorization or quick review sessions.</li>
+                <li><strong>Instrument Setup:</strong> Configure the fretboard to match your specific instrument (number of strings, tuning, fret range) for relevant practice.</li>
+                <li><strong>Theory Info Panel:</strong> Constantly refer to the theory information to reinforce your understanding of the patterns you are practicing.</li>
+                <li><strong>Exploring Different Keys:</strong> Practice scales and chords in all 12 keys to become comfortable across the entire musical spectrum.</li>
+            </ul>
+
+            <h3>Example Practice Routine Ideas</h3>
+            <p>Here are some ways you can structure your practice sessions:</p>
+            <ul>
+                <li><strong>Technical Warm-up (10-15 mins):</strong>
+                    <ul>
+                        <li>Pick a scale (e.g., C Major).</li>
+                        <li>Play it slowly up and down the fretboard using the "1 (each note)" melodic pattern. Focus on clean articulation and even timing (use a metronome!).</li>
+                        <li>Try a different melodic pattern like "1 2 3" or "1 3 5" with the same scale.</li>
+                    </ul>
+                </li>
+                <li><strong>Scale/Chord Study (15-20 mins):</strong>
+                    <ul>
+                        <li>Choose a new scale or chord type from the Thesaurus.</li>
+                        <li>Visualize its pattern on the fretboard in different positions.</li>
+                        <li>Analyze its formula and understand its characteristic intervals.</li>
+                        <li>Use the "Play Pattern" feature to hear it.</li>
+                        <li>Try to find familiar songs that use this scale or chord.</li>
+                    </ul>
+                </li>
+                <li><strong>Ear Training (10 mins):</strong>
+                    <ul>
+                        <li>Use the "Play Pattern" feature for intervals. Try to sing the interval before it plays, then check if you were correct.</li>
+                        <li>Listen to chords and try to identify their quality (major, minor, dominant 7th, etc.).</li>
+                    </ul>
+                </li>
+                <li><strong>Improvisation/Application (10-15 mins):</strong>
+                    <ul>
+                        <li>If you have backing tracks, choose one and select a compatible scale from the Thesaurus.</li>
+                        <li>Try improvising melodies using the notes of that scale over the backing track.</li>
+                        <li>Experiment with different melodic patterns over the track.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Remember to adapt these ideas to your current skill level and musical goals. The most important thing is to be consistent and enjoy the process of learning and improving!</p>
+        </div>
+        <a href="fretboard.html" class="return-button">Explore the Neck Diagram Explorer</a>
+    </div>
+    <script src="music-theory-data.js"></script>
+    <script src="scales-data-standard.js"></script>
+    <script src="scales-data-numeric.js"></script>
+    <script src="scales-data-advanced-1.js"></script>
+    <script src="scales-data-advanced-2.js"></script>
+    <script src="scales-data-advanced-3.js"></script>
+    <script src="scales-data-advanced-4.js"></script>
+    <script src="scales-data-advanced-5.js"></script>
+    <script src="scales-data-advanced-6.js"></script>
+    <script src="scales-data-advanced-7a.js"></script>
+    <script src="scales-data-advanced-7b.js"></script>
+    <script src="scales-data-advanced-8.js"></script>
+    <script src="scales-data-advanced-10.js"></script>
+    <script src="scales-data-advanced-11.js"></script>
+    <script src="music-theory.js"></script>
+    <script src="music-theory-logic.js"></script>
+    <script src="music-theory-chords.js"></script>
+    <script src="music-theory-descriptions.js"></script>
+    <script src="mini-fretboard.js"></script>
+    <script src="practice-app.js"></script>
+</body>
+</html>

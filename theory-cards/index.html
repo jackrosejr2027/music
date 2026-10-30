@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2efe8">
+  <link rel="icon" href="../icon-192.png">
+  <title>Theory Cards</title>
+  <link rel="stylesheet" href="../site.css">
+  <link rel="stylesheet" href="cards.css">
+  <script src="../theme-init.js"></script>
+  <script src="../site.js" defer></script>
+  <script src="../music-theory-data.js" defer></script>
+  <script src="../scales-data-standard.js" defer></script>
+  <script src="../scales-data-numeric.js" defer></script>
+  <script src="../scales-data-advanced-1.js" defer></script>
+  <script src="../scales-data-advanced-2.js" defer></script>
+  <script src="../scales-data-advanced-3.js" defer></script>
+  <script src="../scales-data-advanced-4.js" defer></script>
+  <script src="../scales-data-advanced-5.js" defer></script>
+  <script src="../scales-data-advanced-6.js" defer></script>
+  <script src="../scales-data-advanced-7a.js" defer></script>
+  <script src="../scales-data-advanced-7b.js" defer></script>
+  <script src="../scales-data-advanced-8.js" defer></script>
+  <script src="../scales-data-advanced-10.js" defer></script>
+  <script src="../scales-data-advanced-11.js" defer></script>
+  <script src="../music-theory.js" defer></script>
+  <script src="cards.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="../index.html" class="wordmark">SCALES <b>THESAURUS</b></a>
+    <nav class="header-nav" aria-label="Main navigation"></nav>
+    <div class="sidebar-toggle-container">
+      <a class="cards-app-link" href="../fretboard.html">Open Fretboard</a>
+    </div>
+  </header>
+  <main class="study" aria-label="Theory card study">
+    <div class="study-meta"><span id="card-category">FOUNDATIONS</span><span id="card-count" aria-live="polite"></span><label class="deck-filter">Deck <select id="deck-filter" aria-label="Choose card deck"><option value="all">All cards</option><option value="Foundations">Foundations</option><option value="Scales">Scales</option><option value="Chords">Chords</option><option value="Scale spellings">Scale spellings</option><option value="Chord spellings">Chord spellings</option><option value="Applied theory">Applied theory</option></select></label></div>
+    <button id="flashcard" class="flashcard" type="button" aria-label="Reveal answer">
+      <span class="card-side-label" id="side-label">PROMPT</span>
+      <span id="card-text" class="card-text"></span>
+      <span id="card-hint" class="card-hint">Tap to reveal</span>
+    </button>
+    <div class="controls">
+      <button id="previous" class="arrow" type="button" aria-label="Previous card">&#8592;</button>
+      <span id="progress" class="progress"></span>
+      <button id="next" class="arrow" type="button" aria-label="Next card">&#8594;</button>
+      <button id="favorite-card" class="favorite-card-toggle" type="button" aria-pressed="false">☆ Save card</button>
+    </div>
+    <p id="favorite-card-status" class="keyboard-hint" role="status" aria-live="polite"></p>
+    <p class="keyboard-hint">Use the arrow keys to move, Space to flip</p>
+  </main>
+</body>
+</html>

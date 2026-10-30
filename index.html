@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <title>Fretboard</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fretboard.css">
+    <link rel="stylesheet" href="effects.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <!-- Add JSZip library for ZIP file creation -->
+    <script src="vendor/jszip.min.js"></script>
+    <link rel="stylesheet" href="site.css">
+    <link rel="stylesheet" href="fretboard-page.css">
+    <link rel="stylesheet" href="app-export-package.css">
+    <link rel="stylesheet" href="fretboard-word-beta.css">
+    <link rel="stylesheet" href="fretboard-beta-preview.css">
+    <link rel="stylesheet" href="fretboard-release.css">
+    <link rel="stylesheet" href="entry-screen.css">
+    <link rel="stylesheet" href="recreate-prompt.css">
+    <link rel="stylesheet" href="compact-instrument.css">
+    <link rel="stylesheet" href="header-layout.css">
+    <link rel="stylesheet" href="revamp.css">
+    <link rel="stylesheet" href="export-studio-fullscreen.css">
+    <link rel="stylesheet" href="content-section.css">
+    <link rel="stylesheet" href="diagram-layers.css">
+    <link rel="stylesheet" href="watermark-section.css">
+    <link rel="stylesheet" href="packaging-section.css">
+    <link rel="stylesheet" href="table-preview.css">
+    <link rel="stylesheet" href="html-reader-section.css">
+    <script src="site.js" defer></script>
+</head>
+<body class="square-ui awaiting-entry">
+    <main class="entry-screen" id="entry-screen">
+        <button class="entry-button" id="enter-app" type="button">Enter</button>
+    </main>
+    <div class="app-container" inert>
+        <script src="entry-screen.js"></script>
+        <aside class="sidebar">
+            <!-- removed static sidebar sections content (moved to app-ui-sidebar.js) -->
+        </aside>
+        
+        <main class="main-content">
+            <header class="top-header">
+                <div class="top-header-content">
+                    <!-- Reset button removed from absolute position; moved into header content -->
+                    <h1 class="sr-only">Neck Diagram Explorer</h1>
+                    <button id="reset-settings" class="header-tool-button reset-settings-button" type="button" title="Reset all settings" aria-label="Reset settings">
+                        ⟳
+                    </button>
+                    <nav class="header-nav" data-consolidated="true">
+                        <a href="home.html" class="header-link">Home</a>
+                        <a href="scales.html" class="header-link">Scales</a>
+                        <a href="chords.html" class="header-link">Chords</a>
+                        <a href="intervals.html" class="header-link">Intervals</a>
+                        <a href="data.html" class="header-link">Data</a>
+                        <a href="lessons.html" class="header-link">Lessons</a>
+                        <a href="about.html" class="header-link">About</a>
+                    </nav>
+                    <div class="sidebar-toggle-container" style="display:flex; gap:8px; align-items:center;">
+                        <button id="header-play-pattern" type="button" class="header-play-pattern" title="Play selected pattern" aria-label="Play selected pattern">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M7 4.5a1 1 0 0 1 1.5-.86l11 7.5a1 1 0 0 1 0 1.72l-11 7.5A1 1 0 0 1 7 19.5z"/></svg>
+                        </button>
+                        <button id="header-stop-pattern" type="button" class="header-stop-pattern" title="Stop fretboard playback" aria-label="Stop fretboard playback" disabled>
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+                        </button>
+                        <button id="sidebar-toggle" aria-expanded="false">
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                            <span class="sr-only">Toggle Sidebar</span>
+                        </button>
+                        <button id="toggle-bottom" class="header-tool-button controls-toggle" type="button" title="Show bottom controls" aria-label="Show bottom controls" aria-pressed="false">
+                            Controls
+                        </button>
+                        <button id="fretboard-beta-open" class="header-tool-button" type="button" aria-haspopup="dialog" aria-controls="fretboard-word-beta" title="Open Export Studio">Export Studio</button>
+                    </div>
+                </div>
+            </header>
+            
+            <section class="fretboard-container" aria-label="Fretboard diagrams">
+                <div id="fretboard" role="region" aria-label="Interactive fretboard, strings ordered lowest to highest" tabindex="0"></div>
+                <div id="current-pattern-display" class="current-pattern-display" aria-label="Selected diagram actions"></div>
+            </section>
+            
+            <div class="slideshow-container">
+                <div id="slideshow-items"></div>
+            </div>
+            
+            <div class="pattern-generator">
+                <div id="generated-patterns"></div>
+            </div>
+            
+
+
+            <!-- removed footers controls-bottom and export-footer -> injected by app-ui-bottom.js -->
+        </main>
+    </div>
+    
+    <dialog id="fretboard-word-beta" aria-labelledby="beta-title">
+        <div class="beta-shell">
+            <header class="beta-header">
+                <div><h2 id="beta-title">Export Studio</h2></div>
+                <button id="beta-close" class="beta-close" type="button">Close</button>
+            </header>
+            <div class="beta-body">
+                <details class="beta-main beta-card"><summary>Patterns <span id="beta-selection-count" class="beta-selection-count">0 selected</span></summary><div class="beta-card-body">
+                    <div class="beta-tools">
+                        <button id="beta-check-all" type="button">Check shown patterns</button>
+                        <button id="beta-clear-all" type="button">Uncheck all</button>
+                        <input id="beta-filter" type="search" placeholder="Find a scale, interval, or chord" aria-label="Filter patterns">
+                    </div>
+                    <details class="beta-card beta-filter-card"><summary>Filter by Intervals</summary><div class="beta-card-body">
+                        <div id="beta-interval-filter" class="beta-interval-filter"><label><input type="checkbox" value="0">R</label><label><input type="checkbox" value="1">b2</label><label><input type="checkbox" value="2">2</label><label><input type="checkbox" value="3">b3</label><label><input type="checkbox" value="4">3</label><label><input type="checkbox" value="5">4</label><label><input type="checkbox" value="6">b5</label><label><input type="checkbox" value="7">5</label><label><input type="checkbox" value="8">b6</label><label><input type="checkbox" value="9">6</label><label><input type="checkbox" value="10">b7</label><label><input type="checkbox" value="11">7</label></div>
+                        <div class="beta-filter-tools"><label for="beta-interval-mode">Match<select id="beta-interval-mode"><option value="any">Any checked interval</option><option value="all">All checked intervals</option><option value="exact">Exact pitch-class set</option></select></label><button id="beta-filter-reset" type="button">Clear search filters</button></div>
+                        <p class="beta-config-note">Any checked interval shows items with at least one checked interval. R is root. Enharmonic and compound intervals match the same pitch class. Interval entries match their target; chords and scales match their interval sets. Filtering never unchecks your selections.</p>
+                    </div></details>
+                    <div id="beta-patterns" class="beta-patterns"></div>
+                </div></details>
+                <aside class="beta-side">
+                    <details class="beta-card"><summary>Keys <span id="beta-key-count" class="beta-selection-count">0 selected</span></summary><div class="beta-card-body">
+                        <div class="beta-key-tools">
+                            <button id="beta-keys-current" type="button">Current key</button>
+                            <button id="beta-keys-all" type="button">All keys</button>
+                            <button id="beta-keys-clear" type="button">Clear</button>
+                        </div>
+                        <div id="beta-keys" class="beta-key-list"></div>
+                    </div></details>
+                </aside>
+                <div class="beta-options">
+                    <details class="beta-card beta-order-card"><summary>Selection &amp; Export Order</summary><div class="beta-card-body">
+                        <div class="beta-option-grid"><label for="beta-category-order">Category order<select id="beta-category-order"><option value="interval,chord,scale">Intervals, Chords, Scales</option><option value="interval,scale,chord">Intervals, Scales, Chords</option><option value="chord,interval,scale">Chords, Intervals, Scales</option><option value="chord,scale,interval">Chords, Scales, Intervals</option><option value="scale,interval,chord">Scales, Intervals, Chords</option><option value="scale,chord,interval">Scales, Chords, Intervals</option></select></label><label for="beta-pattern-order">Order within each category<select id="beta-pattern-order"><option value="catalog">Common to less common</option><option value="name-asc">Name A to Z</option><option value="name-desc">Name Z to A</option><option value="interval-count">Fewest pitch classes first</option><option value="custom">Custom (use Up / Down)</option></select></label></div>
+                        <input id="beta-custom-order" type="hidden" value="[]">
+                        <div id="beta-order-list" class="beta-order-list"></div>
+                        <p class="beta-config-note">The same order is used in the pattern lists and every export. Up / Down sets a custom order within a category; use Category order to move categories. Order is saved with configurations.</p>
+                    </div></details>
+                    <details class="beta-card" aria-labelledby="beta-page-heading"><summary id="beta-page-heading">Page &amp; Diagram</summary><div class="beta-card-body">
+                        <div class="beta-option-grid">
+                            <label for="beta-columns">Row layout<select id="beta-columns"><option value="1">One diagram per row</option><option value="2">Side by side (2 columns)</option><option value="0">Automatic columns</option></select></label>
+                            <label for="beta-orientation">Orientation<select id="beta-orientation"><option value="landscape">Landscape</option><option value="portrait">Portrait</option></select></label>
+                            <label for="beta-per-page">Maximum diagrams per page<select id="beta-per-page"><option value="0">As many as fit</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option></select></label>
+                            <label for="beta-paper">Paper size<select id="beta-paper"><option value="a4">A4</option><option value="a3">A3</option><option value="letter">US Letter</option><option value="legal">US Legal</option><option value="custom">Custom dimensions</option></select></label>
+                            <label for="beta-image-width">Width (mm)<input id="beta-image-width" type="number" min="10" max="400" step="any" placeholder="Auto"></label>
+                            <label for="beta-image-height">Height (mm)<input id="beta-image-height" type="number" min="10" max="400" step="any" placeholder="Auto"></label>
+                            <label for="beta-start-fret">Start fret<input id="beta-start-fret" type="number" min="0" max="24" step="1"></label>
+                            <label for="beta-end-fret">End fret<input id="beta-end-fret" type="number" min="0" max="24" step="1"></label>
+                            <label class="beta-option-wide" for="beta-tuning-preset">Tuning preset<select id="beta-tuning-preset"><option value="">Current / custom tuning</option><option value="standard">Standard guitar</option><option value="dropD">Drop D</option><option value="bass">4-string bass</option><option value="ukulele">Ukulele</option><option value="seven">7-string guitar</option><option value="openG">Open G</option><option value="dadgad">DADGAD</option></select></label>
+                            <label class="beta-option-wide" for="beta-tuning">Tuning (low to high)<input id="beta-tuning" type="text" placeholder="E A D G B E" spellcheck="false"></label>
+                            <label for="beta-margin">Page margins (mm)<input id="beta-margin" type="number" value="12" min="5" max="35" step="any"></label>
+                            <label for="beta-gap-x">Column gap (mm)<input id="beta-gap-x" type="number" value="4" min="0" max="20" step="any"></label>
+                            <label for="beta-gap-y">Row gap (mm)<input id="beta-gap-y" type="number" value="4" min="0" max="20" step="any"></label>
+                            <label for="beta-align-x">Image alignment<select id="beta-align-x"><option value="center">Center</option><option value="left">Left</option><option value="right">Right</option></select></label>
+                            <label for="beta-align-y">Vertical placement<select id="beta-align-y"><option value="top">Top</option><option value="center">Center</option><option value="bottom">Bottom</option></select></label>
+                            <label for="beta-background">Image background<input id="beta-background" type="color" value="#ffffff"></label>
+                            <label for="beta-dpi">Image resolution (DPI)<input id="beta-dpi" type="number" value="200" min="72" max="300" step="any"></label>
+                            <label for="beta-jpeg-quality">JPG quality (%)<input id="beta-jpeg-quality" type="number" value="92" min="40" max="100" step="any"></label>
+                            <label class="beta-check-option" for="beta-category-break"><input id="beta-category-break" type="checkbox"> New page per category</label>
+                                                    <label for="beta-custom-width">Custom paper short edge (mm)<input id="beta-custom-width" type="number" value="210" min="100" max="500" step="any"></label>
+                            <label for="beta-custom-height">Custom paper long edge (mm)<input id="beta-custom-height" type="number" value="297" min="100" max="500" step="any"></label>
+                            <label for="beta-diagram-padding">Diagram padding (%)<input id="beta-diagram-padding" type="number" value="0" min="0" max="20" step="any"></label>
+                            <label for="beta-border-style">Diagram border<select id="beta-border-style"><option value="none">None</option><option value="solid">Solid</option><option value="dashed">Dashed</option></select></label>
+                            <label for="beta-border-color">Border color<input id="beta-border-color" type="color" value="#20221f"></label>
+                            <label for="beta-border-width">Border thickness (mm)<input id="beta-border-width" type="number" value="0.3" min="0.1" max="3" step="any"></label>
+                            <label class="beta-check-option" for="beta-grayscale"><input id="beta-grayscale" type="checkbox">Grayscale diagrams</label>
+                            <label class="beta-check-option" for="beta-transparent"><input id="beta-transparent" type="checkbox">Transparent PNG / SVG / WebP background</label>
+                            <label class="beta-check-option" for="beta-key-break"><input id="beta-key-break" type="checkbox">New page per key</label>
+                            <label for="beta-display-mode">Diagram labels<select id="beta-display-mode"><option value="current">Current app labels</option><option value="notes">Note names</option><option value="intervals">Intervals</option><option value="roman">Roman numerals</option><option value="solfege">Solfege</option><option value="none">No labels</option></select></label>
+                                                    <label for="beta-fret-number-placement">Fret number placement<select id="beta-fret-number-placement"><option value="current">Current</option><option value="above">Above</option><option value="below">Below</option></select></label>
+                            <label for="beta-fret-number-size">Fret number font size<input id="beta-fret-number-size" type="number" value="" min="6" max="32" step="any" placeholder="Current"></label>
+                            <label for="beta-marker-size">Note marker size<input id="beta-marker-size" type="number" value="" min="4" max="30" step="any" placeholder="Current"></label>
+                            <label for="beta-marker-font-size">Note label font size<input id="beta-marker-font-size" type="number" value="" min="5" max="24" step="any" placeholder="Current"></label>
+                            <label for="beta-string-thickness">String thickness<input id="beta-string-thickness" type="number" value="" min="0.25" max="6" step="any" placeholder="Current"></label>
+                            <label for="beta-fret-thickness">Fret thickness<input id="beta-fret-thickness" type="number" value="" min="0.25" max="6" step="any" placeholder="Current"></label>
+                            <label for="beta-diagram-opacity">Diagram opacity<input id="beta-diagram-opacity" type="number" value="1" min="0.1" max="1" step="any"></label>
+                            <label for="beta-marker-shape">Note marker shape<select id="beta-marker-shape"><option value="current">Current</option><option value="circle">Circle</option><option value="square">Square</option><option value="diamond">Diamond</option><option value="triangle">Triangle</option><option value="hexagon">Hexagon</option><option value="star">Star</option></select></label>
+                            <label for="beta-fret-number-position">Fret number alignment<select id="beta-fret-number-position"><option value="current">Current</option><option value="left">Left</option><option value="center">Center</option><option value="right">Right</option></select></label>
+                            <label class="beta-check-option" for="beta-rotate-diagram"><input id="beta-rotate-diagram" type="checkbox">Rotate diagram 180 degrees</label>
+                        </div>
+                        <p class="beta-config-note">Blank image size fills the row width. Set one dimension to preserve proportions, or both to contain the diagram in a box. Oversized images shrink to fit.</p>
+                        <p class="beta-config-note">Word, combined PDF, HTML and paged image collections share the same page layout. Blank diagram dimensions fill the available row width while preserving proportions. Individual PDFs use one column. Image archives contain individual diagrams; catalog formats contain text and data, not images.</p>
+                    </div></details>
+                    <details class="beta-card" aria-labelledby="beta-text-heading"><summary id="beta-text-heading">Export Text</summary><div class="beta-card-body">
+                        <div class="beta-option-grid">
+                            <label class="beta-option-wide" for="beta-document-title">Document title<textarea id="beta-document-title" rows="2">Fretboard Pattern Collection</textarea></label>
+                            <label for="beta-subtitle">Subtitle<textarea id="beta-subtitle" rows="2"></textarea></label>
+                            <label for="beta-author">Author / byline<textarea id="beta-author" rows="2"></textarea></label>
+                            <label for="beta-introduction">Introduction<textarea id="beta-introduction" rows="2"></textarea></label>
+                            <label class="beta-option-wide" for="beta-category-text">Category heading<textarea id="beta-category-text" rows="2">{category}</textarea></label>
+                            <label for="beta-category-note">Category note<textarea id="beta-category-note" rows="2"></textarea></label>
+                            <label class="beta-option-wide" for="beta-key-text">Key heading<textarea id="beta-key-text" rows="2">Key of {key}</textarea></label>
+                            <label for="beta-key-note">Key note<textarea id="beta-key-note" rows="2"></textarea></label>
+                            <label class="beta-option-wide" for="beta-caption-text">Diagram caption<textarea id="beta-caption-text" rows="2">{key} · {name}</textarea></label>
+                            <label for="beta-page-header">Page header<textarea id="beta-page-header" rows="2"></textarea></label>
+                            <label for="beta-page-footer">Page footer<textarea id="beta-page-footer" rows="2"></textarea></label>
+                            <label for="beta-page-numbers">Page numbering<select id="beta-page-numbers"><option value="none">None</option><option value="number">Page number</option><option value="total">Page X of Y</option></select></label>
+                            <label for="beta-text-font">Text font<select id="beta-text-font"><option value="Arial">Arial / Helvetica</option><option value="Times New Roman">Times / Serif</option><option value="Courier New">Courier / Mono</option></select></label>
+                            <label for="beta-text-color">Text color<input id="beta-text-color" type="color" value="#20221f"></label>
+                                                    <label for="beta-title-size">Title size (pt)<input id="beta-title-size" type="number" value="17" min="8" max="40" step="any"></label>
+                            <label for="beta-heading-size">Heading size (pt)<input id="beta-heading-size" type="number" value="14" min="8" max="30" step="any"></label>
+                            <label for="beta-caption-size">Caption size (pt)<input id="beta-caption-size" type="number" value="8" min="6" max="20" step="any"></label>
+                            <label for="beta-body-size">Body size (pt)<input id="beta-body-size" type="number" value="9" min="6" max="24" step="any"></label>
+                            <label for="beta-text-align">Text alignment<select id="beta-text-align"><option value="left">Left</option><option value="center">Center</option><option value="right">Right</option></select></label>
+                            <label for="beta-caption-position">Caption position<select id="beta-caption-position"><option value="below">Below diagram</option><option value="above">Above diagram</option></select></label>
+                            <label class="beta-check-option" for="beta-caption-bold"><input id="beta-caption-bold" type="checkbox">Bold captions</label>
+                            <label class="beta-check-option" for="beta-body-italic"><input id="beta-body-italic" type="checkbox">Italic body text</label>
+                            <label class="beta-check-option" for="beta-heading-numbers"><input id="beta-heading-numbers" type="checkbox">Number category and key headings</label>
+                            <label class="beta-check-option" for="beta-diagram-numbers"><input id="beta-diagram-numbers" type="checkbox">Number diagram captions</label>
+                                                    <label for="beta-caption-color">Caption color (hex)<input id="beta-caption-color" type="text" maxlength="7" placeholder="Inherit text color" spellcheck="false"></label>
+                            <label for="beta-heading-color">Heading color (hex)<input id="beta-heading-color" type="text" maxlength="7" placeholder="Inherit text color" spellcheck="false"></label>
+                            <label for="beta-title-color">Title color (hex)<input id="beta-title-color" type="text" maxlength="7" placeholder="Inherit text color" spellcheck="false"></label>
+                            <label for="beta-body-color">Body color (hex)<input id="beta-body-color" type="text" maxlength="7" placeholder="Inherit text color" spellcheck="false"></label>
+                            <label class="beta-check-option" for="beta-uppercase-headings"><input id="beta-uppercase-headings" type="checkbox">Uppercase category / key headings</label>
+                            <label class="beta-check-option" for="beta-uppercase-captions"><input id="beta-uppercase-captions" type="checkbox">Uppercase captions</label>
+                            <label for="beta-date-text">Date line<textarea id="beta-date-text" rows="2" placeholder="Date: {date}"></textarea></label>
+                            <label for="beta-tuning-text">Tuning line<textarea id="beta-tuning-text" rows="2" placeholder="Tuning: {tuning}"></textarea></label>
+                            <label for="beta-range-text">Fret range line<textarea id="beta-range-text" rows="2" placeholder="Frets {startFret} to {endFret}"></textarea></label>
+                            <label for="beta-line-spacing">Line spacing multiplier<input id="beta-line-spacing" type="number" value="1" min="1" max="2" step="any"></label>
+                        </div>
+                        <div id="beta-text-token-help" class="beta-config-note beta-text-token-help">Blank fields are omitted. Use <code>{category}</code>, <code>{key}</code>, <code>{name}</code>, <code>{tuning}</code>, <code>{startFret}</code>, <code>{endFret}</code>, or <code>{date}</code> in text. Page header and footer also support <code>{page}</code> and <code>{pages}</code>. Title, subtitle, author, and introduction are included in DOCX and combined PDF.<button type="button" data-beta-settings="preview">Open Print Preview</button></div>
+                    </div></details>
+                    <details class="beta-card beta-config-card" aria-labelledby="beta-configuration-heading"><summary id="beta-configuration-heading">Export Configurations <span id="beta-config-count">0 / 100</span></summary><div class="beta-card-body">
+                        <div class="beta-config-tools">
+                            <input id="beta-config-name" type="text" maxlength="60" placeholder="Configuration name" aria-label="Configuration name">
+                            <button id="beta-config-save" type="button">Save new</button>
+                            <select id="beta-config-select" aria-label="Saved configurations"></select>
+                            <button id="beta-config-load" type="button">Load</button>
+                            <button id="beta-config-delete" type="button">Delete selected</button>
+                        </div>
+                        <div class="beta-config-actions">
+                            <button id="beta-config-update" type="button">Update saved</button>
+                            <button id="beta-config-duplicate" type="button">Duplicate</button>
+                            <button id="beta-config-rename" type="button">Rename from name field</button>
+                            <button id="beta-config-download" type="button">Download selected JSON</button>
+                            <button id="beta-config-import" type="button">Import JSON</button>
+                            <button id="beta-config-backup" type="button">Back up all</button>
+                            <button id="beta-config-reset" type="button">Reset export options</button>
+                            <button id="beta-config-restore" type="button">Restore last loaded</button>
+                            <button id="beta-config-clear" type="button">Clear all saved</button>
+                            <label><input id="beta-config-default" type="checkbox"> Load selected on open</label>
+                            <input id="beta-config-file" type="file" accept=".json,application/json" hidden>
+                        </div>
+                        <p class="beta-config-note">Save patterns, keys, and every export option together. Existing selection-only configurations still load without changing your options. Stored on this device; use JSON to transfer or back up.</p>
+                    </div></details>
+                </div>
+            </div>
+            <footer class="beta-footer">
+                <p id="beta-status" class="beta-status" role="status"><span id="beta-summary">0 patterns · 0 keys · 0 diagrams</span><span id="beta-message"></span></p>
+                <div class="beta-export-actions">
+                    <button id="beta-cancel" class="beta-cancel" type="button">Stop export</button>
+                    <label class="beta-format-label" for="beta-export-format">Export format<select id="beta-export-format"><option value="docx">Word document (DOCX)</option><option value="pdf-zip">Individual PDFs (ZIP)</option><option value="pdf-single">Combined PDF</option><option value="jpg-zip">JPG diagrams (ZIP)</option><option value="png-zip">PNG diagrams (ZIP)</option><option value="svg-zip">SVG diagrams (ZIP)</option><option value="webp-zip">WebP diagrams (ZIP)</option><option value="html">Standalone HTML collection</option><option value="markdown-zip">Markdown + PNGs (ZIP)</option><option value="csv">CSV catalog</option><option value="json">JSON catalog + settings</option><option value="tsv">TSV catalog</option><option value="txt">Plain text catalog</option><option value="svg-pages-zip">Paged SVG collection (ZIP)</option><option value="xlsx">Excel workbook catalog (XLSX)</option><option value="ods">OpenDocument spreadsheet catalog (ODS)</option><option value="xls">Excel 97-2003 catalog (XLS)</option><option value="rtf">Rich Text catalog (RTF)</option><option value="word-xml">Word 2003 XML catalog</option><option value="xml">XML catalog</option><option value="ndjson">Newline-delimited JSON catalog</option><option value="yaml">YAML catalog</option><option value="png-pages-zip">Paged PNG collection (ZIP)</option><option value="jpg-pages-zip">Paged JPG collection (ZIP)</option><option value="epub">Fixed-layout ebook (EPUB)</option><option value="djvu">Wavelet page document (DjVu)</option><option value="odt">Page-image document (ODT)</option><option value="odp">Page-image presentation (ODP)</option><option value="pptx">PowerPoint page-image slides (PPTX)</option><option value="cbz">Comic page collection (CBZ)</option><option value="tar">PNG page collection (TAR)</option><option value="bmp-pages-zip">BMP pages (ZIP)</option><option value="tiff">Multipage RGB TIFF</option><option value="pnm-pages-zip">PNM/PPM pages (ZIP)</option><option value="xhtml">XML-safe XHTML collection</option><option value="latex-zip">LaTeX source + PNGs (ZIP)</option><option value="asciidoc-zip">AsciiDoc source + PNGs (ZIP)</option><option value="org-zip">Org source + PNGs (ZIP)</option><option value="rst-zip">reStructuredText + PNGs (ZIP)</option><option value="dbf">dBASE table (DBF)</option><option value="dif">Data Interchange table (DIF)</option></select></label>
+                    <button id="beta-export" type="button" disabled>Export</button>
+                </div>
+            </footer>
+        </div>
+    </dialog>
+    <script src="vendor/tone.js"></script>
+    <script src="vendor/html2canvas.min.js"></script>
+    <script src="vendor/docx.js"></script>
+    <script src="vendor/xlsx.full.min.js"></script>
+    <script src="themes-data.js"></script>
+    <script src="themes-data-wood.js"></script>
+    <script src="themes-data-exotic.js"></script>
+    <script src="themes-data-mono.js"></script>
+    <script src="themes-data-retro.js"></script>
+    <script src="music-theory-data.js"></script>
+    <script src="scales-data-standard.js"></script>
+    <script src="scales-data-numeric.js"></script>
+    <script src="scales-data-advanced-1.js"></script>
+    <script src="scales-data-advanced-2.js"></script>
+    <script src="scales-data-advanced-3.js"></script>
+    <script src="scales-data-advanced-4.js"></script>
+    <script src="scales-data-advanced-5.js"></script>
+    <script src="scales-data-advanced-6.js"></script>
+    <script src="scales-data-advanced-7a.js"></script>
+    <script src="scales-data-advanced-7b.js"></script>
+    <script src="scales-data-advanced-8.js"></script>
+    <script src="scales-data-advanced-10.js"></script>
+    <script src="scales-data-advanced-11.js"></script>
+    <script src="music-theory.js"></script>
+    <script src="daw-midi.js"></script>
+    <script src="music-theory-logic.js"></script>
+    <script src="music-theory-chords.js"></script>
+    <script src="music-theory-descriptions.js"></script>
+    <script src="fretboard-styles.js"></script>
+    <script src="fretboard-styles-extended.js"></script>
+    <script src="fretboard-marker.js"></script>
+    <script src="fretboard-number-shapes.js"></script>
+    <script src="fretboard-capo-styles.js"></script>
+    <script src="fretboard-effects.js"></script>
+    <script src="instrument-presets.js"></script>
+    <script src="themes-data-extra.js"></script>
+    <script src="themes-data-colors.js"></script>
+    <script src="themes-data-nature.js"></script>
+    <script src="themes-data-misc.js"></script>
+    <script src="themes-data-extended.js"></script>
+    <script src="exporter.js"></script>
+    <script src="exporter-scales.js"></script>
+    <script src="exporter-chords.js"></script>
+    <script src="exporter-intervals.js"></script>
+    <script src="exporter-gamuts.js"></script>
+    <script src="exporter-bulk.js"></script>
+    <script src="exporter-word-v1.js"></script>
+    <script src="exporter-word-v2.js"></script>
+    <script src="exporter-word-v3.js"></script>
+    <script src="exporter-word-v4.js"></script>
+    <script src="exporter-word-v5.js"></script>
+    <script src="exporter-word-v6.js"></script>
+    <script src="exporter-word-extended.js"></script>
+    <script src="exporter-word-custom.js"></script>
+    <script src="exporter-word-patterns.js"></script>
+    <script src="exporter-word-chords-cof.js"></script>
+    <script src="exporter-word-intervals-circle.js"></script>
+    <script src="exporter-word-gamuts-cof.js"></script>
+    <script src="exporter-info-pages.js"></script>
+    <script src="exporter-cof.js"></script>
+    <script src="vendor/jspdf.umd.min.js"></script>
+    <script src="exporter-pdf.js"></script>
+    <script src="exporter-pdf-diagrams.js"></script>
+    <script src="fretboard.js"></script>
+    <script src="fretboard-draw.js"></script>
+    <script src="fretboard-draw-grid.js"></script>
+    <script src="fretboard-draw-notes.js"></script>
+    <script src="fretboard-menu.js"></script>
+    <script src="fretboard-menu-multi.js"></script>
+    <script src="piano.js"></script>
+    <!-- removed inline theme handler script -> moved to theme-init.js -->
+    <script src="diagnostics-tests.js"></script>
+    <script src="diagnostics-tests-ui.js"></script>
+    <script src="diagnostics-tests-logic.js"></script>
+    <script src="diagnostics-tests-release.js"></script>
+    <script src="diagnostics-tests-mobile.js"></script>
+    <script src="diagnostics.js"></script>
+    <!-- Core App Engine and Extensions -->
+    <script src="app.js"></script>
+    <script src="app-events-main.js"></script>
+    <script src="app-events-core.js"></script>
+    <script src="app-events-playback.js"></script>
+    <script src="app-events-export-basic.js"></script>
+    <script src="app-events-export-batch.js"></script>
+    <script src="app-events-export-custom.js"></script>
+    <script src="app-events-export.js"></script>
+    <script src="app-state.js"></script>
+    <script src="app-lessons-data.js"></script>
+    <script src="app-ui-layout.js"></script>
+    <script src="app-playback.js"></script>
+    <script src="app-playback-cof.js"></script>
+    <script src="app-settings.js"></script>
+    <script src="app-media.js"></script>
+    <script src="app-ui.js"></script>
+    <script src="app-ui-bottom-controls.js"></script>
+    <script src="app-ui-bottom-instrument.js"></script>
+    <script src="app-ui-bottom-appearance.js"></script>
+    <script src="app-ui-bottom-export.js"></script>
+    <script src="app-ui-bottom.js"></script>
+    <script src="app-ui-appearance.js"></script>
+    <script src="app-instrument.js"></script>
+    <script src="app-instrument-multi.js"></script>
+    <script src="app-instrument-ui.js"></script>
+    <script src="app-instrument-tuning.js"></script>
+    <script src="app-instrument-fretspan.js"></script>
+    <script src="app-theory-info.js"></script>
+    <script src="app-theory-renderers.js"></script>
+    <script src="app-theory-panel.js"></script>
+    <script src="app-theory-lessons.js"></script>
+    <script src="app-export.js"></script>
+    <script src="app-ui-pattern-pill.js"></script>
+    <script src="app-ui-pattern-selectors.js"></script>
+    <script src="app-ui-pattern-actions.js"></script>
+    <script src="pattern-generator.js"></script>
+    <script src="pattern-generator-export.js"></script>
+    <script src="slideshow.js"></script>
+    <script src="slideshow-player.js"></script>
+    <script src="slideshow-cycle.js"></script>
+    <script src="slideshow-csv.js"></script>
+    <script src="melodic-patterns-data.js"></script>
+    <script src="melodic-patterns.js"></script>
+    <script src="melodic-patterns-ui.js"></script>
+    <script src="melodic-patterns-player.js"></script>
+    <script src="melodic-patterns-midi.js"></script>
+
+    <!-- UI Component Builders (These create elements App needs) -->
+    <script src="app-ui-sidebar.js"></script>
+    
+    <!-- Application Initialization -->
+    <script src="app-init.js"></script>
+    <script src="app-export-package.js"></script>
+    <script src="fretboard-beta-layout.js"></script>
+    <script src="fretboard-beta-advanced-schema.js"></script>
+    <script src="fretboard-beta-binary.js"></script>
+    <script src="fretboard-beta-book-packages.js"></script>
+    <script src="fretboard-beta-publishing.js"></script>
+    <script src="fretboard-beta-options.js"></script>
+    <script src="fretboard-beta-advanced.js"></script>
+    <script src="fretboard-beta-config.js"></script>
+    <script src="fretboard-beta-extra-formats.js"></script>
+    <script src="fretboard-beta-formats.js"></script>
+    <script src="fretboard-beta-catalog.js"></script>
+    <script src="fretboard-beta-stream.js"></script>
+    <script src="fretboard-word-beta.js"></script>
+    <script src="fretboard-beta-guides.js"></script>
+    <script src="fretboard-beta-preview.js"></script>
+    <script src="fretboard-beta-studio.js"></script>
+    <dialog id="recreate-dialog" aria-labelledby="recreate-title">
+        <div class="recreate-shell">
+            <header><h2 id="recreate-title">Redo prompt</h2><button id="recreate-close" type="button">Close</button></header>
+            <textarea id="recreate-text" readonly spellcheck="false"></textarea>
+            <footer><button id="recreate-copy" type="button">Copy prompt</button></footer>
+        </div>
+    </dialog>
+    <script src="recreate-prompt.js"></script>
+</body>
+</html>

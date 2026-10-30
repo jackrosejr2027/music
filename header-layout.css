@@ -1,0 +1,11 @@
+/* Keep the redo control beside the navigation trigger instead of letting the nav's flex grow separate them. */
+.top-header-content{gap:12px}
+.header-nav.st-nav.st-nav-consolidated{flex:0 0 auto!important;width:auto;margin:0 2px 0 0}
+#recreate-open{flex:0 0 40px;width:40px;height:40px;margin:0 4px 0 0}
+.top-header-content>.sidebar-toggle-container{position:static;inset:auto;margin-left:auto;flex:0 0 auto;gap:10px!important}
+@media(max-width:768px){
+  .top-header-content{gap:8px}
+  .header-nav.st-nav.st-nav-consolidated{flex:0 0 auto!important;margin:0}
+  #recreate-open{flex-basis:38px;width:38px;height:38px;margin:0}
+  .top-header-content>.sidebar-toggle-container{gap:7px!important}
+}

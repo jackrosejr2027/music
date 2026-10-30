@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Scales Thesaurus - Settings</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <style>
+        .settings-container {
+            padding: 30px 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .settings-heading {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            font-size: 2.2em;
+        }
+        .settings-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+        .settings-section h2 {
+            margin-top: 0;
+            color: var(--secondary-color);
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        .setting-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .setting-group label {
+            font-weight: 600;
+            margin-bottom: 0;
+            flex-grow: 1;
+        }
+        .setting-group select, .setting-group input[type="text"] {
+            width: 250px;
+            max-width: 100%;
+        }
+        .danger-zone {
+            background-color: rgba(231, 76, 60, 0.05);
+            border-color: #e74c3c;
+        }
+        .danger-zone h2 {
+            color: #e74c3c;
+            border-bottom-color: rgba(231, 76, 60, 0.3);
+        }
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+        .return-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        .return-button:hover {
+            background-color: var(--secondary-color);
+        }
+    </style>
+    <link rel="stylesheet" href="site.css">
+    <script src="site.js" defer></script>
+</head>
+<body>
+    <header class="top-header">
+        <div class="top-header-content">
+            <h1 class="main-title" style="margin-right: 15px;">Scales Thesaurus</h1>
+            <nav class="header-nav">
+                <a href="home.html" class="header-link">Home</a>
+                <a href="scales.html" class="header-link">Scales</a>
+                <a href="chords.html" class="header-link">Chords</a>
+                <a href="intervals.html" class="header-link">Intervals</a>
+                <a href="data.html" class="header-link">Data</a>
+                <a href="lessons.html" class="header-link">Lessons</a>
+                <a href="about.html" class="header-link">About</a>
+            </nav>
+            <div class="sidebar-toggle-container">
+                <button id="sidebar-toggle" aria-expanded="false" title="Back to Neck Diagram Explorer" onclick="window.location.href='fretboard.html'">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="sr-only">Go to App</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="settings-container">
+        <h1 class="settings-heading">Application Settings</h1>
+
+        <div class="settings-section">
+            <h2>Startup Defaults</h2>
+            <p style="margin-bottom: 15px; font-size: 0.9em; color: var(--text-color);">Set the default configuration for when the Neck Diagram Explorer loads.</p>
+            
+            <div class="setting-group">
+                <label for="default-instrument">Default Instrument:</label>
+                <select id="default-instrument" class="form-select"></select>
+            </div>
+            <div class="setting-group">
+                <label for="default-key">Default Key:</label>
+                <select id="default-key" class="form-select"></select>
+            </div>
+            <div class="setting-group">
+                <label for="default-display-mode">Default Display Mode:</label>
+                <select id="default-display-mode" class="form-select">
+                    <option value="intervals">Intervals</option>
+                    <option value="notes">Notes</option>
+                    <option value="roman">Roman Numerals</option>
+                    <option value="solfege">Solfège</option>
+                    <option value="none">No Text</option>
+                </select>
+            </div>
+            <div style="text-align: right; margin-top: 15px;">
+                <button id="save-defaults" class="btn-primary" style="padding: 8px 16px; width: auto;">Save Defaults</button>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>Data Management</h2>
+            <p style="margin-bottom: 15px; font-size: 0.9em; color: var(--text-color);">Export or import your custom patterns, favorites, custom fretspan presets, and data editor changes.</p>
+            
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button id="export-user-data" class="btn-primary" style="flex: 1; padding: 10px; font-weight: bold;">Export User Data (JSON)</button>
+                <label for="import-user-data" class="btn-primary" style="flex: 1; padding: 10px; text-align: center; cursor: pointer; border-radius: 4px; font-weight: bold; margin-bottom: 0;">Import User Data</label>
+                <input type="file" id="import-user-data" accept=".json" style="display: none;">
+            </div>
+        </div>
+
+        <div class="settings-section danger-zone">
+            <h2>Danger Zone</h2>
+            <p style="margin-bottom: 15px; font-size: 0.9em;">These actions will permanently delete your saved preferences and custom data from local storage.</p>
+            
+            <div class="setting-group">
+                <label>Clear Favorites</label>
+                <button id="clear-favorites" class="btn-danger" style="width: auto; padding: 6px 12px; font-weight: bold;">Clear</button>
+            </div>
+            <div class="setting-group">
+                <label>Reset All Settings & Data</label>
+                <button id="factory-reset" class="btn-danger" style="width: auto; padding: 6px 12px; font-weight: bold;">Factory Reset</button>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="fretboard.html" class="return-button">Explore the Neck Diagram Explorer</a>
+        </div>
+    </div>
+
+    <!-- Core dependencies to populate settings -->
+    <script src="music-theory-data.js"></script>
+    <script src="instrument-presets.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Populate instruments
+            const instSelect = document.getElementById('default-instrument');
+            if (typeof INSTRUMENT_PRESETS !== 'undefined') {
+                Object.entries(INSTRUMENT_PRESETS).forEach(([id, data]) => {
+                    instSelect.appendChild(new Option(data.name, id));
+                });
+            }
+
+            // Populate keys
+            const keySelect = document.getElementById('default-key');
+            // v1.0 fix: offer exactly the keys the fretboard key selector supports (flat names such
+            // as "Bb" were saved but silently ignored by the app)
+            const enh = { 'C#': 'C# / Db', 'D#': 'D# / Eb', 'F#': 'F# / Gb', 'G#': 'G# / Ab', 'A#': 'A# / Bb' };
+            ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'].forEach(k => {
+                keySelect.appendChild(new Option(enh[k] || k, k));
+            });
+
+            // Load current defaults
+            const readSetting = key => { try { return localStorage.getItem(key); } catch (error) { return null; } };
+            instSelect.value = readSetting('defaultInstrument') || 'acoustic_guitar';
+            const flatMap = { 'Db': 'C#', 'Eb': 'D#', 'Gb': 'F#', 'Ab': 'G#', 'Bb': 'A#', 'Cb': 'B' };
+            const storedKey = readSetting('defaultKey') || 'C';
+            keySelect.value = flatMap[storedKey] || storedKey;
+            if (!instSelect.value && instSelect.options.length) instSelect.selectedIndex = 0;
+            document.getElementById('default-display-mode').value = readSetting('defaultDisplayMode') || 'intervals';
+
+            // Save defaults
+            document.getElementById('save-defaults').addEventListener('click', () => {
+                try {
+                    localStorage.setItem('defaultInstrument', instSelect.value);
+                    localStorage.setItem('defaultKey', keySelect.value);
+                    localStorage.setItem('defaultDisplayMode', document.getElementById('default-display-mode').value);
+                } catch (error) {
+                    alert('Could not save defaults. Browser storage may be unavailable or full.');
+                    return;
+                }
+                const btn = document.getElementById('save-defaults');
+                const orig = btn.textContent;
+                btn.textContent = 'Saved!';
+                btn.style.backgroundColor = 'var(--accent-color)';
+                setTimeout(() => {
+                    btn.textContent = orig;
+                    btn.style.backgroundColor = 'var(--primary-color)';
+                }, 1500);
+            });
+
+            // Factory Reset
+            document.getElementById('factory-reset').addEventListener('click', () => {
+                if (!confirm('Are you sure you want to completely reset the application? All custom patterns, edited data, favorites, and settings will be permanently lost.')) return;
+                try { localStorage.clear(); }
+                catch (error) { alert('Could not reset the application because browser storage is unavailable.'); return; }
+                alert('Application has been reset to factory defaults.');
+                window.location.reload();
+            });
+
+            // Clear Favorites
+            document.getElementById('clear-favorites').addEventListener('click', () => {
+                if (!confirm('Clear all Favorites, including saved diagrams, cards, lessons and progressions?')) return;
+                try {
+                    localStorage.removeItem('favoriteScales');
+                    localStorage.removeItem('favoriteChords');
+                    localStorage.removeItem('st_favorites_v1');
+                    window.dispatchEvent(new CustomEvent('st:favoriteschange'));
+                } catch (error) { alert('Could not clear Favorites because browser storage is unavailable.'); return; }
+                alert('Favorites cleared.');
+            });
+
+            // Export Data
+            document.getElementById('export-user-data').addEventListener('click', () => {
+                // v1.0: full backup of every saved setting (previously only 5 keys were included,
+                // so themes, defaults, progress, quiz results and notes were lost on restore)
+                const safe = (k, d) => { try { return JSON.parse(localStorage.getItem(k) || d); } catch (e) { return JSON.parse(d); } };
+                const data = {
+                    customPatterns: safe('customPatterns', '{}'),
+                    manic_rules_custom_data: safe('manic_rules_custom_data', '{}'),
+                    favoriteScales: safe('favoriteScales', '{}'),
+                    favoriteChords: safe('favoriteChords', '{}'),
+                    fretspanPresets: safe('fretspanPresets', '{}'),
+                    _backup: { app: 'Scales Thesaurus', version: (window.ST && ST.version) || '1.0.0', created: new Date().toISOString() },
+                    _all: {}
+                };
+                for (let i = 0; i < localStorage.length; i++) {
+                    const k = localStorage.key(i);
+                    data._all[k] = localStorage.getItem(k);
+                }
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'scales_thesaurus_user_data.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                setTimeout(() => URL.revokeObjectURL(url), 60000);
+            });
+
+            // Import Data
+            document.getElementById('import-user-data').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                if (file.size > 8 * 1024 * 1024) {
+                    alert('Choose a user data backup under 8 MB.');
+                    e.target.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const changes = new Map();
+                    const setItem = (key, value) => {
+                        if (!changes.has(key)) changes.set(key, localStorage.getItem(key));
+                        localStorage.setItem(key, value);
+                    };
+                    try {
+                        const data = JSON.parse(event.target.result);
+                        if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('The backup must contain a JSON object.');
+                        if (data._all !== undefined && (!data._all || typeof data._all !== 'object' || Array.isArray(data._all))) throw new Error('The backup contains an invalid data section.');
+                        const recognized = ['customPatterns', 'manic_rules_custom_data', 'favoriteScales', 'favoriteChords', 'fretspanPresets'];
+                        if (!data._all && !recognized.some(key => Object.prototype.hasOwnProperty.call(data, key))) throw new Error('This is not a supported user data backup.');
+                        if (data.customPatterns) setItem('customPatterns', JSON.stringify(data.customPatterns));
+                        if (data.manic_rules_custom_data) setItem('manic_rules_custom_data', JSON.stringify(data.manic_rules_custom_data));
+                        if (data.favoriteScales) setItem('favoriteScales', JSON.stringify(data.favoriteScales));
+                        if (data.favoriteChords) setItem('favoriteChords', JSON.stringify(data.favoriteChords));
+                        if (data.fretspanPresets) setItem('fretspanPresets', JSON.stringify(data.fretspanPresets));
+                        if (data._all) {
+                            Object.entries(data._all).forEach(([key, value]) => { if (typeof value === 'string') setItem(key, value); });
+                        }
+                        alert('User data successfully imported!');
+                        window.location.reload();
+                    } catch (error) {
+                        let rollbackFailed = false;
+                        changes.forEach((_, key) => { try { localStorage.removeItem(key); } catch (rollbackError) { rollbackFailed = true; } });
+                        changes.forEach((value, key) => {
+                            if (value === null) return;
+                            try { localStorage.setItem(key, value); } catch (rollbackError) { rollbackFailed = true; }
+                        });
+                        const message = rollbackFailed ? ' Import rollback was incomplete; restore your backup if data is missing.' : '';
+                        alert('Could not import user data: ' + error.message + message);
+                    }
+                };
+                reader.onerror = () => alert('Could not read this user data backup.');
+                reader.readAsText(file);
+                e.target.value = '';
+            });
+        });
+    </script>
+</body>
+</html>

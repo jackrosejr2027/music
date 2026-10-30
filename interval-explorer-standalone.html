@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Interval Explorer</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="intervals.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <link rel="stylesheet" href="site.css">
+    <script src="site.js" defer></script>
+<link rel="stylesheet" href="standalone.css">
+<style>.filter-section,.interval-filters,.mode-interval-filter{display:none!important}</style>
+</head>
+<body>
+    <header class="top-header">
+        <div class="top-header-content">
+            <h1 class="main-title" style="margin-right: 15px;">Scales Thesaurus</h1>
+            <nav class="header-nav">
+                <a href="home.html" class="header-link">Home</a>
+                <a href="scales.html" class="header-link">Scales</a>
+                <a href="chords.html" class="header-link">Chords</a>
+                <a href="intervals.html" class="header-link">Intervals</a>
+                <a href="data.html" class="header-link">Data</a>
+                <a href="lessons.html" class="header-link">Lessons</a>
+                <a href="about.html" class="header-link">About</a>
+
+            </nav>
+            <div class="sidebar-toggle-container">
+                <button id="sidebar-toggle" aria-expanded="false" title="Back to Neck Diagram Explorer" onclick="window.location.href='fretboard.html'">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="sr-only">Go to App</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="intervals-container">
+        <h1>Musical Intervals</h1>
+        <p style="text-align: center; margin-bottom: 20px; font-style: italic;">
+            The building blocks of melody and harmony. Filter by the intervals found within specific chords or scales.
+        </p>
+
+        <details class="explorer-about">
+            <summary>About intervals and Base 0</summary>
+            <p>An interval measures the distance between two pitches. Its semitone count gives its equal-tempered size. Base 0 anchors the first note at 0 and writes the second pitch as its number from 0 to 11; enharmonic spellings can share a number.</p>
+        </details>
+
+        <!-- Filter Section -->
+        <div class="interval-filters">
+            <div class="filter-section">
+                <label for="chord-filter-select">Map intervals to Chord:</label>
+                <select id="chord-filter-select">
+                    <option value="">-- All Chords --</option>
+                    <!-- Chord options will be populated here -->
+                </select>
+            </div>
+            <div class="filter-section">
+                <label for="scale-filter-select">Show intervals in Scale:</label>
+                <select id="scale-filter-select">
+                    <option value="">-- All Scales --</option>
+                    <!-- Scale options will be populated here -->
+                </select>
+            </div>
+            <label class="mode-interval-filter"><input type="checkbox" id="mode-intervals-only"><span>7-Mode Intervals Only</span></label>
+            <button id="clear-interval-filters">Clear Filters</button>
+        </div>
+
+        <div class="interval-list" id="interval-list">
+            <!-- Interval items will be populated by JavaScript -->
+        </div>
+        <div style="text-align: center;">
+            <a href="fretboard.html" class="return-button">Explore the Neck Diagram Explorer</a>
+        </div>
+    </div>
+
+    <!-- Load music theory data -->
+    <script src="music-theory-data.js"></script>
+    <script src="scales-data-standard.js"></script>
+    <script src="scales-data-numeric.js"></script>
+    <script src="scales-data-advanced-1.js"></script>
+    <script src="scales-data-advanced-2.js"></script>
+    <script src="scales-data-advanced-3.js"></script>
+    <script src="scales-data-advanced-4.js"></script>
+    <script src="scales-data-advanced-5.js"></script>
+    <script src="scales-data-advanced-6.js"></script>
+    <script src="scales-data-advanced-7a.js"></script>
+    <script src="scales-data-advanced-7b.js"></script>
+    <script src="scales-data-advanced-8.js"></script>
+    <script src="scales-data-advanced-10.js"></script>
+    <script src="scales-data-advanced-11.js"></script>
+    <script src="mode-intervals.js"></script>
+    <script src="music-theory.js"></script>
+    <script src="music-theory-logic.js"></script>
+    <script src="music-theory-chords.js"></script>
+    <script src="music-theory-descriptions.js"></script>
+    <script src="audio-preview.js"></script>
+    <!-- moved interval behavior to its offline page script -->
+    <script src="intervals-app.js"></script>
+</body>
+</html>

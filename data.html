@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Scales Thesaurus - Data</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <!-- Add SheetJS library for XLSX export -->
+    <script src="vendor/xlsx.full.min.js"></script>
+    <style>
+        .data-container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-heading {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .sub-heading {
+            font-size: 1.5em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+            text-align: left;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .return-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .return-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* Tab Styles */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        .tab-link {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            border-bottom: 3px solid transparent;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: -2px;
+        }
+        .tab-link.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.95em;
+            margin-bottom: 30px;
+        }
+
+        .data-table th, .data-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .data-table thead {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: var(--primary-color);
+        }
+
+        .data-table th {
+            font-weight: 600;
+        }
+
+        .data-table th.sortable {
+            cursor: pointer;
+            position: relative;
+            padding-right: 20px;
+        }
+        .data-table th.sortable::after {
+            content: '';
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            border: 4px solid transparent;
+            opacity: 0.3;
+        }
+        .data-table th.sortable.sort-asc::after {
+            border-bottom-color: var(--text-color);
+            transform: translateY(-6px);
+            opacity: 1;
+        }
+        .data-table th.sortable.sort-desc::after {
+            border-top-color: var(--text-color);
+            transform: translateY(-2px);
+            opacity: 1;
+        }
+        .data-table th.sortable:hover::after {
+            opacity: 0.7;
+        }
+
+        .data-table tbody tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        .data-table tbody tr:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+        
+        .data-table td[contenteditable="true"] {
+            background-color: rgba(255, 255, 0, 0.1);
+            cursor: text;
+            transition: background-color 0.3s ease;
+        }
+        .data-table td[contenteditable="true"]:focus {
+            background-color: rgba(255, 255, 0, 0.2);
+            outline: 1px solid var(--primary-color);
+        }
+        .data-table td.saved {
+            background-color: rgba(0, 255, 0, 0.15);
+        }
+        .data-table td.error {
+            background-color: rgba(255, 0, 0, 0.15);
+        }
+        .color-input-wrapper {
+             display: flex;
+             align-items: center;
+             gap: 5px;
+        }
+        .color-input-wrapper input[type="color"] {
+            padding: 0;
+            width: 25px;
+            height: 25px;
+            border: none;
+            cursor: pointer;
+        }
+        .color-input-wrapper span {
+            font-family: "Arial Narrow", Arial, sans-serif;
+            font-size: 0.9em;
+        }
+
+        .export-button {
+            padding: 8px 15px;
+            background-color: var(--accent-color);
+            color: var(--button-text);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .export-button:hover {
+            background-color: var(--secondary-color);
+            opacity: 0.9;
+        }
+
+        .edit-info {
+            text-align: center;
+            font-style: italic;
+            color: var(--secondary-color);
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        .data-table th:first-child,
+        .data-table td:first-child {
+            width: 50px;
+            text-align: right;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .data-table .tones-col {
+            width: 60px;
+            text-align: center;
+        }
+        
+        .export-buttons-container {
+            margin-bottom: 20px;
+        }
+        
+        #reset-data {
+            padding: 10px 20px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+        }
+        #reset-data:hover {
+            background-color: #c0392b;
+        }
+
+    </style>
+    <link rel="stylesheet" href="site.css">
+    <script src="site.js" defer></script>
+</head>
+<body>
+    <header class="top-header">
+        <div class="top-header-content">
+            <h1 class="main-title" style="margin-right: 15px;">Scales Thesaurus</h1>
+            <nav class="header-nav">
+                <a href="home.html" class="header-link">Home</a>
+                <a href="scales.html" class="header-link">Scales</a>
+                <a href="chords.html" class="header-link">Chords</a>
+                <a href="intervals.html" class="header-link">Intervals</a>
+                <a href="data.html" class="header-link">Data</a>
+                <a href="lessons.html" class="header-link">Lessons</a>
+                <a href="about.html" class="header-link">About</a>
+
+            </nav>
+            <div class="sidebar-toggle-container">
+                <button id="sidebar-toggle" aria-expanded="false" title="Back to Neck Diagram Explorer" onclick="window.location.href='fretboard.html'">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="sr-only">Go to App</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="data-container">
+        <h1 class="data-heading">Application Data</h1>
+        <p>View and manage the underlying data for intervals, chords, and scales. Editable fields have a light yellow background. Changes are saved automatically when you click away.</p>
+
+        <div class="tabs">
+            <button class="tab-link active" data-tab="intervals">Intervals</button>
+            <button class="tab-link" data-tab="chords">Chords</button>
+            <button class="tab-link" data-tab="scales">Scales</button>
+        </div>
+
+        <div id="intervals-tab" class="tab-content active">
+            <div class="export-buttons-container">
+                <button id="export-intervals-xlsx" class="export-button">Export Intervals to XLSX</button>
+                <button id="export-intervals-csv" class="export-button">CSV</button>
+                <button id="export-intervals-pdf" class="export-button">PDF</button>
+            </div>
+            <table class="data-table" id="interval-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Short Name</th>
+                        <th>Semitones</th>
+                        <th>Marker Color</th>
+                        <th>Text Color</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="chords-tab" class="tab-content">
+             <div class="export-buttons-container">
+                <button id="export-all-chords-xlsx" class="export-button">Export All Chords to XLSX (Multiple Sheets)</button>
+                <button id="export-chords-csv" class="export-button">CSV</button>
+                <button id="export-chords-pdf" class="export-button">PDF</button>
+            </div>
+            <div id="chords-tables-container"></div>
+        </div>
+
+        <div id="scales-tab" class="tab-content">
+             <div class="export-buttons-container">
+                <button id="export-all-scales-xlsx" class="export-button">Export All Scales to XLSX (Multiple Sheets)</button>
+                <button id="export-scales-csv" class="export-button">CSV</button>
+                <button id="export-scales-pdf" class="export-button">PDF</button>
+            </div>
+             <div id="scales-tables-container"></div>
+        </div>
+
+        <button id="reset-data">Reset All Data to Defaults</button>
+        <p class="edit-info">Note: Changes are stored in your browser's local storage and will persist until cleared.</p>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="fretboard.html" class="return-button">Explore the Neck Diagram Explorer</a>
+        </div>
+    </div>
+
+    <!-- Load music theory data dependencies -->
+    <script src="music-theory-data.js"></script>
+    <script src="scales-data-standard.js"></script>
+    <script src="scales-data-numeric.js"></script>
+    <script src="scales-data-advanced-1.js"></script>
+    <script src="scales-data-advanced-2.js"></script>
+    <script src="scales-data-advanced-3.js"></script>
+    <script src="scales-data-advanced-4.js"></script>
+    <script src="scales-data-advanced-5.js"></script>
+    <script src="scales-data-advanced-6.js"></script>
+    <script src="scales-data-advanced-7a.js"></script>
+    <script src="scales-data-advanced-7b.js"></script>
+    <script src="scales-data-advanced-8.js"></script>
+    <script src="scales-data-advanced-10.js"></script>
+    <script src="scales-data-advanced-11.js"></script>
+    <script src="themes-data.js"></script>
+    <script src="music-theory.js"></script>
+    <script src="music-theory-logic.js"></script>
+    <script src="music-theory-chords.js"></script>
+    <script src="music-theory-descriptions.js"></script>
+    <script src="vendor/jspdf.umd.min.js"></script>
+    <script src="data-app.js"></script>
+</body>
+</html>

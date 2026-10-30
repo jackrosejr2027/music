@@ -1,0 +1,238 @@
+/* Add styles specific to the chords page */
+.chords-container {
+    padding: 20px;
+    max-width: 1100px;
+    margin: 20px auto;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chords-container h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.chord-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 15px;
+}
+
+.chord-item {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 15px;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+}
+
+.chord-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.chord-item.hidden {
+    display: none;
+}
+
+.chord-details {
+    flex-grow: 1;
+}
+
+.chord-details h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.25em;
+    color: var(--primary-color);
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 5px;
+    padding-right: 35px;
+}
+
+.chord-details p {
+    margin: 0 0 8px 0;
+    font-size: 0.95em;
+    color: var(--text-color);
+    line-height: 1.4;
+}
+
+.chord-details strong {
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+.chord-notes {
+    font-family: "Arial Narrow", Arial, sans-serif;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 2px 6px;
+    border-radius: 3px;
+    display: inline-block;
+    word-break: break-all;
+    font-weight: 700;
+}
+
+.chord-filters {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.filter-section h2 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.1em;
+    color: var(--primary-color);
+}
+
+.favorite-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card-bg);
+    padding: 8px 12px;
+    border-radius: 6px;
+    width: fit-content;
+    border: 1px solid var(--border-color);
+}
+
+.favorite-filter label {
+    margin-bottom: 0;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.favorite-filter input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.return-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    margin-top: 30px;
+}
+
+.return-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.hear-chord-button, .view-diagram-button, .learn-button { 
+    padding: 8px 12px;
+    font-size: 0.9em;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.2s, background-color 0.2s;
+    text-align: center; 
+    flex: 1;
+    font-weight: 600;
+}
+.hear-chord-button { background-color: var(--accent-color); }
+.view-diagram-button { background-color: var(--secondary-color); }
+.learn-button { background-color: var(--primary-color); }
+
+.hear-chord-button:hover, .view-diagram-button:hover, .learn-button:hover {
+    opacity: 0.9;
+    filter: brightness(1.1);
+}
+
+.button-pair-container { 
+     display: flex;
+     gap: 8px; 
+     margin-top: 15px;
+}
+
+.favorite-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 1.6em; 
+    cursor: pointer;
+    color: #ccc; 
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s ease, transform 0.1s;
+}
+.favorite-button:active { transform: scale(1.2); }
+.favorite-button.favorited {
+    color: #666; 
+}
+
+#clear-filters {
+    align-self: flex-start;
+    padding: 8px 20px;
+    background-color: #777;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+#clear-filters:hover { background-color: #555; }
+
+.interval-filter-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.interval-filter-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-color);
+    padding: 5px 10px;
+    border-radius: 15px;
+    border: 1px solid var(--input-border);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.interval-filter-item input[type="checkbox"] {
+    margin-right: 5px;
+    width: auto;
+    cursor: pointer;
+}
+
+.interval-filter-item label {
+    margin-bottom: 0;
+    font-weight: normal;
+    font-size: 0.9em;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.chord-filter-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 12px;
+}
+
+.chord-results-count {
+    margin-left: auto;
+    color: var(--secondary-color);
+    font-size: 0.82em;
+    font-weight: 650;
+    white-space: nowrap;
+}

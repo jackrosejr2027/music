@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <title>Pattern Studio</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="themes.css">
+    <link rel="stylesheet" href="site.css">
+    <link rel="stylesheet" href="daw.css">
+    <link rel="stylesheet" href="mini-fretboard.css">
+    <link rel="stylesheet" href="square-edges.css">
+    <script src="theme-init.js"></script>
+    <script src="site.js" defer></script>
+<link rel="stylesheet" href="standalone.css">
+<style>.daw-library,.daw-track-selectors{display:none!important}</style>
+</head>
+<body class="daw-page">
+    <header class="top-header">
+        <div class="top-header-content">
+            <h1 class="main-title">Pattern Studio</h1>
+            <nav class="header-nav" aria-label="Main navigation">
+                <a href="index.html">Home</a><a href="fretboard.html">Fretboard</a><a href="daw.html">DAW</a>
+            </nav>
+        </div>
+    </header>
+    <main class="daw-shell">
+        <section class="daw-heading">
+            <div>
+                <p class="daw-kicker">LOCAL PATTERN WORKSPACE</p>
+                <h2>Build a progression</h2>
+            </div>
+            <p class="daw-library-count"><strong id="preload-count">500</strong><span>ready offline</span></p>
+        </section>
+
+        <section class="daw-library" aria-labelledby="library-heading">
+            <div class="daw-section-heading">
+                <h3 id="library-heading">Start from a pattern</h3>
+                <span>42 forms · all 12 keys</span>
+            </div>
+            <div class="daw-library-controls">
+                <label class="daw-field daw-search">Find a progression
+                    <input id="library-search" type="search" placeholder="Try blues, minor, scale..." autocomplete="off">
+                </label>
+                <label class="daw-field">500 preloaded patterns
+                    <select id="library-select" size="1" aria-label="Preloaded pattern"></select>
+                </label>
+                <button id="load-pattern" class="daw-button daw-button-secondary" type="button">Load</button>
+            </div>
+        </section>
+
+        <div class="daw-workspace">
+            <section class="daw-track-panel" aria-labelledby="track-heading">
+                <div class="daw-section-heading daw-track-heading">
+                    <div><h3 id="track-heading">Arrangement</h3><p id="pattern-caption">One bar per block</p></div>
+                    <div class="daw-track-selectors">
+                        <label class="daw-field daw-key-field">Key
+                            <select id="pattern-key" aria-label="Pattern key"></select>
+                        </label>
+                        <label class="daw-field daw-diagram-select">Diagram block
+                            <select id="diagram-step" aria-label="Choose an arrangement block for the fretboard diagram"></select>
+                        </label>
+                    </div>
+                </div>
+                <ol id="pattern-steps" class="daw-steps" aria-label="Pattern arrangement"></ol>
+                <p id="empty-track" class="daw-empty" hidden>Add intervals, chords or scales to build your own sequence.</p>
+                <section class="daw-diagram-panel" aria-labelledby="diagram-heading">
+                    <div class="daw-section-heading"><h3 id="diagram-heading">Fretboard diagram</h3><span id="diagram-caption">Select a block to view its notes.</span></div>
+                    <div id="daw-fretboard"></div>
+                </section>
+                <div class="daw-playback">
+                    <label class="daw-field daw-tempo-field">Tempo
+                        <span class="daw-tempo-input"><input id="pattern-tempo" type="number" min="40" max="220" value="100" inputmode="numeric"><span>BPM</span></span>
+                    </label>
+                    <label class="daw-loop-toggle"><input id="loop-arrangement" type="checkbox" checked> Loop</label>
+                    <button id="play-arrangement" class="daw-button daw-button-play" type="button">Play</button>
+                    <button id="stop-arrangement" class="daw-button daw-button-stop" type="button" disabled>Stop</button>
+                    <button id="export-midi" class="daw-button daw-button-secondary" type="button">Export MIDI</button>
+                    <button id="export-midi-zip" class="daw-button daw-button-secondary" type="button">Export All MIDI (ZIP)</button>
+                    <span id="playback-status" role="status" aria-live="polite">Ready</span>
+                </div>
+                <p id="midi-status" role="status" aria-live="polite"></p>
+            </section>
+
+            <aside class="daw-tools">
+                <section class="daw-add-panel" aria-labelledby="add-heading">
+                    <div class="daw-section-heading"><h3 id="add-heading">Add a block</h3></div>
+                    <label class="daw-field">Source
+                        <select id="block-kind"><option value="chord">Chord</option><option value="scale">Scale</option><option value="interval">Interval</option></select>
+                    </label>
+                    <label class="daw-field">Reference
+                        <select id="block-reference"></select>
+                    </label>
+                    <label class="daw-field">Root in key
+                        <select id="block-root"></select>
+                    </label>
+                    <label class="daw-field">Length
+                        <select id="block-bars"><option value="1">1 bar</option><option value="2">2 bars</option><option value="4">4 bars</option></select>
+                    </label>
+                    <button id="add-block" class="daw-button daw-button-add" type="button">Add to arrangement</button>
+                </section>
+
+                <section class="daw-save-panel" aria-labelledby="save-heading">
+                    <div class="daw-section-heading"><h3 id="save-heading">On this device</h3></div>
+                    <label class="daw-field">Pattern name
+                        <input id="pattern-name" type="text" maxlength="48" placeholder="My progression">
+                    </label>
+                    <button id="save-pattern" class="daw-button daw-button-secondary" type="button">Save pattern</button>
+                    <button id="favorite-current-pattern" class="daw-button daw-button-quiet" type="button" aria-pressed="false" disabled>☆ Favorite current</button>
+                    <label class="daw-field">Saved patterns
+                        <select id="saved-patterns"><option value="">No saved patterns</option></select>
+                    </label>
+                    <div class="daw-save-actions">
+                        <button id="load-saved" class="daw-button daw-button-secondary" type="button">Open</button>
+                        <button id="delete-saved" class="daw-button daw-button-quiet" type="button">Delete</button>
+                    </div>
+                    <p id="save-status" role="status" aria-live="polite"></p>
+                    <div class="daw-state-actions">
+                        <button id="export-status" class="daw-button daw-button-secondary" type="button">Export status</button>
+                        <button id="import-status-button" class="daw-button daw-button-quiet" type="button">Import status</button>
+                        <input id="import-status-file" type="file" accept="application/json,.json" hidden>
+                    </div>
+                    <p id="status-file-status" role="status" aria-live="polite"></p>
+                </section>
+            </aside>
+        </div>
+    </main>
+
+    <script src="music-theory-data.js"></script>
+    <script src="scales-data-standard.js"></script>
+    <script src="scales-data-numeric.js"></script>
+    <script src="scales-data-advanced-1.js"></script>
+    <script src="scales-data-advanced-2.js"></script>
+    <script src="scales-data-advanced-3.js"></script>
+    <script src="scales-data-advanced-4.js"></script>
+    <script src="scales-data-advanced-5.js"></script>
+    <script src="scales-data-advanced-6.js"></script>
+    <script src="scales-data-advanced-7a.js"></script>
+    <script src="scales-data-advanced-7b.js"></script>
+    <script src="scales-data-advanced-8.js"></script>
+    <script src="scales-data-advanced-10.js"></script>
+    <script src="scales-data-advanced-11.js"></script>
+    <script src="music-theory.js"></script>
+    <script src="mini-fretboard.js"></script>
+    <script src="audio-preview.js"></script>
+    <script src="vendor/jszip.min.js"></script>
+    <script src="daw-midi.js"></script>
+    <script src="daw.js"></script>
+</body>
+</html>

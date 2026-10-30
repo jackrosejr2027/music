@@ -1,0 +1,4 @@
+/* Standalone copies: hide the site header, navigation and sidebar toggle so only the tool shows.
+   Each copy adds its own selection/filter selectors in a <style> block after this file. */
+.top-header,.site-header,.topbar,.masthead,.practice-subnav,.sidebar-toggle-container,.site-sidebar{display:none!important}
+body{padding-top:0!important;margin-top:0!important}

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Scale Explorer</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <style>
+        /* Add styles specific to the scales page */
+        .scales-container {
+            padding: 20px;
+            max-width: 1100px;
+            margin: 20px auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .scales-container h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .scale-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 15px;
+        }
+
+        .scale-item {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+
+        .scale-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .scale-item.hidden {
+            display: none;
+        }
+
+        .scale-details {
+            flex-grow: 1;
+        }
+
+        .scale-details h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.25em;
+            color: var(--primary-color);
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 5px;
+            padding-right: 35px;
+        }
+
+        .scale-identity {
+            margin: -4px 0 11px;
+            color: var(--secondary-color);
+            font-size: 0.94em;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .scale-details p {
+            margin: 0 0 8px 0;
+            font-size: 0.95em;
+            color: var(--text-color);
+            line-height: 1.4;
+        }
+
+        .scale-details strong {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .scale-notes {
+            font-family: "Arial Narrow", Arial, sans-serif;
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 2px 6px;
+            border-radius: 3px;
+            display: inline-block;
+            word-break: break-all;
+            font-weight: 700;
+        }
+
+        .scale-filters {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .filter-section h2 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            color: var(--primary-color);
+        }
+
+        .favorite-filter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 8px 12px;
+            border-radius: 6px;
+            width: fit-content;
+            border: 1px solid var(--border-color);
+        }
+
+        .favorite-filter label {
+            margin-bottom: 0;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .favorite-filter input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .return-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-top: 30px;
+        }
+
+        .return-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .hear-scale-button, .view-diagram-button, .learn-button { 
+            padding: 8px 12px;
+            font-size: 0.9em;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.2s, background-color 0.2s;
+            text-align: center; 
+            flex: 1;
+            font-weight: 600;
+        }
+        .hear-scale-button { background-color: var(--accent-color); }
+        .view-diagram-button { background-color: var(--secondary-color); }
+        .learn-button { background-color: var(--primary-color); }
+        
+        .hear-scale-button:hover, .view-diagram-button:hover, .learn-button:hover {
+            opacity: 0.9;
+            filter: brightness(1.1);
+        }
+        
+        .button-pair-container { 
+             display: flex;
+             gap: 8px; 
+             margin-top: 15px;
+        }
+        
+        .favorite-button {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 1.6em; 
+            cursor: pointer;
+            color: #ccc; 
+            padding: 0;
+            line-height: 1;
+            transition: color 0.2s ease, transform 0.1s;
+        }
+        .favorite-button:active { transform: scale(1.2); }
+        .favorite-button.favorited {
+            color: #f1c40f; 
+        }
+        
+        #clear-filters {
+            align-self: flex-start;
+            padding: 8px 20px;
+            background-color: #95a5a6;
+            color: white;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+        #clear-filters:hover { background-color: #7f8c8d; }
+
+        .interval-filter-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+            gap: 5px;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.04);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .interval-filter-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--card-bg);
+            padding: 4px 0;
+            border-radius: 4px;
+            border: 1px solid var(--input-border);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .interval-filter-item:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(0,0,0,0.02);
+        }
+
+        .interval-filter-item.selected {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white !important;
+        }
+
+        .interval-filter-item.excluded {
+            background-color: #e74c3c;
+            border-color: #e74c3c;
+            color: white !important;
+        }
+
+        .interval-filter-item input[type="checkbox"] {
+            display: none;
+        }
+
+        .interval-filter-item label {
+            margin-bottom: 0;
+            font-weight: 700;
+            font-size: 0.8em;
+            cursor: pointer;
+            width: 100%;
+            color: inherit;
+        }
+    </style>
+    <link rel="stylesheet" href="site.css">
+    <script src="site.js" defer></script>
+<link rel="stylesheet" href="standalone.css">
+<style>.filter-section,.scale-filters{display:none!important}</style>
+</head>
+<body>
+    <header class="top-header">
+        <div class="top-header-content">
+            <h1 class="main-title" style="margin-right: 15px;">Scales Thesaurus</h1>
+            <nav class="header-nav">
+                <a href="home.html" class="header-link">Home</a>
+                <a href="scales.html" class="header-link">Scales</a>
+                <a href="chords.html" class="header-link">Chords</a>
+                <a href="intervals.html" class="header-link">Intervals</a>
+                <a href="data.html" class="header-link">Data</a>
+                <a href="lessons.html" class="header-link">Lessons</a>
+                <a href="about.html" class="header-link">About</a>
+
+            </nav>
+            <div class="sidebar-toggle-container">
+                <button id="sidebar-toggle" aria-expanded="false" title="Back to Neck Diagram Explorer" onclick="window.location.href='fretboard.html'">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="sr-only">Go to App</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="scales-container">
+        <h1>Musical Scales Explorer</h1>
+         <p style="text-align: center; margin-bottom: 25px; font-style: italic; color: var(--secondary-color);">
+            Browse our library of musical scales. Filter by common intervals or your favorites.
+        </p>
+
+        <details class="explorer-about">
+            <summary>About scales and Base 0</summary>
+            <p>A scale is an ordered pitch collection measured from its tonic. The formula names scale degrees; the example spells them from C. Base 0 converts those intervals to pitch-class numbers modulo 12, with C = 0, C-sharp/D-flat = 1, and B = 11. Octave-equivalent notes share one number.</p>
+        </details>
+
+        <!-- Filter Section for Scales -->
+        <div class="scale-filters">
+            <div class="filter-section search-section">
+                <h2>Search & General</h2>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <input type="search" id="scale-search" list="scale-name-options" placeholder="Search scale name (e.g. Lydian)..." style="flex-grow: 1; min-width: 200px;">
+                    <datalist id="scale-name-options"></datalist>
+                    <select id="tone-count-filter" style="width: auto;">
+                        <option value="">-- Any Note Count --</option>
+                        <option value="5">5 Notes (Pentatonic)</option>
+                        <option value="6">6 Notes (Hexatonic)</option>
+                        <option value="7">7 Notes (Heptatonic)</option>
+                        <option value="8">8 Notes (Octatonic)</option>
+                        <option value="12">12 Notes (Chromatic)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h2>Filter by Intervals Included</h2>
+                <div class="interval-filter-list" id="interval-filter-list">
+                    <!-- Interval filter checkboxes populated by JS -->
+                </div>
+            </div>
+            
+            <div style="display:flex; gap:15px; align-items:center; flex-wrap:wrap; justify-content: space-between;">
+                <div style="display:flex; gap:15px; align-items:center;">
+                    <div class="filter-section favorite-filter" style="margin-top:0;">
+                        <input type="checkbox" id="show-favorites-only">
+                        <label for="show-favorites-only">Favorites Only</label>
+                    </div>
+                    <div class="filter-section favorite-filter" style="margin-top:0;">
+                        <input type="checkbox" id="named-only">
+                        <label for="named-only">Named Only</label>
+                    </div>
+                    <div class="filter-section favorite-filter" style="margin-top:0;">
+                        <input type="checkbox" id="mode-intervals-only">
+                        <label for="mode-intervals-only" title="Require every formula interval to appear in a major mode">7-Mode Intervals Only</label>
+                    </div>
+                    <button id="clear-filters" style="margin-top:0;">Reset All</button>
+                </div>
+                <div id="results-count" style="font-weight: 600; color: var(--secondary-color);">
+                    Showing all scales
+                </div>
+            </div>
+        </div>
+
+        <div class="scale-list" id="scale-list">
+            <!-- Scale items populated by JS -->
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+             <a href="fretboard.html" class="return-button">Explore the Neck Diagram Explorer</a>
+        </div>
+    </div>
+
+    <!-- Core dependencies -->
+    <script src="music-theory-data.js"></script>
+    <script src="scales-data-standard.js"></script>
+    <script src="scales-data-numeric.js"></script>
+    <script src="scales-data-advanced-1.js"></script>
+    <script src="scales-data-advanced-2.js"></script>
+    <script src="scales-data-advanced-3.js"></script>
+    <script src="scales-data-advanced-4.js"></script>
+    <script src="scales-data-advanced-5.js"></script>
+    <script src="scales-data-advanced-6.js"></script>
+    <script src="scales-data-advanced-7a.js"></script>
+    <script src="scales-data-advanced-7b.js"></script>
+    <script src="scales-data-advanced-8.js"></script>
+    <script src="scales-data-advanced-10.js"></script>
+    <script src="scales-data-advanced-11.js"></script>
+    <script src="mode-intervals.js"></script>
+    <script src="themes-data.js"></script>
+    <script src="music-theory.js"></script>
+    <script src="music-theory-logic.js"></script>
+    <script src="music-theory-chords.js"></script>
+    <script src="music-theory-descriptions.js"></script>
+    <script src="audio-preview.js"></script>
+    <!-- Page logic -->
+    <script src="scales-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Chord Explorer</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="chords.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <link rel="stylesheet" href="site.css">
+    <script src="site.js" defer></script>
+<link rel="stylesheet" href="standalone.css">
+<style>.filter-section,.chord-filters,.chord-filter-actions,.interval-filter-list{display:none!important}</style>
+</head>
+<body>
+    <header class="top-header">
+        <div class="top-header-content">
+            <h1 class="main-title" style="margin-right: 15px;">Scales Thesaurus</h1>
+            <nav class="header-nav">
+                <a href="home.html" class="header-link">Home</a>
+                <a href="scales.html" class="header-link">Scales</a>
+                <a href="chords.html" class="header-link">Chords</a>
+                <a href="intervals.html" class="header-link">Intervals</a>
+                <a href="data.html" class="header-link">Data</a>
+                <a href="lessons.html" class="header-link">Lessons</a>
+                <a href="about.html" class="header-link">About</a>
+
+            </nav>
+            <div class="sidebar-toggle-container">
+                <button id="sidebar-toggle" aria-expanded="false" title="Back to Neck Diagram Explorer" onclick="window.location.href='fretboard.html'">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="sr-only">Go to App</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="chords-container">
+        <h1>Musical Chords Explorer</h1>
+        <p style="text-align: center; margin-bottom: 25px; font-style: italic; color: var(--secondary-color);">
+            Browse our library of musical chords. Filter by required intervals, related scales, or your favorites.
+        </p>
+
+        <details class="explorer-about">
+            <summary>About chords and Base 0</summary>
+            <p>A chord is a set of tones heard together. Its interval formula describes each tone from the root; inversions change the bass note without changing the chord's pitch classes. Base 0 uses C = 0 through B = 11 and reduces every interval modulo 12, so octave extensions share a pitch-class number.</p>
+        </details>
+
+        <!-- Filter Section for Chords -->
+        <div class="chord-filters">
+            <div class="filter-section">
+                <h2>Filter by Intervals Included</h2>
+                <div class="interval-filter-list" id="interval-filter-list">
+                    <!-- Interval filter checkboxes populated by JS -->
+                </div>
+            </div>
+            
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:15px; align-items:flex-end;">
+                <div class="filter-section">
+                    <h2>Filter by Scale Container</h2>
+                    <select id="scale-filter-select">
+                        <option value="">-- All Scales --</option>
+                        <!-- Scale options populated by JS -->
+                    </select>
+                </div>
+                
+                <div class="chord-filter-actions">
+                    <div class="filter-section favorite-filter">
+                        <input type="checkbox" id="show-favorites-only">
+                        <label for="show-favorites-only">Show Favorites Only</label>
+                    </div>
+                    <div class="filter-section favorite-filter">
+                        <input type="checkbox" id="named-only">
+                        <label for="named-only" title="Keep recognized chord qualities; hide formula-only entries">Named Only</label>
+                    </div>
+                    <div class="filter-section favorite-filter">
+                        <input type="checkbox" id="mode-intervals-only">
+                        <label for="mode-intervals-only" title="Require every chord interval to appear in a major mode formula">7-Mode Intervals Only</label>
+                    </div>
+                    <button id="clear-filters">Clear All Filters</button>
+                    <span id="results-count" class="chord-results-count" aria-live="polite">Showing all chords</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chord-list" id="chord-list">
+            <!-- Chord items populated by JS -->
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+             <a href="fretboard.html" class="return-button">Explore the Neck Diagram Explorer</a>
+        </div>
+    </div>
+
+    <!-- Core dependencies -->
+    <script src="music-theory-data.js"></script>
+    <script src="scales-data-standard.js"></script>
+    <script src="scales-data-numeric.js"></script>
+    <script src="scales-data-advanced-1.js"></script>
+    <script src="scales-data-advanced-2.js"></script>
+    <script src="scales-data-advanced-3.js"></script>
+    <script src="scales-data-advanced-4.js"></script>
+    <script src="scales-data-advanced-5.js"></script>
+    <script src="scales-data-advanced-6.js"></script>
+    <script src="scales-data-advanced-7a.js"></script>
+    <script src="scales-data-advanced-7b.js"></script>
+    <script src="scales-data-advanced-8.js"></script>
+    <script src="scales-data-advanced-10.js"></script>
+    <script src="scales-data-advanced-11.js"></script>
+    <script src="mode-intervals.js"></script>
+    <script src="themes-data.js"></script>
+    <script src="music-theory.js"></script>
+    <script src="music-theory-logic.js"></script>
+    <script src="music-theory-chords.js"></script>
+    <script src="music-theory-descriptions.js"></script>
+    <script src="app-theory-lessons.js"></script>
+    <script src="audio-preview.js"></script>
+    <!-- Page logic -->
+    <script src="chords-app.js"></script>
+</body>
+</html>

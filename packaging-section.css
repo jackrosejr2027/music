@@ -1,0 +1,5 @@
+#fretboard-word-beta #beta-advanced-packaging .beta-field-sections { grid-template-columns:repeat(2,minmax(0,1fr)); }
+#fretboard-word-beta #beta-advanced-packaging .beta-field-section { min-width:0; }
+#fretboard-word-beta #beta-advanced-packaging .beta-advanced-scope { max-width:115ch; line-height:1.55; }
+#fretboard-word-beta #beta-advanced-packaging input:disabled { opacity:.55; cursor:not-allowed; }
+@media(max-width:760px) { #fretboard-word-beta #beta-advanced-packaging .beta-field-sections { grid-template-columns:minmax(0,1fr); } }

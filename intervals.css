@@ -1,0 +1,192 @@
+/* Add styles specific to the intervals page */
+.intervals-container {
+    padding: 20px;
+    max-width: 900px;
+    margin: 20px auto;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.intervals-container h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.interval-filters {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.filter-section h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: var(--primary-color);
+}
+
+.filter-section label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.mode-interval-filter {
+    display: flex;
+    align-items: center;
+    align-self: end;
+    gap: 8px;
+    min-height: 38px;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.mode-interval-filter input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--primary-color);
+}
+
+.filter-section select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
+
+#clear-interval-filters {
+    padding: 8px 15px;
+    background-color: var(--secondary-color);
+    color: var(--button-text);
+    font-size: 0.9em;
+    width: auto;
+    justify-self: start;
+    grid-column: 1 / -1;
+    margin-top: 10px;
+}
+
+#clear-interval-filters:hover {
+    background-color: var(--accent-color);
+}
+
+.interval-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.interval-item {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 15px;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out, border 0.3s ease-in-out;
+    order: 0;
+}
+
+.interval-item .interval-favorite-button[aria-pressed="true"] {
+    background-color: var(--accent-color);
+}
+
+.interval-item.hidden {
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+    overflow: hidden;
+    order: 1;
+}
+
+.interval-color-swatch {
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
+    margin-right: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.interval-details {
+    flex-grow: 1;
+}
+
+.interval-details h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1em;
+    color: var(--text-color);
+}
+
+.interval-details p {
+    margin: 0;
+    font-size: 0.9em;
+    color: var(--text-color);
+}
+
+.button-pair-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.hear-interval-button, .view-diagram-button, .learn-button {
+    padding: 5px 10px;
+    font-size: 0.9em;
+    color: var(--button-text);
+    width: auto;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.view-diagram-button {
+    background-color: var(--secondary-color);
+}
+
+.learn-button {
+    background-color: var(--primary-color);
+}
+
+.hear-interval-button:hover, .view-diagram-button:hover, .learn-button:hover {
+    opacity: 0.8;
+}
+
+.return-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.return-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.interval-item audio {
+    width: 100%;
+    margin-top: 15px;
+    height: 40px;
+}

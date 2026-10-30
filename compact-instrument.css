@@ -1,0 +1,44 @@
+/* Tighter spacing for the two Instrument and tuning controls. */
+#instrument-footer #instrument-selected,
+.diagram-instrument-controls #instrument-selected{padding:9px}
+#instrument-footer #instrument-selected legend,
+.diagram-instrument-controls #instrument-selected legend{font-size:.9rem}
+#instrument-footer #instrument-selected .instrument-control-help,
+.diagram-instrument-controls #instrument-selected .instrument-control-help{margin:0 0 6px;font-size:.76rem;line-height:1.4}
+#instrument-footer #instrument-selected .control-group,
+.diagram-instrument-controls #instrument-selected .control-group{padding:4px 0;gap:5px}
+#instrument-footer #instrument-selected button,
+.diagram-instrument-controls #instrument-selected button{min-height:34px;padding:5px 8px;font-size:.78rem}
+#instrument-footer #instrument-selected select,
+.diagram-instrument-controls #instrument-selected select{min-height:34px;padding:5px 8px}
+.primer-instrument-tuning-control{gap:4px;padding:8px}
+.primer-instrument-tuning-control>strong{font-size:.73rem}
+.primer-instrument-tuning-control select{min-height:34px;padding:5px 8px;font-size:.82rem}
+#instrument-footer .instrument-editor-summary,.diagram-instrument-controls .instrument-editor-summary{box-sizing:border-box;max-width:100%;padding:8px 10px;border:1px solid var(--border-color);border-left:3px solid var(--accent-color);border-radius:7px;background:var(--card-bg);font-size:.78rem;line-height:1.5;overflow-wrap:anywhere}
+#instrument-footer .instrument-editor-summary{margin:0 0 10px}
+#instrument-range .fretspan-save-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(140px,1.2fr);align-items:center;gap:6px;width:100%;margin-top:8px}
+#instrument-range .fretspan-save-row label{margin:0;font-size:.78rem;font-weight:700}
+#instrument-range .fretspan-save-row input{width:100%;min-height:34px;padding:6px 8px;border:1px solid var(--input-border);border-radius:6px;background:var(--input-bg);color:var(--text-color);box-sizing:border-box}
+#instrument-range .fretspan-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+#instrument-range .fretspan-actions button{flex:0 1 auto;min-height:34px;padding:5px 9px;font-size:.75rem}
+#instrument-range .fretspan-status{margin:6px 0 0;color:var(--secondary-color);font-size:.74rem;line-height:1.4}
+#instrument-range .fretspan-actions button:disabled{opacity:.45;cursor:not-allowed}
+.diagram-instrument-controls .instrument-editor-summary{margin:0 0 8px}
+
+/* Keep the model and open-pitch preset together as a two-column control row. */
+#instrument-footer #instrument-selected,
+.diagram-instrument-controls #instrument-selected{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+#instrument-footer #instrument-selected>.instrument-control-help,
+.diagram-instrument-controls #instrument-selected>.instrument-control-help{grid-column:1/-1}
+#instrument-footer #instrument-selected>.control-group,
+.diagram-instrument-controls #instrument-selected>.control-group{display:flex;flex-direction:column;align-items:stretch;min-width:0}
+#instrument-footer #instrument-selected>.control-group>label,
+.diagram-instrument-controls #instrument-selected>.control-group>label{flex:0 0 auto;min-width:0}
+#instrument-footer #instrument-selected>.control-group>select,
+.diagram-instrument-controls #instrument-selected>.control-group>select{width:100%;min-width:0}
+
+#instrument-range .fret-window-row{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:100%;min-width:0}
+#instrument-range .fret-window-row .control-group{display:flex;flex-direction:column;align-items:stretch;gap:4px;min-width:0;padding:4px 0}
+#instrument-range .fret-window-row label{margin:0;font-size:.78rem;font-weight:700}
+#instrument-range .fret-window-row select{box-sizing:border-box;width:100%;min-width:0;min-height:36px;padding:6px 8px}
+#instrument-range .fret-window-row .control-group>label{flex:0 0 auto}

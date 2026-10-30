@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Feature Master List</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="catalog.css">
+    <link rel="stylesheet" href="site.css">
+    <script src="site.js" defer></script>
+</head>
+<body>
+    <header class="top-header">
+        <div class="top-header-content">
+            <h1 class="main-title" style="margin-right: 15px;">Scales Thesaurus</h1>
+            <nav class="header-nav">
+                <a href="home.html" class="header-link">Home</a>
+                <a href="scales.html" class="header-link">Scales</a>
+                <a href="chords.html" class="header-link">Chords</a>
+                <a href="intervals.html" class="header-link">Intervals</a>
+                <a href="data.html" class="header-link">Data</a>
+                <a href="lessons.html" class="header-link">Lessons</a>
+                <a href="about.html" class="header-link">About</a>
+
+            </nav>
+            <div class="sidebar-toggle-container">
+                <button id="sidebar-toggle" aria-expanded="false" title="Back to Neck Diagram Explorer" onclick="window.location.href='fretboard.html'">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="sr-only">Go to App</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="about-container" style="max-width: 1200px;">
+        <h1>Complete Feature Master List</h1>
+        <p style="text-align: center; font-size: 1.1em; margin-bottom: 30px;">
+            Every preserved page, its capabilities and every local asset are documented below. Home supports Default (pre-consolidation dashboard) and Custom (saved Show/Hide) views; use <a href="admin.html">Admin</a> to open tools and manage local navigation visibility. See the <a href="release-notes.html">Release Notes</a> for current offline architecture and installation details.
+        </p>
+
+        <p id="catalog-summary" class="catalog-note"></p>
+        <nav class="catalog-links" aria-label="Feature sections"><a href="#page-catalog">All pages</a><a href="#features-grid">Detailed controls</a><a href="#asset-catalog">All assets</a><a href="admin.html">Admin</a></nav>
+        <section id="page-catalog"><h2>Page-by-Page Capabilities</h2><div data-catalog="pages"></div></section>
+        <h2>Detailed Controls &amp; Workflows</h2>
+        <p>Locations refer to each preserved tool. Some advanced fretboard controls remain in its Sidebar; instrument, appearance and export controls also appear in its Controls panel.</p>
+        <div class="features-grid" id="features-grid">
+            <!-- removed feature categories -> moved to about-data.js and rendered by about-app.js -->
+        </div>
+
+        <section id="asset-catalog"><h2>Complete Asset Inventory</h2><p>This inventory is generated from the same manifest used by both workers and ZIP exporters. Hidden navigation entries and folded asset details are still included. Legacy Home styles and uploaded source art are preserved.</p><div data-catalog="assets"></div></section>
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="fretboard.html" class="return-button">Explore the Neck Diagram Explorer</a>
+        </div>
+    </div>
+    
+    <script src="offline-assets.js"></script>
+    <script src="project-catalog.js"></script>
+    <script src="catalog-ui.js"></script>
+    <script src="about-data.js"></script>
+    <script src="about-app.js"></script>
+</body>
+</html>

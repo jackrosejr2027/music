@@ -1,0 +1,207 @@
+/* Application layout structure */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Arial Narrow", Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    padding: 10px;
+    margin: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app-container, .sidebar, .bottom-footer, .card-bg {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.app-container {
+    width: 100%;
+    margin: 0 auto;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    transition: margin-left 0.3s ease;
+}
+
+.app-container.full-width .main-content {
+    max-width: 100%;
+}
+
+.sidebar {
+    width: 350px;
+    max-height: 100vh;
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    left: -370px;
+    bottom: 0;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    padding: 20px;
+    z-index: 1010;
+    transition: left 0.3s ease;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    color: var(--sidebar-text);
+}
+
+.sidebar-visible {
+    left: 0;
+}
+
+.main-content {
+    width: 100%;
+    transition: width 0.3s ease;
+}
+
+header {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--header-bg);
+}
+
+header h1 {
+    font-size: 28px;
+    color: var(--primary-color);
+    margin: 0;
+    padding: 10px 0;
+}
+
+.top-header {
+    background-color: var(--primary-color);
+    color: white;
+    width: 100%;
+    padding: 4px 0;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.top-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 44px;
+}
+
+.top-header h1.main-title {
+    padding: 0;
+    margin: 0;
+    font-size: 1.2em;
+    color: white;
+    white-space: nowrap;
+}
+
+.header-nav {
+    display: flex;
+    gap: 8px;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+    flex-wrap: wrap;
+}
+
+.sidebar-toggle-container {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    z-index: 1020;
+}
+
+.header-key-selector,
+.header-display-selector,
+.header-pattern-type-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0; 
+    flex-shrink: 0;
+}
+
+.header-key-selector label,
+.header-display-selector label,
+.header-pattern-type-selector label {
+    margin-bottom: 0;
+    color: white;
+    font-weight: normal;
+    font-size: 0.95em;
+}
+
+.header-key-selector select,
+.header-display-selector select,
+.header-pattern-type-selector select {
+    padding: 2px 6px;
+    font-size: 0.9em;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 4px;
+    width: auto; 
+}
+
+@media (max-width: 850px) {
+    .header-nav {
+        gap: 5px;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: min(350px, 90vw);
+        max-height: 100vh;
+        overflow-y: auto;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        bottom: 0;
+        border-right: 1px solid var(--border-color);
+        border-bottom: none;
+        margin: 0;
+        padding: 20px;
+        z-index: 1010;
+        transition: left 0.3s ease;
+    }
+
+    .sidebar-visible {
+        left: 0;
+    }
+    
+    .main-content {
+        width: 100%;
+    }
+    
+    .header-nav {
+        display: none;
+    }
+    
+    .top-header-content {
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-header-content {
+        padding: 0 10px;
+    }
+}

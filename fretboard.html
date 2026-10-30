@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <title>Fretboard</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fretboard.css">
+    <link rel="stylesheet" href="effects.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <!-- Add JSZip library for ZIP file creation -->
+    <script src="vendor/jszip.min.js"></script>
+    <link rel="stylesheet" href="site.css">
+    <link rel="stylesheet" href="fretboard-page.css">
+    <link rel="stylesheet" href="app-export-package.css">
+    <script src="site.js" defer></script>
+</head>
+<body class="square-ui">
+    <div class="app-container">
+        <aside class="sidebar">
+            <!-- removed static sidebar sections content (moved to app-ui-sidebar.js) -->
+        </aside>
+        
+        <main class="main-content">
+            <header class="top-header">
+                <div class="top-header-content">
+                    <!-- Reset button removed from absolute position; moved into header content -->
+                    <h1 class="sr-only">Neck Diagram Explorer</h1>
+                    <button id="reset-settings" class="header-tool-button reset-settings-button" type="button" title="Reset all settings" aria-label="Reset settings">
+                        ⟳
+                    </button>
+                    <nav class="header-nav">
+                        <a href="home.html" class="header-link">Home</a>
+                        <a href="scales.html" class="header-link">Scales</a>
+                        <a href="chords.html" class="header-link">Chords</a>
+                        <a href="intervals.html" class="header-link">Intervals</a>
+                        <a href="data.html" class="header-link">Data</a>
+                        <a href="lessons.html" class="header-link">Lessons</a>
+                        <a href="about.html" class="header-link">About</a>
+                    </nav>
+                    <div class="sidebar-toggle-container" style="display:flex; gap:8px; align-items:center;">
+                        <button id="header-play-pattern" type="button" class="header-play-pattern" title="Play selected pattern" aria-label="Play selected pattern">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M7 4.5a1 1 0 0 1 1.5-.86l11 7.5a1 1 0 0 1 0 1.72l-11 7.5A1 1 0 0 1 7 19.5z"/></svg>
+                        </button>
+                        <button id="header-stop-pattern" type="button" class="header-stop-pattern" title="Stop fretboard playback" aria-label="Stop fretboard playback" disabled>
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+                        </button>
+                        <button id="sidebar-toggle" aria-expanded="false">
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                            <span class="sr-only">Toggle Sidebar</span>
+                        </button>
+                        <button id="toggle-bottom" class="header-tool-button controls-toggle" type="button" title="Show bottom controls" aria-label="Show bottom controls" aria-pressed="false">
+                            Controls
+                        </button>
+                    </div>
+                </div>
+            </header>
+            
+            <section class="fretboard-container" aria-label="Fretboard diagrams">
+                <div id="fretboard" role="region" aria-label="Interactive fretboard, strings ordered lowest to highest" tabindex="0"></div>
+                <div id="current-pattern-display" class="current-pattern-display" aria-label="Selected diagram actions"></div>
+            </section>
+            
+            <div class="slideshow-container">
+                <div id="slideshow-items"></div>
+            </div>
+            
+            <div class="pattern-generator">
+                <div id="generated-patterns"></div>
+            </div>
+            
+
+
+            <!-- removed footers controls-bottom and export-footer -> injected by app-ui-bottom.js -->
+        </main>
+    </div>
+    
+    <script src="vendor/tone.js"></script>
+    <script src="vendor/html2canvas.min.js"></script>
+    <script src="vendor/docx.js"></script>
+    <script src="vendor/xlsx.full.min.js"></script>
+    <script src="themes-data.js"></script>
+    <script src="themes-data-wood.js"></script>
+    <script src="themes-data-exotic.js"></script>
+    <script src="themes-data-mono.js"></script>
+    <script src="themes-data-retro.js"></script>
+    <script src="music-theory-data.js"></script>
+    <script src="scales-data-standard.js"></script>
+    <script src="scales-data-numeric.js"></script>
+    <script src="scales-data-advanced-1.js"></script>
+    <script src="scales-data-advanced-2.js"></script>
+    <script src="scales-data-advanced-3.js"></script>
+    <script src="scales-data-advanced-4.js"></script>
+    <script src="scales-data-advanced-5.js"></script>
+    <script src="scales-data-advanced-6.js"></script>
+    <script src="scales-data-advanced-7a.js"></script>
+    <script src="scales-data-advanced-7b.js"></script>
+    <script src="scales-data-advanced-8.js"></script>
+    <script src="scales-data-advanced-10.js"></script>
+    <script src="scales-data-advanced-11.js"></script>
+    <script src="music-theory.js"></script>
+    <script src="daw-midi.js"></script>
+    <script src="music-theory-logic.js"></script>
+    <script src="music-theory-chords.js"></script>
+    <script src="music-theory-descriptions.js"></script>
+    <script src="fretboard-styles.js"></script>
+    <script src="fretboard-styles-extended.js"></script>
+    <script src="fretboard-marker.js"></script>
+    <script src="fretboard-number-shapes.js"></script>
+    <script src="fretboard-capo-styles.js"></script>
+    <script src="fretboard-effects.js"></script>
+    <script src="instrument-presets.js"></script>
+    <script src="themes-data-extra.js"></script>
+    <script src="themes-data-colors.js"></script>
+    <script src="themes-data-nature.js"></script>
+    <script src="themes-data-misc.js"></script>
+    <script src="themes-data-extended.js"></script>
+    <script src="exporter.js"></script>
+    <script src="exporter-scales.js"></script>
+    <script src="exporter-chords.js"></script>
+    <script src="exporter-intervals.js"></script>
+    <script src="exporter-gamuts.js"></script>
+    <script src="exporter-bulk.js"></script>
+    <script src="exporter-word-v1.js"></script>
+    <script src="exporter-word-v2.js"></script>
+    <script src="exporter-word-v3.js"></script>
+    <script src="exporter-word-v4.js"></script>
+    <script src="exporter-word-v5.js"></script>
+    <script src="exporter-word-v6.js"></script>
+    <script src="exporter-word-extended.js"></script>
+    <script src="exporter-word-custom.js"></script>
+    <script src="exporter-word-patterns.js"></script>
+    <script src="exporter-word-chords-cof.js"></script>
+    <script src="exporter-word-intervals-circle.js"></script>
+    <script src="exporter-word-gamuts-cof.js"></script>
+    <script src="exporter-info-pages.js"></script>
+    <script src="exporter-cof.js"></script>
+    <script src="vendor/jspdf.umd.min.js"></script>
+    <script src="exporter-pdf.js"></script>
+    <script src="exporter-pdf-diagrams.js"></script>
+    <script src="fretboard.js"></script>
+    <script src="fretboard-draw.js"></script>
+    <script src="fretboard-draw-grid.js"></script>
+    <script src="fretboard-draw-notes.js"></script>
+    <script src="fretboard-menu.js"></script>
+    <script src="fretboard-menu-multi.js"></script>
+    <script src="piano.js"></script>
+    <!-- removed inline theme handler script -> moved to theme-init.js -->
+    <script src="diagnostics-tests.js"></script>
+    <script src="diagnostics-tests-ui.js"></script>
+    <script src="diagnostics-tests-logic.js"></script>
+    <script src="diagnostics-tests-release.js"></script>
+    <script src="diagnostics-tests-mobile.js"></script>
+    <script src="diagnostics.js"></script>
+    <!-- Core App Engine and Extensions -->
+    <script src="app.js"></script>
+    <script src="app-events-main.js"></script>
+    <script src="app-events-core.js"></script>
+    <script src="app-events-playback.js"></script>
+    <script src="app-events-export-basic.js"></script>
+    <script src="app-events-export-batch.js"></script>
+    <script src="app-events-export-custom.js"></script>
+    <script src="app-events-export.js"></script>
+    <script src="app-state.js"></script>
+    <script src="app-lessons-data.js"></script>
+    <script src="app-ui-layout.js"></script>
+    <script src="app-playback.js"></script>
+    <script src="app-playback-cof.js"></script>
+    <script src="app-settings.js"></script>
+    <script src="app-media.js"></script>
+    <script src="app-ui.js"></script>
+    <script src="app-ui-bottom-controls.js"></script>
+    <script src="app-ui-bottom-instrument.js"></script>
+    <script src="app-ui-bottom-appearance.js"></script>
+    <script src="app-ui-bottom-export.js"></script>
+    <script src="app-ui-bottom.js"></script>
+    <script src="app-ui-appearance.js"></script>
+    <script src="app-instrument.js"></script>
+    <script src="app-instrument-multi.js"></script>
+    <script src="app-instrument-ui.js"></script>
+    <script src="app-instrument-tuning.js"></script>
+    <script src="app-instrument-fretspan.js"></script>
+    <script src="app-theory-info.js"></script>
+    <script src="app-theory-renderers.js"></script>
+    <script src="app-theory-panel.js"></script>
+    <script src="app-theory-lessons.js"></script>
+    <script src="app-export.js"></script>
+    <script src="app-ui-pattern-pill.js"></script>
+    <script src="app-ui-pattern-selectors.js"></script>
+    <script src="app-ui-pattern-actions.js"></script>
+    <script src="pattern-generator.js"></script>
+    <script src="pattern-generator-export.js"></script>
+    <script src="slideshow.js"></script>
+    <script src="slideshow-player.js"></script>
+    <script src="slideshow-cycle.js"></script>
+    <script src="slideshow-csv.js"></script>
+    <script src="melodic-patterns-data.js"></script>
+    <script src="melodic-patterns.js"></script>
+    <script src="melodic-patterns-ui.js"></script>
+    <script src="melodic-patterns-player.js"></script>
+    <script src="melodic-patterns-midi.js"></script>
+
+    <!-- UI Component Builders (These create elements App needs) -->
+    <script src="app-ui-sidebar.js"></script>
+    
+    <!-- Application Initialization -->
+    <script src="app-init.js"></script>
+    <script src="app-export-package.js"></script>
+</body>
+</html>

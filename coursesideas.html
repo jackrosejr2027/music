@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Ideas & Notes</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <style>
+        .ideas-container { max-width: 760px; margin: 20px auto; padding: 20px; background: var(--card-bg); border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .ideas-container h1 { color: var(--primary-color); margin: 0 0 16px; }
+        #idea-form { display: flex; flex-direction: column; gap: 8px; }
+        #idea-text { min-height: 90px; padding: 10px; font: inherit; border: 1px solid var(--input-border, var(--border-color)); border-radius: 6px; background: var(--bg-color); color: var(--text-color); resize: vertical; }
+        .idea-row { display: flex; gap: 8px; justify-content: flex-end; align-items: center; flex-wrap: wrap; }
+        .idea-row button { padding: 8px 16px; border: none; border-radius: 4px; background: var(--accent-color); color: var(--button-text, #fff); cursor: pointer; font-weight: bold; }
+        .idea-row #idea-export { background: transparent; color: var(--text-color); border: 1px solid var(--border-color); font-weight: normal; }
+        #idea-list { list-style: none; padding: 0; margin: 20px 0 0; display: flex; flex-direction: column; gap: 10px; }
+        .idea { border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; background: var(--bg-color); }
+        .idea-body { white-space: pre-wrap; line-height: 1.5; }
+        .idea-meta { display: flex; gap: 10px; align-items: center; margin-top: 8px; font-size: 0.8em; opacity: 0.75; }
+        .idea-meta button { background: none; border: none; color: var(--accent-color); cursor: pointer; padding: 0; font-size: 1em; }
+        .idea-meta .idea-favorite { min-width: 40px; min-height: 40px; border: 1px solid var(--border-color); border-radius: 999px; color: var(--text-color); }
+        .idea-meta .idea-favorite[aria-pressed="true"] { background: var(--text-color); color: var(--card-bg); }
+        .idea-meta .idea-favorite:focus-visible { outline: 3px solid var(--primary-color); outline-offset: 2px; }
+        .idea-meta button:first-of-type { margin-left: auto; }
+        .idea-sandbox { border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; background: var(--bg-color); }
+        .idea-sandbox select { min-width: 110px; max-width: 100%; padding: 6px 8px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); }
+        .idea-pattern-row select:last-of-type { flex: 1 1 220px; }
+        @media (max-width: 560px) { .idea-pattern-row select { flex: 1 1 100%; } .idea-row button { flex: 1 1 auto; } }
+        .idea-row button.ghost { background: transparent; color: var(--text-color); border: 1px solid var(--border-color); font-weight: normal; }
+        .idea-found { font-size: 0.88em; opacity: 0.8; text-align: center; min-height: 1.2em; margin-top: 4px; }
+        .idea-diagram { margin-top: 8px; cursor: pointer; }
+        .idea-empty { opacity: 0.6; text-align: center; }
+        .idea-tool-label { font-size: 0.86em; font-weight: 600; opacity: .78; }
+        .idea-transpose-row { justify-content: flex-start; }
+        .idea-transpose-row select { min-width: 82px; }
+        .idea-sequence-tools { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-color); }
+        .idea-sequence-controls { justify-content: flex-start; }
+        .idea-sequence-controls label { font-size: .86em; opacity: .75; }
+        .idea-sequence-results { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+        .idea-sequence-results:empty { display: none; }
+        .idea-sequence-results button { border: 1px solid var(--border-color); border-radius: 16px; padding: 5px 9px; background: var(--card-bg); color: var(--text-color); cursor: pointer; }
+        .idea-sequence-results button:hover { border-color: var(--accent-color); }
+        .idea-interval-picker { min-width: 0; margin: 8px 0 0; padding: 8px; border: 1px solid var(--border-color); border-radius: 6px; }
+        .idea-interval-picker legend { padding: 0 5px; font-size: .85em; font-weight: 700; }
+        .idea-interval-options { display: grid; grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); gap: 4px 8px; }
+        .idea-interval-choice { display: flex; align-items: center; gap: 6px; min-height: 36px; padding: 4px 6px; border-radius: 4px; cursor: pointer; }
+        .idea-interval-choice:focus-within { outline: 2px solid var(--primary-color); outline-offset: 1px; }
+        .idea-interval-choice input { width: 18px; height: 18px; accent-color: var(--primary-color); }
+        .idea-export-row { justify-content: flex-end; }
+        .idea-export-row button { background: transparent; color: var(--text-color); border: 1px solid var(--border-color); font-weight: normal; }
+        #idea-export-status { min-height: 1.4em; margin: 8px 0 0; font-size: .88em; }
+        @media (max-width: 560px) { .idea-transpose-row > *, .idea-sequence-controls > * { flex: 1 1 auto; } .idea-tool-label { flex-basis: 100% !important; } .idea-interval-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } .idea-export-row button { flex: 1 1 42%; } }
+    </style>
+    <link rel="stylesheet" href="mini-fretboard.css">
+    <link rel="stylesheet" href="site.css">
+    <script src="site.js" defer></script>
+</head>
+<body>
+    <div class="top-header">
+        <div class="top-header-content">
+            <div class="header-nav">
+                <a href="scales.html" class="header-link">Scales</a>
+                <a href="chords.html" class="header-link">Chords</a>
+                <a href="intervals.html" class="header-link">Intervals</a>
+                <a href="lessons.html" class="header-link">Lessons</a>
+                <!-- Courses dropdown -->
+                <div class="header-nav-item">
+                    <a href="courses.html" class="header-link">Courses</a>
+                    <div class="dropdown-content">
+                        <a href="coursesquizzes.html">Quizzes</a>
+                        <a href="coursestests.html">Tests</a>
+                        <a href="coursesexams.html">Exams</a>
+                        <a href="coursesideas.html">Ideas</a>
+                    </div>
+                </div>
+                <a href="favorites.html" class="header-link">Favorites</a>
+                <a href="data.html" class="header-link">Data</a>
+                <a href="about.html" class="header-link">About</a>
+            </div>
+            <div class="sidebar-toggle-container">
+                <button id="sidebar-toggle" aria-expanded="false" onclick="window.location.href='fretboard.html'">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="sr-only">Go to App</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="ideas-container">
+        <h1>Ideas &amp; Notes</h1>
+        <p style="margin:-8px 0 14px;opacity:.75">A scratchpad for drafting. Everything stays on this device.</p>
+        <form id="idea-form">
+            <div class="idea-sandbox">
+                <div class="idea-row" style="justify-content:flex-start">
+                    <select id="idea-tuning" aria-label="Instrument"></select>
+                    <button type="button" id="idea-hear" class="ghost">▶ Hear</button>
+                    <button type="button" id="idea-hear-arpeggiated" class="ghost">▶ Hear Arpeggiated</button>
+                    <button type="button" id="idea-clear-marks" class="ghost">Clear marks</button>
+                </div>
+                <div class="idea-row idea-pattern-row">
+                    <select id="idea-pattern-type" aria-label="Pattern type">
+                        <option value="interval">Intervals</option>
+                        <option value="chord">Chords</option>
+                        <option value="scale">Scales</option>
+                    </select>
+                    <select id="idea-pattern-key" aria-label="Current key"></select>
+                    <select id="idea-pattern-id" aria-label="Choose chord or scale"></select>
+                    <button type="button" id="idea-populate" class="ghost">Populate board</button>
+                </div>
+                <fieldset id="idea-interval-picker" class="idea-interval-picker" hidden>
+                    <legend>Intervals to include</legend>
+                    <div id="idea-interval-options" class="idea-interval-options"></div>
+                </fieldset>
+                <div class="idea-row idea-transpose-row">
+                    <span class="idea-tool-label">Transpose to</span>
+                    <select id="idea-transpose-key" aria-label="Transpose to key"></select>
+                    <button type="button" id="idea-transpose" class="ghost">Transpose</button>
+                    <button type="button" id="idea-identify-key" class="ghost">Identify key</button>
+                    <button type="button" id="idea-update-key" class="ghost" hidden>Use identified key</button>
+                </div>
+                <div id="idea-fb"></div>
+                <div id="idea-found" class="idea-found" aria-live="polite"></div>
+                <section class="idea-sequence-tools" aria-label="Note sequence generator">
+                    <div class="idea-row idea-sequence-controls">
+                        <span class="idea-tool-label">Build from sketched notes</span>
+                        <select id="idea-sequence-type" aria-label="Sequence type">
+                            <option value="combination">Combinations</option>
+                            <option value="permutation">Permutations</option>
+                        </select>
+                        <label for="idea-sequence-size">Choose</label>
+                        <select id="idea-sequence-size" aria-label="Number of notes in each sequence"></select>
+                        <button type="button" id="idea-generate-sequences" class="ghost">Generate</button>
+                    </div>
+                    <div id="idea-sequence-results" class="idea-sequence-results" aria-live="polite"></div>
+                </section>
+            </div>
+            <textarea id="idea-text" placeholder="Draft anything: a practice plan, lyrics, a riff idea, a topic to study... Marked frets above are saved with the note." aria-label="Note"></textarea>
+            <div class="idea-row"><button type="button" id="idea-export" hidden>Download .txt</button><button type="submit">Add note</button></div>
+            <div class="idea-row idea-export-row" aria-label="Export saved notes">
+                <button type="button" id="idea-export-pdf" hidden>Export PDF</button>
+                <button type="button" id="idea-export-midi" hidden>Export MIDI</button>
+            </div>
+            <p id="idea-export-status" role="status" aria-live="polite"></p>
+        </form>
+        <ul id="idea-list"></ul>
+    </div>
+    <script src="music-theory-data.js"></script>
+    <script src="scales-data-standard.js"></script>
+    <script src="scales-data-numeric.js"></script>
+    <script src="scales-data-advanced-1.js"></script>
+    <script src="scales-data-advanced-2.js"></script>
+    <script src="scales-data-advanced-3.js"></script>
+    <script src="scales-data-advanced-4.js"></script>
+    <script src="scales-data-advanced-5.js"></script>
+    <script src="scales-data-advanced-6.js"></script>
+    <script src="scales-data-advanced-7a.js"></script>
+    <script src="scales-data-advanced-7b.js"></script>
+    <script src="scales-data-advanced-8.js"></script>
+    <script src="scales-data-advanced-10.js"></script>
+    <script src="scales-data-advanced-11.js"></script>
+    <script src="music-theory.js"></script>
+    <script src="music-theory-logic.js"></script>
+    <script src="music-theory-chords.js"></script>
+    <script src="music-theory-descriptions.js"></script>
+    <script src="mini-fretboard.js"></script>
+    <script src="ideas-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+Build a static, no-build web app called "Neck Diagram Explorer": an interactive guitar/bass fretboard for learning scales, chords, intervals and patterns, with a full export studio. Use plain HTML, CSS and JavaScript split into separate files (index.html + .css + .js), relative URLs only, no backend. Use localStorage for saved setups and settings. Use the Web Audio API for playback. Libraries (JSZip, jsPDF, a DOCX writer, SheetJS, etc.) may be loaded from a CDN or vendored.
+
+LAYOUT
+- Header: nav links Home, Scales, Chords, Intervals, Data, Lessons, About. Icon buttons: reset settings, play selected pattern, stop playback, sidebar toggle, "Controls" (bottom controls panel), "Export Studio".
+- Main screen: one large interactive fretboard (default 6 strings, standard tuning E A D G B E, frets 0-24, adjustable tuning presets and fret range). Show note markers, position inlays and fret numbers. Clicking a note toggles it. Note labels can show note names, intervals (R, b3, 5...), roman numerals, solfege, or be hidden. Below it: the current pattern/diagram actions, a slideshow of diagrams, and a generated-patterns area.
+- Keep the chrome minimal: no banners, taglines or instructions blocks.
+
+MUSIC CONTENT
+- Choose a root (12 chromatic keys with sharp/flat spelling). Choose categories: scales (major, minor, modes, pentatonics, blues, harmonic and melodic minor, exotic scales), chords (triads, sevenths, extensions, inversions and voicings), and intervals (unison through octave plus compound intervals).
+- Each pattern shows its note names, interval names and fretboard shape. Patterns can be played as audio, ascending or descending, with tempo control. A melodic-pattern player and a random pattern generator are included.
+- Sidebar: themes, instrument presets, audio and default settings.
+- Bottom Controls panel: tuning, appearance and export shortcuts.
+- Reference pages: Scales, Chords and Intervals (formulas, spellings and fretboard views), Data (inspect and export the theory tables), Lessons (step-by-step tutorials with interactive diagrams), About, and a Home hub with search across all tools.
+
+EXPORT STUDIO (modal dialog from the header; tabs, each with an About guide opened by right-clicking the tab or its heading)
+1. Patterns & keys: search by name or interval; interval filter (Any checked / All checked / Exact pitch-class set); check or uncheck shown patterns; select current key, all keys or none; category order (six orderings of Intervals, Chords, Scales); pattern order (common first, A-Z, Z-A, fewest notes first, or custom with Up/Down). Show the selection count (patterns x keys).
+2. Page & diagram: paper (A4, A3, Letter, Legal, custom mm); orientation; margins; row layout (one per row, two columns, automatic); maximum diagrams per page; diagram width/height in mm (blank = auto aspect); column and row gaps; alignment; page breaks per category and per key; start and end fret; tuning preset or custom tuning; label mode (current, note names, intervals, roman, solfege, none); marker shape and size; label font size; string and fret thickness; fret number placement; background color; transparent background; grayscale; opacity; padding; border style, color and width; rotate 180 degrees; DPI; JPEG quality.
+3. Text & labels: document title, subtitle, author, introduction, date, tuning and range text; category and key headings with notes; diagram captions with tokens {category} {key} {name} {title} {author} {tuning} {startFret} {endFret} {count}; caption position; heading and diagram numbering; uppercase headings and captions; typography (font family, sizes, colors, alignment, line spacing); page header and footer; page numbers (number or number of total).
+4. Saved setups: save, load, duplicate, rename and delete named setups on this device; choose a default setup to load on open; export and import setups as JSON; validate imported values.
+5. Content: publication details (collection code, publisher, edition, revision, copyright, license, contact) and per-diagram captions or practice prompts.
+6. Diagram Layers: show or hide strings, frets, position inlays, tuning labels, fret numbers and note labels; roots only; hide open-string markers; color overrides for strings, frets, root markers, other markers and labels; mirror horizontally or vertically.
+7. Watermark: text (blank = none); size as percent of diagram height; X/Y position; rotation; font family, color, opacity, bold, italic, letter spacing; background badge with color, opacity and padding; repeat mode (3x3 grid).
+8. Packaging: download name template; archive entry template with {number} {key} {category} {name} {pattern}; prefix and suffix; root folder; category and key folders; safe filenames with numeric suffixes for duplicates; companion files (manifest JSON, settings JSON, notes TXT); compression automatic, STORE or DEFLATE.
+9. Data Tables: choose columns (sequence, category, key, pattern ID, name, caption, intervals, tuning, start fret, end fret; at least one required); CSV/TSV delimiter (auto, comma, semicolon, tab, pipe); quoting (always or minimal); UTF-8 BOM on or off; CRLF or LF; protect formula-like cells with a leading apostrophe.
+10. Print preview: paginated preview of the exact output, one page at a time (Previous/Next and page number). Click a heading, diagram or caption to select it; remove a part or only its caption; edit heading or caption text; reorder parts (drag, or move earlier/later across pages); reset preview edits without touching other settings.
+11. HTML Reader: reader and page background colors; gap and outer padding; width percent capped by paper width; shadows, borders, corner radius; optional header with title, author and page count; Print button; document language. Printing removes the reader chrome and uses the paper size.
+
+EXPORT FORMATS (choose one; a footer explains each)
+- Documents and print: DOCX (editable Word with diagram images), single combined PDF, PDF zip (one diagram per PDF), HTML (paged standalone reader), EPUB 3 fixed-layout, DjVu, ODT, XHTML.
+- Presentations and readers: PPTX, ODP (one full-page image per slide or page), CBZ comic archive.
+- Publishing sources with linked PNG diagrams: LaTeX zip, AsciiDoc zip, Org zip, reStructuredText zip.
+- Individual diagrams in a zip: PNG, JPG, SVG, WebP, or Markdown with captions.
+- Page images: SVG pages zip, PNG pages zip, JPG pages zip, BMP pages zip, PNM pages zip, multipage TIFF, TAR of PNG pages.
+- Spreadsheets and catalogs: XLSX, ODS, XLS, CSV, TSV, TXT, RTF, Word XML, DBF, DIF (text and data only, no images; settings sheet included where the format allows).
+- Structured data: JSON (all settings included), XML, NDJSON, YAML.
+
+EXPORT BEHAVIOR
+- Each selected pattern is exported in each selected key; the count is patterns x keys.
+- Render each diagram as SVG, then rasterize to PNG/JPG at the chosen DPI when needed. Pagination honors margins, columns, per-page limits and page breaks, and shrinks oversized diagrams to fit.
+- Show progress with a Cancel button that stops at a safe boundary.
+- Over 300 diagrams: stream ZIPs to disk where supported, otherwise split into numbered parts of at most 250 diagrams (about 32 MB each), and split paged documents on whole pages.
+- Downloads use the packaging name template.
+
+Keep the layout responsive for phones, respect light and dark color schemes, use keyboard-accessible controls with clear focus rings, and keep the interface quiet: the content (the fretboard) owns the screen.

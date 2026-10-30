@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Scales Thesaurus - Favorites</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <style>
+        /* Reuse construction/placeholder page styles */
+        .favorites-container {
+            text-align: center;
+            padding: 100px 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .favorites-icon {
+            font-size: 100px;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        .favorites-heading {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .favorites-text {
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .return-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .return-button:hover {
+            background-color: var(--secondary-color);
+        }
+    </style>
+    <link rel="stylesheet" href="site.css">
+    <script src="site.js" defer></script>
+    <style>
+        .favorites-container{max-width:1100px !important;padding:30px 20px !important}
+        .fav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin:10px 0 30px;text-align:left}
+        .fav-card{background:var(--card-bg,#fff);border:1px solid var(--border-color,#ddd);border-radius:10px;padding:16px;position:relative}
+        .fav-card h3{margin:4px 0 8px;color:var(--primary-color)}
+        .fav-card p{margin:4px 0;font-size:.92em}
+        .fav-type{font-size:.72em;text-transform:uppercase;letter-spacing:.08em;opacity:.6}
+        .fav-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+        .fav-btn{padding:7px 12px;border-radius:6px;border:1px solid var(--border-color,#ccc);background:transparent;color:inherit;cursor:pointer;font-weight:600;text-decoration:none;font-size:.9em}
+        .fav-btn.primary{background:var(--primary-color,#2c3e50);color:#fff;border-color:transparent}
+        .fav-empty{grid-column:1/-1;text-align:center;opacity:.8}
+        .fav-export-actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 0 8px}
+        #favorites-status{min-height:1.4em;color:var(--secondary-color);font-size:.86em}
+        .fav-star{border:1px solid var(--border-color);border-radius:999px;padding:2px 8px;background:var(--bg-color);color:var(--text-color);font:inherit;font-size:.78em}
+    </style>
+</head>
+<body>
+    <header class="top-header">
+        <div class="top-header-content">
+            <h1 class="main-title" style="margin-right: 15px;">Scales Thesaurus</h1>
+            <nav class="header-nav">
+                <a href="home.html" class="header-link">Home</a>
+                <a href="scales.html" class="header-link">Scales</a>
+                <a href="chords.html" class="header-link">Chords</a>
+                <a href="intervals.html" class="header-link">Intervals</a>
+                <a href="data.html" class="header-link">Data</a>
+                <a href="lessons.html" class="header-link">Lessons</a>
+                <a href="about.html" class="header-link">About</a>
+            </nav>
+            <div class="sidebar-toggle-container">
+                <button id="sidebar-toggle" aria-expanded="false" title="Back to Neck Diagram Explorer" onclick="window.location.href='fretboard.html'">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="sr-only">Go to App</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="favorites-container">
+        <h1 class="favorites-heading">⭐ Your Favorites</h1>
+        <p class="favorites-text" id="favorites-count"></p>
+        <div class="fav-export-actions">
+            <button type="button" id="favorites-pdf" class="fav-btn primary">Download as PDF</button>
+            <button type="button" id="favorites-json-export" class="fav-btn">Export portable backup</button>
+            <button type="button" id="favorites-json-import-button" class="fav-btn">Import backup</button>
+            <input type="file" id="favorites-json-import" accept="application/json,.json" hidden>
+        </div>
+        <p id="favorites-status" role="status" aria-live="polite"></p>
+        <div id="favorites-list" class="fav-grid"></div>
+        <a href="fretboard.html" class="return-button">Explore the Neck Diagram Explorer</a>
+    </div>
+    <script src="music-theory-data.js"></script>
+    <script src="scales-data-standard.js"></script>
+    <script src="scales-data-numeric.js"></script>
+    <script src="scales-data-advanced-1.js"></script>
+    <script src="scales-data-advanced-2.js"></script>
+    <script src="scales-data-advanced-3.js"></script>
+    <script src="scales-data-advanced-4.js"></script>
+    <script src="scales-data-advanced-5.js"></script>
+    <script src="scales-data-advanced-6.js"></script>
+    <script src="scales-data-advanced-7a.js"></script>
+    <script src="scales-data-advanced-7b.js"></script>
+    <script src="scales-data-advanced-8.js"></script>
+    <script src="scales-data-advanced-10.js"></script>
+    <script src="scales-data-advanced-11.js"></script>
+    <script src="music-theory.js"></script>
+    <script src="music-theory-logic.js"></script>
+    <script src="music-theory-chords.js"></script>
+    <script src="music-theory-descriptions.js"></script>
+    <script src="vendor/jspdf.umd.min.js"></script>
+    <script src="favorites-app.js"></script>
+</body>
+</html>

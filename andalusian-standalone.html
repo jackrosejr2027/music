@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#24352d">
+  <link rel="icon" href="icon-192.png">
+  <title>Andalusian</title>
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="andalusian.css">
+  <link rel="stylesheet" href="square-edges.css">
+  <script src="site.js" defer></script>
+  <script src="theory-decks/theory.js" defer></script>
+  <script src="theory-decks/data/andalusian.js" defer></script>
+  <script src="andalusian.js" defer></script>
+<link rel="stylesheet" href="standalone.css">
+<style>.progression-controls,.cadence-foot{display:none!important}</style>
+</head>
+<body class="andalusian-page">
+  <header class="top-header">
+    <div class="top-header-content">
+      <h1 class="main-title">Scales Thesaurus</h1>
+      <nav class="header-nav"></nav>
+      <div class="sidebar-toggle-container"></div>
+    </div>
+  </header>
+  <main class="cadence-shell">
+    <section class="cadence-intro">
+      <p class="cadence-kicker"><span></span> MINOR KEY / HARMONIC STUDY</p>
+      <h2>Andalusian<br><i>cadence</i></h2>
+      <p class="cadence-lede">Explore the full Andalusian progression deck in any minor key. Hear each turn, then map its chord and scale colors across the guitar neck.</p>
+    </section>
+
+    <section class="progression-section" aria-labelledby="progression-heading">
+      <div class="section-heading">
+        <div><p class="section-index">01 / THE PROGRESSION <span id="progression-count"></span></p><h3 id="progression-heading">Choose a progression</h3></div>
+        <button class="play-button" id="play-progression" type="button"><span aria-hidden="true">▶</span><span id="play-label">Play progression</span></button>
+      </div>
+      <div class="progression-controls">
+        <label class="cadence-select">Minor key<select id="key-select" aria-label="Minor key"></select></label>
+        <label class="cadence-select cadence-progression-select">Progression<select id="progression-select" aria-label="Andalusian progression"></select></label>
+        <label class="tempo-control">Tempo (BPM)<input id="tempo-input" type="number" min="40" max="220" step="1" value="84" aria-label="Andalusian playback tempo in beats per minute"></label>
+        <label class="loop-toggle"><input id="loop-progression" type="checkbox" checked><span>Loop</span><small>on by default</small></label>
+      </div>
+      <div id="chord-row" class="chord-row" aria-live="polite"></div>
+      <section class="fretboard-section" aria-label="Selected chord fretboard diagrams">
+        <div class="diagram-heading"><span>DAW FRETBOARD VIEWS</span><span id="diagram-key-label">A minor</span></div>
+        <div class="fretboard-grid">
+          <figure class="fretboard-card"><figcaption><strong>Chord</strong><span id="diagram-chord-caption">Select a progression chord.</span></figcaption><div id="diagram-chord" class="fretboard-diagram"></div></figure>
+          <figure class="fretboard-card"><figcaption><strong>Scale mode</strong><span id="diagram-scale-caption">Select a progression chord.</span></figcaption><div id="diagram-scale" class="fretboard-diagram"></div></figure>
+          <figure class="fretboard-card"><figcaption><strong>Blues scale</strong><span id="diagram-blues-caption">Select a progression chord.</span></figcaption><div id="diagram-blues" class="fretboard-diagram"></div></figure>
+          <figure class="fretboard-card"><figcaption><strong>Pentatonic scale</strong><span id="diagram-pentatonic-caption">Select a progression chord.</span></figcaption><div id="diagram-pentatonic" class="fretboard-diagram"></div></figure>
+        </div>
+      </section>
+      <p class="progression-note" id="progression-note"></p>
+    </section>
+
+    <section class="scale-section" aria-labelledby="scale-heading">
+      <div class="section-heading scale-heading">
+        <div><p class="section-index">02 / SCALE COLORS</p><h3 id="scale-heading">One cadence, shifting color</h3></div>
+        <a id="scale-fretboard-link" class="text-link" href="fretboard.html?key=A&patternType=scale&pattern=harmonic_minor">Map scale on fretboard <span aria-hidden="true">↗</span></a>
+      </div>
+      <div id="scale-list" class="scale-list"></div>
+      <div class="scale-readout" aria-live="polite">
+        <div class="readout-top"><div><p class="section-index">SELECTED SCALE</p><h4 id="scale-name"></h4></div><span class="fit-pill" id="scale-fit"></span></div>
+        <div id="scale-notes" class="note-row"></div>
+        <p id="scale-explanation" class="scale-explanation"></p>
+      </div>
+    </section>
+
+    <footer class="cadence-foot"><span>Standard tuning · E A D G B E · low to high</span><span>Loop starts enabled · use Stop to end playback</span></footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1f3a2c">
+<title>Reference</title>
+<link rel="stylesheet" href="home.css">
+<script defer src="offline-support.js"></script>
+<link rel="stylesheet" href="mobile.css">
+<link rel="stylesheet" href="main-app-header.css">
+<script defer src="mobile-view.js"></script>
+</head>
+<body class="field-guide-page reference-page">
+<header class="site-header">
+  <a class="wordmark" href="index.html">Theory Decks</a>
+  <nav aria-label="Main navigation"><a href="index.html">Home</a><a href="play.html" class="nav-play">Play</a><a href="daw.html">DAW</a><a href="reference.html" aria-current="page">Reference</a><a href="about.html">About</a><a href="release-notes.html">Release Notes</a><a href="settings.html">Settings</a><a href="Fretboard%20Diagrams/index.html">Fretboard</a><a href="../fretboard.html">Scales Fretboard</a><a href="author.html">From the Author</a></nav>
+</header>
+<header class="main-app-header">
+  <div class="main-app-header-content">
+    <a class="main-app-brand" href="../home.html">Scales Thesaurus</a>
+    <nav class="main-app-nav" aria-label="Scales Thesaurus navigation">
+      <a href="../home.html">Home</a>
+      <a href="../scales.html">Scales</a>
+      <a href="../chords.html">Chords</a>
+      <a href="../intervals.html">Intervals</a>
+      <a href="../data.html">Data</a>
+      <a href="../lessons.html">Lessons</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </div>
+</header>
+<main class="reference-shell">
+  <div class="reference-intro">
+    <p class="eyebrow">Field guide</p>
+    <h1>Lessons, decks &amp; games</h1>
+    <p>Five sections start collapsed: Theory lessons, Decks, Games, DAW and Fretboard. Open a section, then an entry for its application, usefulness, variations, uses in composition and improvisation, and worked examples in C.</p>
+  </div>
+  <details class="reference-section reference-group" aria-labelledby="lesson-heading">
+    <summary class="section-heading"><span>01</span><h2 id="lesson-heading">Theory lessons</h2></summary>
+    <p class="reference-note">A full music-theory lesson for every deck: the idea, how it is built (with examples in C), hearing it, applying it on the guitar, a practice plan, common mistakes and where it leads.</p>
+    <div id="lesson-list" class="reference-list"></div>
+  </details>
+  <details class="reference-section reference-group" aria-labelledby="deck-heading">
+    <summary class="section-heading"><span>02</span><h2 id="deck-heading">Decks</h2></summary>
+    <div id="deck-list" class="reference-list"></div>
+  </details>
+  <details class="reference-section reference-group" aria-labelledby="game-heading">
+    <summary class="section-heading"><span>03</span><h2 id="game-heading">Games</h2></summary>
+    <div id="game-list" class="reference-list"></div>
+  </details>
+  <details class="reference-section reference-group" aria-labelledby="daw-heading">
+    <summary class="section-heading"><span>04</span><h2 id="daw-heading">DAW</h2></summary>
+    <p class="reference-note">The DAW page (daw.html) turns cards into songs: a step grid down to 32nd notes, bars with their own meter, beat grouping, tempo, key, scale and chord changes, sections arranged into a song, and live key / scale / chord changes while it plays. <a href="daw.html">Open the DAW →</a></p>
+    <div class="reference-list doc-list">
+<details class="reference-entry game-doc"><summary><h3>The grid</h3><p>Melody, chord and bass lanes, one column per grid step.</p></summary><section><ul><li>Each bar is a block of cells. The top rows are scale degrees of that bar's scale (1 = tonic, marked in red); the bottom two rows are the Chords and Bass lanes.</li><li>Click a cell to add a note of the selected Note length; click a note to remove it. Shift+click moves the insert cursor without adding a note. From the keyboard: Tab to the grid, arrows move the cursor (across bars), Enter adds or removes, Delete removes, Home / End jump within the bar.</li><li>Grid sets the step size: 1/4, 1/8, 1/8 triplet, 1/16, 1/16 triplet, 1/32 or 1/32 triplet; Note sets the length (1/32 triplet to whole, including dotted values). Positions are stored in 96ths of a whole note, so changing the grid never moves notes and triplets are exact.</li><li>Melody notes are stored as scale degrees, so changing a bar's key or scale moves its melody with it. Hover any cell to see the bar, beat and exact pitch.</li><li>Chord hits play the chord written at that point of the bar (around C4); bass hits play its root (E2–E♭3).</li></ul></section></details>
+<details class="reference-entry game-doc"><summary><h3>Bars: meter, grouping, tempo, key, scale</h3><p>Every bar has its own complete settings.</p></summary><section><ul><li>Meter: any numerator 1–32 over 2, 4, 8, 16 or 32 (3/4, 6/8, 7/8, 5/16, 12/8, 9/32…).</li><li>Beat groups: how the beats group, e.g. 2+2+3 for 7/8 or 3+3+2 for 8/8. The first group is accented by the click; group lines are drawn darker in the grid. Blank = a sensible default (6/8 → 3+3).</li><li>Tempo: quarter notes per minute; blank uses the song tempo, so tempo changes can happen on any bar.</li><li>Key (12 tonics) and Scale (major, the modes, harmonic and melodic minor, Phrygian dominant, pentatonics, blues, whole tone, chromatic, or any scale or key card).</li><li>"Meter → following bars" and "Key & scale → following bars" copy the settings to the rest of the section.</li><li>Fill chords & bass writes one chord hit per beat group and a bass note per chord change; Insert, Duplicate, Move and Delete edit the bar list.</li></ul></section></details>
+<details class="reference-entry game-doc"><summary><h3>Chords</h3><p>Diatonic chords that follow the scale, or exact chords from cards.</p></summary><section><ul><li><b>Right-click</b> any cell, chord name or bar number (or press C on the grid, or click a chord name) for the chord menu: choose Triad, 4-tone or 5-tone, then a degree I–VII of the bar's scale (keys 1–7 work too). Tick Whole bar to replace the bar's chord, or leave it to add a chord change from that point. A bar with no chord or bass hits gets them automatically so the chord is heard.</li><li>Preset bars start with a chord; Blank starts chordless. "+ Chord at cursor" gives a chordless bar its first chord; "+ Change at cursor" adds a chord change anywhere inside the bar (Shift+click the position first).</li><li>Roman numerals are named from the root's distance above the tonic, so pentatonic, blues and borrowed chords read correctly (♭III, ♭VII, ♭V).</li><li>Pick a degree (I–VII) and Triad, 4-tone (7th) or 5-tone (9th): these are built from the bar's scale, so a key or scale change re-harmonises them.</li><li>Chords from progression, Roman numeral, triad and 4-tone cards keep their exact quality and move with key changes.</li></ul></section></details>
+<details class="reference-entry game-doc"><summary><h3>Cards → progression → song</h3><p>Build a song from cards.</p></summary><section><ul><li>Every card: ▶ Together (or ▶ Chords) and ▶ Arpeggio play it in the key chosen in its Key box (key cards in their own key). "New song from card" replaces the song with one built from the card — a progression as chosen below; a chord held for four bars with its arpeggio as melody; a Roman numeral alternating with the tonic; a key or scale as I–IV–V–I with the scale as melody; a pattern or interval as melody over I–IV–V–I. Undo brings the old song back.</li><li>Progression cards (Major / Minor, Andalusian, Deceptive, Blues): choose bars per chord (½, 1, 2 or 4), repeats and key, then "Build new section" or "Replace bars from bar n". Minor-key cards set natural minor.</li><li>Roman numeral, triad and 4-tone cards: "Set chord at cursor" (chord cards keep the root already there and change its quality); "Insert arpeggio at cursor" writes the chord as melody.</li><li>Key and scale cards: set the key and scale of one bar or of every bar from here on, or insert the scale as a melody.</li><li>Melodic pattern, 7-tone Base 0 and interval cards: "Insert melody at cursor" writes the notes one Note length apart, continuing into the next bars.</li></ul></section></details>
+<details class="reference-entry game-doc"><summary><h3>New song: blank or ready-made</h3><p>Start empty or from one of 916 progressions.</p></summary><section><ul><li>New opens a strip above the grid. Start from Blank gives empty bars (choose how many, 1–64) in any key and any of the 15 scales, with no chord or bass hits, for writing a totally new progression. Each empty bar shows “+ Chord”: click it (or right-click the bar, long-press on a touch screen, or press C) to choose its chord; the chord's hits are added for you so it is heard straight away.</li><li>Or pick one of 916 progressions (every one unique) grouped as Pop, Rock, Folk &amp; country, Jazz, Blues, Gospel &amp; soul, Minor, Harmonic minor, Modal (Dorian, Phrygian, Lydian, Mixolydian, Locrian, Phrygian dominant), Early music, and — new in 1.0 — Film &amp; game, Latin, R&amp;B &amp; neo-soul, Metal, Classical, Worship, Electronic, Hip-hop &amp; lo-fi, Musical theatre and Celtic &amp; folk. Type in the Find box to narrow the list by name, genre, scale or numerals (“bVII”, “ii7 V7”, “metal”). The chords are shown in the chosen key before you create it.</li><li>Choose the key, meter, tempo and bars per chord (½, 1, 2 or 4). Create new song replaces the song (Undo brings it back); Add as section adds it to the current song.</li></ul></section></details>
+<details class="reference-entry game-doc"><summary><h3>All bars</h3><p>Change chord, key, scale or meter for every bar at once.</p></summary><section><ul><li>The All bars strip works on this section or the whole song.</li><li>Meter → Set gives every bar the same meter (chord changes and hits are re-spaced when bars grow). Key → Set moves every bar to one key; +1 / −1 transpose every bar by a semitone. Scale → Set changes every bar's scale; diatonic chords and the melody follow.</li><li>Chord → Set puts one chord on every bar; Size only keeps each bar's degrees and makes them triads, 4-tone or 5-tone chords. Use song tempo clears per-bar tempo changes.</li></ul></section></details>
+<details class="reference-entry game-doc"><summary><h3>Sections and song</h3><p>Sections are reusable blocks; the song is their order.</p></summary><section><ul><li>Sections (A, B, …) are edited one at a time; + New, Duplicate, rename in the name box, Delete (click twice).</li><li>Song lists the sections in playing order. + Add section appends the section you are editing; ◀ moves a slot earlier, × removes it. A section can appear any number of times.</li><li>Play: Song plays the arrangement; This section plays only the section on screen. Loop repeats, ▶ From bar starts at the selected bar, and the view follows the playhead.</li></ul></section></details>
+<details class="reference-entry game-doc"><summary><h3>Live changes</h3><p>Change key, scale or chord on the spot while it plays.</p></summary><section><ul><li>Live Key and Scale override every bar while set; "As written" returns to the song.</li><li>Live Chord buttons (I–VII of the current scale, as triads, 4-tone or 5-tone chords) hold one chord under everything; Written returns to the written chords. Keys 1–7 and 0 do the same.</li><li>Tempo, swing, mutes, volumes and any edit also take effect within about a tenth of a second, because notes are scheduled just ahead of time.</li></ul></section></details>
+<details class="reference-entry game-doc"><summary><h3>Saving, files and sound</h3><p>Everything stays on the device.</p></summary><section><ul><li>The song saves automatically on this device. Export downloads it as JSON (the full song, for Import), TXT (a readable chart: every bar's meter, key, scale, chords, melody notes, hits and bass) , CSV (one row per chord change and note, for spreadsheets) or MIDI (a Standard MIDI File of the whole song in arrangement order: tempo, meter and key changes, section markers, chord symbols, and Melody, Chords and Bass tracks, for any DAW or notation program; it follows the Play setting — the whole song or this section — and is named Key - Song Title - bpm - Swing - grid - note - play). Grid, Note, Play, Loop and Click are remembered on this device. Import opens a JSON export (damaged files are repaired) or a MIDI file: MIDI exported here reopens exactly, any other MIDI file brings in its tempo, meter, key and melody. Undo (Ctrl+Z) and Redo (Ctrl+Y / Ctrl+Shift+Z) cover 100 edits. A second tab with the DAW open picks up saved changes.</li><li>Mix: mute, set the volume and choose the sound (Warm, Bright, Organ, Pluck) of Melody, Chords and Bass; choose a Drums pattern (Beat, Half-time, Four on the floor, Hi-hat only — it follows every bar's meter and beat groups); plus the Click. Swing delays off-beat 8ths (light, medium, hard).</li><li>Space plays and stops; Escape closes menus. Settings → DAW song downloads or clears the saved song; Settings → Backup &amp; reset moves it, with every other setting, to another device. Sound is synthesised locally at exact equal-tempered pitches; on iPhone and iPad it plays even with the silent switch on.</li></ul></section></details>
+    </div>
+  </details>
+  <details class="reference-section reference-group" aria-labelledby="fret-heading">
+    <summary class="section-heading"><span>05</span><h2 id="fret-heading">Fretboard</h2></summary>
+    <p class="reference-note">The Fretboard page (Fretboard Diagrams/index.html) draws any scale, chord or interval on 1–14 individually tuned strings, with a selectable fret window and capo. <a href="Fretboard%20Diagrams/index.html">Open the Fretboard →</a></p>
+    <div class="reference-list doc-list">
+<details class="reference-entry game-doc"><summary><h3>What it shows</h3><p>563 grouped shapes: scales, chords and intervals; search by formula; 1–14 tuned strings; capo and fret window.</p></summary><section><ul><li>Choose a key, then search the grouped catalog by name or formula. It includes named scales and modes, formula-labeled synthetic collections, chord sonorities, and simple or compound intervals.</li><li>Every matching note on every string and fret is marked; the root is red, open strings are outlined. Labels show the spelled note (letter-correct for the key) or its degree (1, ♭3, ♯4…).</li><li>▶ Arpeggio plays the selected formula note by note; ■ Stop halts playback. Export locally as PNG, JPG, PDF, PPTX, DOCX or MIDI.</li></ul></section></details>
+<details class="reference-entry game-doc"><summary><h3>Strings, tunings, fret window and capo</h3><p>1–14 custom-tuned strings, any visible fret window from 0–48, and a capo.</p></summary><section><ul><li>Choose 1–14 strings. Standard, half-step-down, whole-step-down and drop presets are available; open each string editor to set its note and octave independently.</li><li>Start and End fret are inclusive and can be set from 0 to 48. The neck remains horizontally scrollable instead of compressing high fret ranges.</li><li>Capo 0 means no capo. At a positive fret, the capo is marked on the board and notes below it are muted/hidden. The string labels show the capoed open pitch; dots and audio remain concert pitch (open MIDI note + physical fret).</li><li>The count, custom pitches, fret window, capo, key, shape and labels save locally and are included in Settings backups.</li></ul></section></details>
+<details class="reference-entry game-doc"><summary><h3>Practising with it</h3><p>Hear it, find it, play it.</p></summary><section><ul><li>Click or press Enter on any note to hear its exact pitch; ▶ Play sounds the scale up to its octave or the chord.</li><li>Pair it with a dealt card: deal a key and a scale on the Play page, then show that key and scale here and play it in every position.</li><li>Switch Labels to Degrees to learn where the 3rds and 7ths lie, then back to Notes to name them.</li></ul></section></details>
+    </div>
+  </details>
+</main>
+<footer class="site-footer"><a href="play.html">Play a deal</a><a href="about.html">About</a><a href="index.html">Theory Decks home</a></footer>
+<script defer src="theory.js"></script>
+<script defer src="data/scales.js"></script>
+<script defer src="data/modes.js"></script>
+<script defer src="data/keys.js"></script>
+<script defer src="data/intervals.js"></script>
+<script defer src="data/chords.js"></script>
+<script defer src="data/strings.js"></script>
+<script defer src="data/techniques.js"></script>
+<script defer src="data/andalusian.js"></script>
+<script defer src="data/progressions.js"></script>
+<script defer src="data/deceptive.js"></script>
+<script defer src="data/majorminor.js"></script>
+<script defer src="data/blues.js"></script>
+<script defer src="data/romannumerals.js"></script>
+<script defer src="data/melodicpatterns.js"></script>
+<script defer src="data/lefthand.js"></script>
+<script defer src="data/righthand.js"></script>
+<script defer src="decks.js"></script>
+<script defer src="themes.js"></script>
+<script defer src="cardstyles.js"></script>
+<script defer src="sound.js"></script>
+<script defer src="deal.js"></script>
+<script defer src="game.js"></script>
+<script defer src="tone.js"></script>
+<script defer src="fibonacci.js"></script>
+<script defer src="fibcombos.js"></script>
+<script defer src="progressiongames.js"></script>
+<script defer src="games.js"></script>
+<script defer src="gamedocs.js"></script>
+<script defer src="deckdocs.js"></script>
+<script defer src="lessons.js"></script>
+<script defer src="reference.js"></script>
+</body>
+</html>

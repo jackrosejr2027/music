@@ -1,0 +1,26 @@
+.cp-quality-label { flex: 0 0 auto; font-size: .9em; }
+.cp-chord b { max-width: 100%; overflow-wrap: anywhere; text-align: center; line-height: 1.2; }
+.cp-step a { max-width: 100%; overflow-wrap: anywhere; text-align: center; }
+.cp-notes { max-width: 100%; overflow-wrap: anywhere; text-align: center; }
+#cp-quality { min-width: 190px; max-width: 100%; }
+.cp-presets { display: grid; grid-template-columns: minmax(150px, .8fr) minmax(190px, 1.2fr) auto; align-items: center; gap: 8px; flex: 1 1 440px; min-width: 0; }
+.cp-presets input, .cp-presets select { min-width: 0; width: 100%; }
+#cp-preset-count { color: var(--secondary-color); font-size: .78em; white-space: nowrap; }
+.cp-favorite-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: -8px 0 16px; }
+#cp-favorite-status { min-height: 1.3em; color: var(--secondary-color); font-size: .85em; }
+.cp-preset-info { min-height: 2.6em; margin: -6px 0 16px; padding: 10px 12px; border: 1px solid var(--border-color); border-left: 3px solid var(--accent-color); border-radius: 5px; color: var(--text-color); background: var(--card-bg); font-size: .9em; line-height: 1.5; }
+.cp-empty-state { display: block; margin: 0; color: var(--secondary-color); text-align: center; }
+.progressions-app-link { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 8px 13px; border: 1px solid rgba(255,255,255,.38); border-radius: 9px; background: rgba(255,255,255,.12); color: #fff; font-size: .84em; font-weight: 700; line-height: 1.2; text-decoration: none; white-space: nowrap; transition: background .16s ease, border-color .16s ease; }
+.progressions-app-link:hover { border-color: rgba(255,255,255,.65); background: rgba(255,255,255,.22); color: #fff; }
+.progressions-app-link:focus-visible { outline: 3px solid #ddd; outline-offset: 2px; }
+@media (max-width: 700px) {
+  .cp { width: calc(100% - 20px); margin: 10px auto; padding: 14px; }
+  .cp-presets { grid-template-columns: minmax(0, 1fr); flex-basis: 100%; }
+  #cp-preset-count { white-space: normal; }
+  #cp-quality { flex: 1 1 100%; }
+  #cp-palette { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cp-step { min-width: min(78px, 100%); }
+}
+@media (max-width: 768px) {
+  .progressions-app-link { min-height: 40px; padding: 8px 10px; font-size: .78em; }
+}

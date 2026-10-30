@@ -1,0 +1,136 @@
+.effect-twinkle, .effect-splash, .effect-heatwave, .effect-chroma, .effect-emboss,
+.effect-metallic, .effect-neumorphic, .effect-holographic, .effect-retro, .effect-pixelate,
+.effect-sketch, .effect-paint, .effect-grime, .effect-distortion, .effect-liquefy,
+.effect-frosted, .effect-carved, .effect-vignette, .effect-noise, .effect-sticker,
+.effect-psychedelic, .effect-relief, .effect-foil, .effect-brushed, .effect-glazed,
+.effect-watercolor, .effect-comic, .effect-bubble, .effect-gradient-pulse {
+    stroke-width: 2;
+}
+
+.effect-glitch {
+    animation: glitch 0.5s infinite steps(2);
+}
+
+@keyframes glitch {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(2px, -2px); }
+    50% { transform: translate(-2px, 2px); }
+    75% { transform: translate(1px, -1px); }
+    100% { transform: translate(0, 0); }
+}
+
+.effect-shatter {
+    animation: shatter 2s infinite;
+}
+
+@keyframes shatter {
+    0% { transform: scale(1); opacity: 1; }
+    15% { transform: scale(1.1) rotate(5deg); opacity: 0.9; }
+    30% { transform: scale(1) rotate(-3deg); opacity: 1; }
+    45% { transform: scale(1.05) rotate(2deg); opacity: 0.95; }
+    60% { transform: scale(1) rotate(0deg); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.effect-gradient-pulse {
+    animation: gradient-pulse 2s infinite;
+}
+
+@keyframes gradient-pulse {
+    0% { filter: hue-rotate(0deg); }
+    50% { filter: hue-rotate(180deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+.note-marker.playing-pattern {
+    animation: note-play 0.3s ease-in-out;
+    stroke: #ffffff;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+}
+
+/* Variant for the secondary melodic pattern player:
+   uses a slightly different hue and longer pulse so both players are visually distinct */
+.note-marker.playing-pattern-variant {
+    animation: note-play-variant 0.36s ease-in-out;
+    stroke: #ddd; /* warm highlight for variant */
+    filter: drop-shadow(0 0 6px rgba(220, 220, 220, 0.75));
+}
+
+/* Variant keyframes: a slightly slower, larger pulse */
+@keyframes note-play-variant {
+    0% { stroke-width: 1; transform: scale(1); filter: none; }
+    50% { stroke-width: 4; transform: scale(1.15); filter: drop-shadow(0 0 6px rgba(220, 220, 220, 0.75)); }
+    100% { stroke-width: 1; transform: scale(1); filter: none; }
+}
+
+@keyframes note-play {
+    0% { stroke-width: 1; filter: none; }
+    50% { stroke-width: 3; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8)); }
+    100% { stroke-width: 1; filter: none; }
+}
+
+.playing-note-pulse {
+    animation: note-pulse-anim 0.6s ease-out;
+}
+@keyframes note-pulse-anim {
+    0% { transform: scale(1); filter: brightness(1); }
+    20% { transform: scale(1.4); filter: brightness(1.5) drop-shadow(0 0 8px rgba(255,255,255,0.8)); stroke: #fff; stroke-width: 2px; }
+    100% { transform: scale(1); filter: brightness(1); stroke-width: 1px; }
+}
+
+/* --- New glow and "on" animations usable by both primary and secondary players --- */
+/* Glow: bright, soft outer glow pulse */
+.note-marker.effect-glow,
+.note-marker.playing-pattern.effect-glow,
+.note-marker.playing-pattern-variant.effect-glow,
+.note-marker.effect-glow.playing-pattern,
+.note-marker.effect-glow.playing-pattern-variant {
+    animation: glow-pulse 0.9s ease-in-out;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.9)) drop-shadow(0 0 12px rgba(255,255,255,0.6));
+    stroke-width: 2 !important;
+}
+
+/* "On": sharp highlight + quick scale/pop to indicate active-on state */
+.note-marker.effect-on,
+.note-marker.playing-pattern.effect-on,
+.note-marker.playing-pattern-variant.effect-on,
+.note-marker.effect-on.playing-pattern,
+.note-marker.effect-on.playing-pattern-variant {
+    animation: on-pop 0.28s ease-in-out;
+    stroke: #ffffff !important;
+    stroke-width: 3 !important;
+    transform-origin: center center;
+    filter: drop-shadow(0 0 6px rgba(255,255,255,0.95));
+}
+
+/* Slightly different color variant when combined with playing-pattern-variant to keep them distinct */
+.note-marker.playing-pattern-variant.effect-on {
+    stroke: #ddd !important;
+    filter: drop-shadow(0 0 8px rgba(220,220,220,0.8));
+}
+
+/* Keyframes */
+@keyframes glow-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        filter: drop-shadow(0 0 4px rgba(255,255,255,0.6));
+    }
+    50% {
+        transform: scale(1.06);
+        opacity: 1;
+        filter: drop-shadow(0 0 12px rgba(255,255,255,0.95));
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        filter: drop-shadow(0 0 4px rgba(255,255,255,0.6));
+    }
+}
+
+@keyframes on-pop {
+    0% { transform: scale(1); opacity: 1; }
+    40% { transform: scale(1.25); opacity: 1; }
+    70% { transform: scale(0.98); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}

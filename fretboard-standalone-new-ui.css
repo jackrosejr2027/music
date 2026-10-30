@@ -1,0 +1,32 @@
+#fb-controls #new-ui-footer { min-width: 0; color: #222; font-family: Arial, sans-serif; }
+#fb-controls #new-ui-footer .new-ui-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+#fb-controls #new-ui-footer button { min-height: 40px; height: auto; padding: 8px 12px; border: 1px solid #bbb; border-radius: 6px; background: #fff; color: #222; font: 14px Arial, sans-serif; cursor: pointer; }
+#fb-controls #new-ui-footer select, #fb-controls #new-ui-footer textarea { min-height: 40px; min-width: 0; max-width: 100%; padding: 8px; border: 1px solid #bbb; border-radius: 6px; background: #fff; color: #222; font: 14px Arial, sans-serif; box-sizing: border-box; }
+#fb-controls #new-ui-footer input:not([type=checkbox]):not([type=color]) { min-height: 40px; min-width: 0; max-width: 100%; padding: 8px; border: 1px solid #bbb; border-radius: 6px; background: #fff; color: #222; font: 14px Arial, sans-serif; box-sizing: border-box; }
+#fb-controls #new-ui-footer textarea { flex: 1 1 100%; resize: vertical; }
+#fb-controls #new-ui-footer output { font: 600 15px Arial, sans-serif; padding: 4px; }
+#fb-controls #new-ui-footer .new-ui-report { display: block; flex: 1 1 100%; max-height: 260px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font: 13px/1.6 Arial, sans-serif; }
+#fb-controls #new-ui-footer .new-ui-report:empty { display: none; }
+#fb-controls #new-ui-footer input[type=color] { flex: 0 0 64px; width: 64px; height: 40px; padding: 3px; }
+#fb-controls #new-ui-footer .new-ui-small-number { flex: 0 1 100px !important; width: 100px; }
+#fb-controls #new-ui-footer .control-group[hidden], #fb-controls #new-ui-footer details.fb-card[hidden] { display: none !important; }
+#fb-controls #new-ui-footer .new-ui-print-frame { position: fixed; left: -10000px; top: 0; width: 1px; height: 1px; border: 0; }
+#fb-controls #new-ui-footer .more-pitch-checks { display: flex; flex-wrap: wrap; flex: 1 1 100%; gap: 8px 14px; }
+#fb-controls #new-ui-footer .more-pitch-checks label { display: inline-flex; align-items: center; gap: 5px; margin: 0; font: 14px Arial, sans-serif; }
+#fb-controls #new-ui-footer .more-pitch-checks input { width: auto; margin: 0; }
+#new-ui-status { margin: 8px 0; font: 14px/1.5 Arial, sans-serif; }
+#new-ui-status:empty { display: none; }
+.fb-standalone .new-ui-root > .note-marker { stroke: #111; stroke-width: 4px; }
+.fb-standalone .new-ui-answer > .note-marker { stroke: #005fcc; stroke-width: 5px; stroke-dasharray: 3 2; }
+.fb-standalone .new-ui-conceal > text { visibility: hidden; }
+.fb-standalone .new-ui-conceal.new-ui-peek:hover > text, .fb-standalone .new-ui-conceal.new-ui-peek:focus > text { visibility: visible; }
+body.fb-ui-compact #fb-advanced [data-control-panel] .control-group { padding-top: 3px; padding-bottom: 3px; }
+body.fb-ui-large #fb-controls label, body.fb-ui-large #fb-controls button, body.fb-ui-large #fb-controls select, body.fb-ui-large #fb-controls input, body.fb-ui-large #fb-controls summary { font-size: 18px !important; }
+body.fb-ui-wide #fb-advanced [data-control-panel] .control-group > select, body.fb-ui-wide #fb-advanced [data-control-panel] .control-group > input:not([type=checkbox]):not([type=range]) { flex: 1 1 100%; width: 100%; }
+body.fb-ui-focus #fb-controls :focus-visible, body.fb-ui-focus [data-fret-note]:focus-visible { outline: 3px solid #005fcc !important; outline-offset: 3px; }
+body.fb-ui-motion *, body.fb-ui-motion *::before, body.fb-ui-motion *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+@media (max-width: 480px) {
+    #fb-controls #new-ui-footer .control-group > label { flex-basis: 100%; }
+    #fb-controls #new-ui-footer .new-ui-actions { width: 100%; }
+    #fb-controls #new-ui-footer .new-ui-actions button { flex: 1 1 auto; white-space: normal; }
+}

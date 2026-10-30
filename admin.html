@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#2c3e50">
+    <title>Admin</title>
+    <link rel="icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="themes.css">
+    <link rel="stylesheet" href="catalog.css">
+    <script src="theme-init.js"></script>
+    <script src="site.js" defer data-offline-only></script>
+    <script src="offline-assets.js" defer></script>
+    <script src="project-catalog.js" defer></script>
+    <script src="catalog-ui.js" defer></script>
+</head>
+<body>
+    <main class="catalog-shell">
+        <nav class="catalog-links" aria-label="Administration"><a href="index.html">Home</a><a href="about.html">Complete Feature Master List</a><a href="release-notes.html">Release Notes</a><a href="testing.html">In dept testing</a></nav>
+        <h1>Admin</h1>
+        <p id="catalog-summary"></p>
+        <p class="catalog-note">UI overhaul workspace. No pages or assets have been deleted. Default restores the Home dashboard from before consolidation and unfiltered shared navigation. Custom builds Home and shared navigation from your saved Show/Hide choices on this device, not legacy menus or direct URLs. Home and Admin stay available. Asset switches only show/hide inventory details; dependencies keep loading. These are local UI controls, not authentication or access restrictions.</p>
+        <fieldset class="catalog-view"><legend>App view</legend><label><input type="radio" name="app-view" value="default"> Default view</label><label><input type="radio" name="app-view" value="custom"> Custom setup</label><p id="catalog-view-note" class="catalog-note"></p></fieldset>
+        <p id="rn-status" role="status">Checking offline installation...</p>
+        <div class="catalog-toolbar"><label for="catalog-search">Find a page or asset<input id="catalog-search" type="search" placeholder="Name, file path or capability" autocomplete="off"></label><button type="button" data-catalog-expand="show">Show all groups</button><button type="button" data-catalog-expand="hide">Hide all groups</button></div>
+        <p id="catalog-message" role="status" aria-live="polite"></p>
+        <h2>Pages</h2><div data-catalog="pages" data-editable></div>
+        <h2>Assets</h2><p class="catalog-note">Every shipped file is listed, including page documents, legacy styles, uploaded source art, fonts, licenses and bundled libraries. Open a group to inspect its files.</p><div data-catalog="assets" data-editable></div>
+        <button class="offline-package-button" type="button">Download Offline ZIP</button><span class="offline-package-status" role="status"></span>
+        <noscript>Enable JavaScript to manage the catalog. All existing pages remain at their original URLs. <a href="site-map.html">Open the Site Map</a>.</noscript>
+    </main>
+    <script src="vendor/jszip.min.js" defer></script>
+    <script src="offline-package.js" defer></script>
+    <script src="release-notes.js" defer></script>
+</body>
+</html>

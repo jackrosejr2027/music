@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#2c3e50">
+    <title>Release Notes</title>
+    <link rel="icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="themes.css">
+    <link rel="stylesheet" href="site.css">
+    <link rel="stylesheet" href="release-notes.css">
+    <link rel="stylesheet" href="catalog.css">
+    <script src="theme-init.js"></script>
+    <script src="site.js" defer></script>
+    <script src="offline-assets.js" defer></script>
+    <script src="project-catalog.js" defer></script>
+    <script src="catalog-ui.js" defer></script>
+</head>
+<body>
+    <header class="top-header"><div class="top-header-content"><nav class="header-nav" aria-label="Main navigation"></nav></div></header>
+    <main class="rn">
+        <h1>Version 1.0.1</h1>
+        <p class="rn-meta">Scales Thesaurus 1.0.1 &middot; 24 October 2026 &middot; <span id="rn-status">Checking offline installation...</span></p>
+        <p id="catalog-summary" class="catalog-note"></p>
+        <div class="rn-package-action"><button class="offline-package-button" type="button">Download Offline ZIP</button><span class="offline-package-status" role="status">Wait for a complete offline install before packaging.</span></div>
+        <nav class="rn-toc" aria-label="Release notes sections"><a href="#new">Current changes</a><a href="#pages">All pages</a><a href="#capabilities">Fretboard</a><a href="#daw">Studios &amp; cadences</a><a href="#learning">Learning</a><a href="#exports">Exports</a><a href="#application">Saved data</a><a href="#design">UI &amp; visibility</a><a href="#offline">Offline architecture</a><a href="#how-to">Install &amp; package</a><a href="#assets">All assets</a><a href="#mobile">Devices</a><a href="#fixes">Verification</a><a href="#faq">FAQ</a><a href="#troubleshooting">Troubleshooting</a><a href="#cheat-sheet">Quick reference</a><a href="#limitations">Limits</a><a href="#history">Earlier fixes</a></nav>
+
+        <section id="new"><h2>Current Changes</h2>
+            <ul>
+                <li><b>Interactive Fretboard promoted:</b> the improved implementation is now the only main Interactive Fretboard at <code>fretboard.html</code>. The separate testing entry and duplicated runtime assets have been removed from desktop navigation, Admin and offline packages. Saved browser data is retained.</li>
+                <li><b>Latest fretboard features:</b> all 52 export actions, clearer task-based controls, 25 Multi-Instrument diagrams, selected-key two-octave piano, 17-spelling All Keys mode and its PDF/DOCX/XLSX/JPG/PNG ZIP are included. Only All Keys links Type and Selection across boards; other setups stay independent.</li>
+                <li><b>Home reset:</b> both <code>index.html</code> and <code>home.html</code> now support an Admin-controlled Default/Custom view. Default restores the pre-consolidation hero, cards, footer and unfiltered shared navigation; Custom builds Home from saved page Show/Hide choices. Admin stays available in both. This is preparation for a future UI overhaul, not a redesign of every tool.</li>
+                <li><b>Other tools preserved:</b> all other tool pages, scripts, datasets, styles, fonts/licenses, libraries, icons, audio and uploaded source art are retained. In particular, the former Home stylesheet remains in the package.</li>
+                <li><b>Admin:</b> a complete page/asset inventory with direct links, capability descriptions, search, group show/hide, page navigation visibility switches and asset-detail show/hide controls.</li>
+                <li><b>Updated documentation:</b> the <a href="about.html">Complete Feature Master List</a>, Admin and these notes use the same page registry and offline manifest, rather than separate manually counted asset lists.</li>
+                <li><b>Offline stays complete:</b> both workers and ZIP exporters include Admin and its dependencies. In Custom setup, page hiding filters Home and shared navigation but does not remove content from caches or ZIPs, disable dependencies, restrict direct access or erase saved data. Switching to Default ignores filters without clearing the saved Custom setup.</li>
+            </ul>
+        </section>
+
+        <section id="pages"><h2>Every Preserved Page</h2><p>Open any page below, even if its shared-navigation entry is hidden. Expand a category and its capability details for the complete page-by-page scope. The main Home reset does not clear the separate Theory Decks Home.</p><div data-catalog="pages"></div></section>
+
+        <section id="capabilities"><h2>Interactive Fretboard &amp; Theory</h2>
+            <ul>
+                <li>Local interval, chord, scale and advanced pattern catalogs; formulas, descriptions, note spelling, Base-0 pitch classes, modes, inversions and related theory. Scales, Chords and Intervals retain search/filter, Hear, favorites and diagram links.</li>
+                <li>Instrument and tuning presets, custom tunings, string counts, fret spans, individual string visibility and start/end frets, note/degree labels and handedness. Fret zero is a valid range endpoint.</li>
+                <li>Up to 20 diagrams. Each retains key, pattern type, pattern selection, instrument, tuning, string count, overall fret range and per-string settings independently. Key, Type and Selection controls appear above each board in multi-diagram and Gauntlet sets, including Gamut patterns. Main controls, playback and single-diagram exports follow the selected diagram; Edit diagram restores its controls. New diagrams inherit the active setup before being edited independently. Appearance stays shared; removed diagrams and controls are cleaned up.</li>
+                <li><b>Multi-Instrument:</b> select Multi-Instrument (25 diagrams) beside Gauntlet and numeric 1-20. Order: acoustic guitar, electric guitar, bass guitar, ukulele, violin, piano, mandolin, banjo, cello, viola, double bass, harp, sitar, oud, koto, followed by 10 alternate acoustic/electric guitar and bass tunings. Titles in both preset modes detail instrument, strings or keys, current tuning and visible-string selections. Multi-Instrument titles also include reference octave pitches and relevant assumptions. Existing independent key/type/selection and editable string controls remain available.</li>
+                <li><b>Instrument modeling:</b> mandolin has 8 physical string rows in 4 unison pairs; Arabic oud has 11 rows in 6 courses with one single bass. Banjo uses short fifth string first; high-G ukulele keeps re-entrant playing order. Piano uses a 24-key keyboard starting on the selected key at octave 4, not repeated physical wire rows. Harp uses a 47-string Cb1-Gb7 open-pitch map at unaltered pedal positions. Koto uses an illustrative 13-string D-based Hirajoshi open-pitch map. Sitar uses an editable C-tonic example with 7 main/drone strings; sympathetic strings are not modeled and tuning varies by raga. Fretless string diagrams are semitone study grids, not physical frets. Reference maps do not apply fret/capo controls; Gamut positions only highlight at open position zero. Octave labels are tuning references, not octave-calibrated playback; the existing theory/playback engine works with pitch classes. Changing a reference pitch removes its octave label rather than inventing an octave.</li>
+                <li><b>Gauntlet:</b> Controls &gt; Instrument &gt; Fretboard diagrams now includes Gauntlet (20 diagrams) alongside numeric 1-20. It applies the ordered guitar string sets below, retains the current overall fret range and shared appearance, initializes each diagram with the selected key/type/pattern, resets per-string limits to 0-24, and selects Diagram 1 for editing. Each diagram remains independent and editable. Re-selecting Gauntlet reapplies its tunings and visibility.</li>
+                <li>Marker shapes/sizes/fonts/effects, note colors, string/fret appearance, fret numbers, page/fretboard themes, and selectable theory-panel content remain available in the existing Sidebar and Controls interfaces.</li>
+                <li>Play/Stop, local synthesis, melodic sequences, piano/reference tones, slideshows and circle-based workflows remain available. Starting audio requires a direct user gesture.</li>
+                <li>Current-key all-diagram PDFs cover every scale, chord or interval, one page per pattern/diagram pair. Intervals are ordered by semitone distance. Settings are snapshotted and rendered offscreen without changing live diagrams or active selection.</li>
+                <li>Exports above 150 pages require confirmation. Stop retains completed pages; cancellation before work starts does not create a misleading complete PDF. Large jobs still depend on browser memory.</li>
+            </ul>
+        </section>
+
+        <details><summary>Gauntlet: ordered diagram setups</summary><p>Tunings are low to high. Diagrams 1-5 now have two physical strings (EA, AD, DG, GB, BE): only the lower target string has notes; the higher context string remains drawn with no notes. Diagrams 18-20 keep all six standard EADGBE strings; only the specified strings are marked Show, producing the listed visible notes.</p><table><thead><tr><th>Diagram</th><th>Strings</th><th>Visible tuning</th><th>Show string numbers</th></tr></thead><tbody><tr><td>1</td><td>2</td><td>E</td><td>Lower target only</td></tr><tr><td>2</td><td>2</td><td>A</td><td>Lower target only</td></tr><tr><td>3</td><td>2</td><td>D</td><td>Lower target only</td></tr><tr><td>4</td><td>2</td><td>G</td><td>Lower target only</td></tr><tr><td>5</td><td>2</td><td>B</td><td>Lower target only</td></tr><tr><td>6</td><td>2</td><td>EA</td><td>All</td></tr><tr><td>7</td><td>2</td><td>AD</td><td>All</td></tr><tr><td>8</td><td>2</td><td>DG</td><td>All</td></tr><tr><td>9</td><td>2</td><td>GB</td><td>All</td></tr><tr><td>10</td><td>2</td><td>BE</td><td>All</td></tr><tr><td>11</td><td>3</td><td>EAD</td><td>All</td></tr><tr><td>12</td><td>3</td><td>ADG</td><td>All</td></tr><tr><td>13</td><td>3</td><td>DGB</td><td>All</td></tr><tr><td>14</td><td>3</td><td>GBE</td><td>All</td></tr><tr><td>15</td><td>4</td><td>EADG</td><td>All</td></tr><tr><td>16</td><td>4</td><td>ADGB</td><td>All</td></tr><tr><td>17</td><td>4</td><td>DGBE</td><td>All</td></tr><tr><td>18</td><td>6</td><td>EDE</td><td>6, 4, 1</td></tr><tr><td>19</td><td>6</td><td>AGE</td><td>5, 3, 1</td></tr><tr><td>20</td><td>6</td><td>DBE</td><td>4, 2, 1</td></tr></tbody></table></details>
+
+        <section id="daw"><h2>Studios, Progressions &amp; Cadence Map</h2>
+            <h3>Pattern Studio</h3><p><a href="daw.html">Pattern Studio</a> contains 500 generated patterns from 42 forms across 12 keys. Load/search the library, arrange interval/chord/scale blocks with root and duration, set key/tempo, play/stop, save named patterns and transfer status backups. MIDI exports include individual arrangements and an all-pattern ZIP with a compiled MIDI that preserves section keys.</p>
+            <h3>Progression tools</h3><p><a href="dummy.html">Chord Progressions</a> retains its builder, presets, transposition, favorites, playback and diagrams. <a href="andalusian.html">Andalusian Cadence</a> retains its focused progression variations, musical explanations and playback.</p>
+            <h3>Cadence Map</h3><p><a href="cadence-map/index.html">Cadence Map</a> combines a six-chord minor palette with triads from all seven major-scale modes. Select one or all 12 tonics, multiple lengths and chord-count shapes; browse progression ranks by page and play a chosen sequence. Featured four-chord recipes have 24 unique orderings per tonic. TXT exports expand selections up to the 25,000-progression limit; larger selections use a compact complete recipe/rank index. DM Mono, DM Sans, Instrument Serif and their licenses are local. Only the optional original-project link needs internet.</p>
+            <h3>Theory Decks suite</h3><p>The preserved nested app includes cards, games, references, themes/card styles, active pools, pitch-based audio, author/release pages and dedicated settings. Its DAW supports bars, sections, arrangements, step editing, key/scale/meter/tempo changes, swing, mix, melody/chord/bass/drum lanes, undo/redo, local songs, MIDI import and supported local exports. Its companion fretboard supports individually tuned strings, note/degree labels, range/capo, arpeggios, saved setups and image/document/MIDI exports. Main Pattern Studio and Theory Decks DAW are separate tools with separate saved records.</p>
+        </section>
+
+        <section id="learning"><h2>Learning, Practice &amp; Personal Tools</h2>
+            <ul>
+                <li><b>Courses and Lessons:</b> structured paths, 50 detailed lessons, explanations, formulas, playable diagrams, practice steps, outcomes and local completion tracking.</li>
+                <li><b>Practice Room:</b> randomized drills, example diagrams, metronome and session timer/activity. <b>Primer:</b> reading, a 10,000-step map, pattern, mixer, instrument setup, tuning and playback.</li>
+                <li><b>Theory Cards:</b> 612 foundation/data-backed flashcards with category filters, reveal/navigation controls and favorites. Theory Decks is a separate, preserved card/game collection.</li>
+                <li><b>Quizzes, Tests and Exams:</b> generated questions, feedback, timed assessments, grades, local results and supported PDF certificates. These are practice records, not server-verified qualifications.</li>
+                <li><b>eBooks:</b> 200 grouped local PDF guides, configurable instrument tuning, diagrams, detailed addenda, all-key examples, all-guide ZIP and full-catalog PDF index.</li>
+                <li><b>Ideas &amp; Notes:</b> local notes, board marks, identified patterns/key, transposition, playback and text/PDF exports. <b>Favorites:</b> reopen saved material and transfer portable backups. <b>Progress:</b> local activity, practice time, lessons and assessment history.</li>
+                <li><b>Documentation:</b> Complete Feature Master List, Site Map, main release notes, component release notes and In dept testing remain accessible through Admin and original URLs.</li>
+            </ul>
+        </section>
+
+        <section id="exports"><h2>Local Exports &amp; Imports</h2>
+            <ul>
+                <li><b>Diagram images/documents:</b> the appropriate tools provide PNG/JPG, PDF, Word or PowerPoint. Available formats depend on the page. Image labels can include instrument, tuning, key, pattern type/name and formula.</li>
+                <li><b>Collections:</b> supported all-key/all-pattern, slideshow and all-diagram PDF/Word/ZIP jobs use local renderers. All-diagram category PDFs are current-key exports, not all-key exports.</li>
+                <li><b>Music:</b> local MIDI for supported patterns/arrangements; Pattern Studio and main fretboard provide bulk MIDI ZIPs with compiled sequences. MIDI import belongs to Theory Decks DAW, not a universal app-wide MIDI recorder.</li>
+                <li><b>Tables:</b> Data provides supported Excel, CSV and PDF operations using bundled libraries. Validate imported data and export a backup before editing real records.</li>
+                <li><b>Notes/study:</b> text, PDF guides, notes, favorites and supported certificates are produced on-device. Cadence Map exports TXT, not audio recordings.</li>
+                <li><b>Portable state:</b> JSON backup/import tools transfer supported settings, favorites, notes, patterns and songs. Use each tool's own backup when needed. There is no cloud sync.</li>
+                <li><b>App ZIP versus data backup:</b> the root Offline ZIP contains app files and a start guide, not this device's localStorage. The Theory Decks package additionally includes its settings/song backup JSON. Neither archive is an operating-system installer.</li>
+                <li>Downloads use browser Blob/file facilities. Disk permissions, blocked downloads, memory limits and OS file-handling rules still apply offline.</li>
+            </ul>
+        </section>
+
+        <section id="application"><h2>Saved Data, Backups &amp; Privacy</h2>
+            <p>Settings, favorites, progress, notes, saved patterns, songs, test marks and Admin visibility choices remain in this browser profile on this origin. They do not follow you to another device automatically. Storage-blocked environments may only keep changes for the current visit. Clearing site data, private-session cleanup or browser eviction can remove both records and offline caches.</p>
+            <p>Use Settings and tool-specific exports before changing browser/device, importing data or testing reset actions. Keep downloaded backups outside browser storage. Theory Decks Settings can request persistent storage; the browser decides whether to grant it. Persistent storage is not a substitute for a backup.</p>
+            <p>Admin's page visibility uses <code>st_ui_visibility_v1</code>. It contains only local navigation/detail preferences and is not authentication. Hidden pages can still be opened by URL, appear in documentation and remain in every complete offline package.</p>
+        </section>
+
+        <section id="design"><h2>UI Overhaul Preparation &amp; Visibility</h2>
+            <p>Both main Home documents remain real entry pages, not redirects. Admin now provides an App view radio toggle: Default restores the dashboard from before consolidation; Custom renders the shown pages grouped by capability. Existing tool-page layouts, controls and assets remain intact. The choice is device-local and stored alongside the saved Custom visibility preferences.</p>
+            <p>Admin lists every page and file. Search by path, name, capability or asset role; Show all groups / Hide all groups expand or collapse the inventory. In Custom setup, page switches show/hide pages on Home and in the shared app header on this device, including other open tabs through storage events. Default ignores these filters and shows asset details; its page/detail switches are disabled until Custom is selected. Saved Custom choices are retained across mode changes. They do not rewrite legacy Theory Decks menus or automatically add every inventory page to navigation. Home and Admin cannot be hidden. Asset switches only fold their descriptive details; they never prevent scripts, styles, fonts or data from loading.</p>
+            <p>The master feature list and release notes always retain the complete inventory regardless of visibility. These controls are staging tools for the forthcoming overhaul, not permissions, deletion tools or global published-site administration.</p>
+        </section>
+
+        <section id="offline"><h2>Offline Architecture</h2>
+            <ul>
+                <li><code>offline-assets.js</code> is the authoritative list of all shipped pages and assets. The root worker, nested Theory Decks worker, Admin/documentation inventory and ZIP exporters consume it. Counts below are generated from that list.</li>
+                <li>The root <code>sw.js</code> uses a versioned cache scoped to the installation path. Theory Decks imports the same manifest and keeps its own path-scoped cache; entering the nested app also registers the parent worker so links back to main pages can work offline after installation completes.</li>
+                <li>Installation downloads mandatory assets in bounded batches, retrying individual files up to three times. A missing required file fails the install and removes that partial new cache. Existing completed versions are not removed by a failed new install.</li>
+                <li>The root readiness marker is written only after every asset succeeds. Successful activation claims pages and removes stale versions belonging to that app scope. Imported manifest updates bypass the HTTP script cache when the shared registration requests updates.</li>
+                <li>Cached GET requests are served locally first. Query strings on known files do not prevent cache matches. Folder addresses resolve to their own cached index documents before trying the network. Missing uncached routes show an explicit offline response rather than silently opening Home.</li>
+                <li>Fonts, libraries, musical formulas, datasets, icons, audio resources and retained UI files are local. Audio is predominantly synthesized with Web Audio; exports do not require a server.</li>
+                <li>Testing-page reference checks use GET so they can be answered by the workers while offline. First-party runtime code does not rely on an AI service, remote font CDN, analytics or a cloud music API.</li>
+                <li>Initial hosted installation, updates and the optional original-project link require internet. Host-platform chrome is outside the app's offline package. A complete extracted package served on localhost needs no internet.</li>
+            </ul>
+        </section>
+
+        <section id="how-to"><h2>Install, Update &amp; Package</h2>
+            <ol>
+                <li><b>Hosted install:</b> open the HTTPS app while connected, follow the persistent Admin link on Home, and wait until its status says ready to work offline. Admin reports installation readiness in either view.</li>
+                <li><b>Check before travel:</b> after readiness, disconnect the network, reopen a tool from Admin, reload it and try playback/export. Keep the same browser profile/origin and do not clear site data.</li>
+                <li><b>Installable app:</b> use the browser's Install app / Add to Home Screen option. On iPhone/iPad, use Safari's Share menu and open the installed app while online once to finish caching. Installed launches use the saved Default/Custom Home view and retain the Admin link.</li>
+                <li><b>Offline ZIP:</b> use Admin or these Release Notes after a complete cache install. Root packaging verifies the readiness marker and every manifest entry, retains folder structure and creates its ZIP locally. The Theory Decks package includes the same complete parent app without unsafe parent-directory ZIP entries.</li>
+                <li><b>Extracted package:</b> extract the entire folder without renaming dependencies. With Python already installed, run <code>python -m http.server 8000</code> inside that folder, then open <code>http://localhost:8000/index.html</code>. This local server does not need internet. Follow the included OFFLINE-START-HERE.txt.</li>
+                <li><b>Do not assume file://:</b> direct file opening is not fully supported because ES modules, local fetch, storage and download permissions vary. iOS Files previews are not an app installation mechanism.</li>
+                <li><b>Updates:</b> reconnect and reopen the hosted app to let a new version fully install, then reopen pages. Do not interrupt the download or delete working caches as an update step. The ZIP is a snapshot; replace extracted app files deliberately while preserving separate data backups.</li>
+            </ol>
+        </section>
+
+        <section id="assets"><h2>Every Preserved Asset</h2><p>The inventory below includes HTML pages, rendering/UI modules, theory data, export/audio code, all legacy and current styles, local font binaries and licenses, icons, media, manifests, workers, packaging code and uploaded source assets. Developer regression scripts under tests/ are retained in the workspace but are not browser runtime dependencies or part of the app ZIP.</p><div data-catalog="assets"></div></section>
+
+        <section id="mobile"><h2>Mobile, Accessibility &amp; Audio</h2><p>Preserved tools keep their existing responsive layouts, large tables/timelines and horizontally scrollable boards. The main app retains its desktop/mobile preview and landscape/portrait controls where its header is present; both Home views retain the shared header and Admin link. Admin inventory wraps file paths, uses keyboard-accessible links/buttons/details, exposes toggle state and announces filtering/storage errors.</p><p>Audio needs a click/tap to resume the browser audio context. Device volume, silent mode, output routing, background throttling and OS interruption behavior vary. A complete cache cannot override those policies. Physical Samsung/iPhone/iPad and assistive-technology verification remain separate from automated dependency/cache tests.</p></section>
+
+        <section id="fixes"><h2>Fixes &amp; Verification Scope</h2>
+            <p>The offline audit fixed omitted multi-diagram/export, testing-page and stylesheet dependencies, localized Cadence Map's fonts, unified asset manifests, corrected Theory Decks archive paths, removed misleading Home fallbacks for missing files, and changed source checks from network-only HEAD to cached GET requests. This preparation release adds Admin/documentation assets to that complete package and keeps all prior page assets.</p>
+            <p><code>node tests/offline-audit.cjs</code> checks runtime manifest coverage, every page's test-script entry, HTML/CSS dependency links, remote runtime dependencies, root/nested install and disconnected byte-for-byte responses, directory/query routing, failed-install rollback, ZIP contents and applicable offline diagnostics. Catalog-specific tests cover inventory completeness, protected routes, visibility persistence, detail folding and the Default/Custom Home contract.</p>
+            <p><a href="testing.html">In dept testing</a> provides manual actions and expected outcomes for every page, including network-disconnected work. Automated source/cache passes are not proof of every interaction, audio/export result or visual layout. Earlier live startup checks were limited to three pages by tooling; a browser confirmed an activated complete root cache. Final verification results for this change are reported separately, not implied by these notes.</p>
+        </section>
+
+        <section id="faq"><h2>FAQ</h2>
+            <h3>Where did Home go?</h3><p>Use Admin > App view > Default to restore the pre-consolidation dashboard. Custom setup builds Home from saved Show/Hide choices. No tool was deleted, and both original Home URLs remain valid.</p>
+            <h3>Does Hide disable a page or asset?</h3><p>No. In Custom setup, page switches affect Home and the shared header's local navigation eligibility. Default ignores them without erasing them. Asset switches fold inventory details. Files, direct URLs, offline caches, documentation and ZIPs remain intact.</p>
+            <h3>Is Admin private?</h3><p>No. It is an offline catalog/staging interface, not a signed-in admin area or authorization boundary.</p>
+            <h3>Will everything work without internet?</h3><p>All first-party runtime dependencies are local and included in the full install. Complete hosted caching first, or use the complete ZIP on localhost. Browser capabilities, storage availability, audio permission and memory limits still apply; this is not an unconditional every-device guarantee.</p>
+            <h3>Will the ZIP carry my music and notes?</h3><p>The root package contains the application, not browser-local records. Export those separately. Theory Decks adds a settings/song JSON backup alongside the application, which must be imported deliberately.</p>
+            <h3>Are all pages listed?</h3><p>Yes. The page registry is validated against all HTML entry points, and the asset inventory is generated from the offline manifest. Home aliases and nested pages are included separately.</p>
+        </section>
+
+        <section id="troubleshooting"><h2>Troubleshooting &amp; Recovery</h2><ul>
+            <li><b>Not ready offline:</b> stay connected and let installation finish. Verify Admin or Release Notes status; a network icon alone is not proof of cache completeness. Low disk space, denied storage and private browsing can block installation.</li>
+            <li><b>Hidden navigation:</b> open Admin from Home and Show the desired page. The direct link in Admin always works. Asset-detail Hide is not a dependency switch.</li>
+            <li><b>Wrong/stale UI:</b> reconnect for the current manifest/worker update and reopen the page after installation. A hidden page is still cached; hiding it does not force a refresh.</li>
+            <li><b>Missing offline route:</b> reconnect and complete the full current install, or verify the extracted folder has every file. Do not move nested folders or rename paths containing spaces.</li>
+            <li><b>ZIP or module failure:</b> use localhost rather than file://. An archive opened in a file preview is not the running app. Check browser download permissions and the included start guide.</li>
+            <li><b>No sound:</b> tap Play/Hear, check media volume and output routing, resume after interruptions and check silent-mode behavior on your device.</li>
+            <li><b>Lost records:</b> check profile/origin/device and restore a matching backup. Do not reset or clear site data as a generic fix.</li>
+            <li><b>Huge export stalls:</b> reduce the collection, use Stop when supported, and allow browser memory/time. Stop does not turn an unfinished collection into a complete one.</li>
+        </ul></section>
+
+        <section id="cheat-sheet"><h2>Quick Reference</h2><ul><li>Home &rarr; Admin &rarr; App view: Default or Custom setup &rarr; any preserved page. Shared header &rarr; More &rarr; Admin.</li><li>Admin &rarr; page Hide/Show: Custom Home and shared navigation only. Asset Hide/Show details: inventory text only.</li><li>Admin or Release Notes &rarr; ready offline status &rarr; Download Offline ZIP.</li><li>Complete Feature Master List &rarr; page features, detailed controls and all assets.</li><li>In dept testing &rarr; execute scripts, record actual outcomes and copy a change-request prompt.</li><li>Settings/tool-specific exports &rarr; back up user records before data changes.</li></ul></section>
+
+        <section id="limitations"><h2>Known Limits</h2><ul><li>First hosted install and updates require a connection; the optional original-project link is online-only.</li><li>Cached storage can be denied, evicted or cleared. Local saved data is not cloud-synchronized.</li><li>Direct file:// execution is not fully supported; use localhost or an installed hosted app.</li><li>Admin is not access control, not a file editor/deletion tool and not a site-wide published visibility switch.</li><li>Main and Theory Decks tools have different feature sets, import/export formats and saved-state conventions. There is no universal recording, notation or MIDI-input layer.</li><li>Some catalog entries use formula-based names; spelling conventions and glyph support differ by tool and export format.</li><li>Large PDF/Word/ZIP jobs can exhaust memory, particularly on phones. Audio/download/background policies differ by browser and OS.</li><li>The UI overhaul has not yet been applied to preserved tools. Their legacy styles and documentation remain in the package; component history is not a claim that every historical assertion was re-verified.</li></ul></section>
+
+        <section id="history"><h2>Earlier Fix History</h2><p>Preserved historical defect list, not a count of newly fixed defects in this preparation release. Current scope and limitations are described above.</p><details><summary>Show earlier fixes</summary>
+            <ol class="rn-fixes">
+                <li><span class="rn-tag">Theory</span>Interval labels missing from the table (#5, #6, b4, b9, #9, #11, b13, 13) resolved to 0 semitones, so augmented and altered chords were spelled wrong (e.g. C augmented as "C E C").</li>
+                <li><span class="rn-tag">Theory</span>Three semitones were named #2 instead of b3, mislabelling every minor chord and scale.</li>
+                <li><span class="rn-tag">Theory</span>Flat keys (Bb, Eb, Ab, Db, Gb) returned empty scales and chords.</li>
+                <li><span class="rn-tag">Theory</span>Notes are now spelled by scale degree: C minor pentatonic reads C Eb F G Bb and F minor 7 reads F Ab C Eb instead of sharps.</li>
+                <li><span class="rn-tag">Theory</span>Interval lookups failed for flat-spelled notes, breaking playback highlighting in interval display mode.</li>
+                <li><span class="rn-tag">Theory</span>The diminished 7th quiz formula was wrong (b7 instead of bb7).</li>
+                <li><span class="rn-tag">Fretboard</span>Flat-spelled notes (F major's Bb) did not light up on the fretboard.</li>
+                <li><span class="rn-tag">Fretboard</span>Notes with interval labels missing from the table showed blank markers.</li>
+                <li><span class="rn-tag">Fretboard</span>The fretboard context menu mishandled flat keys.</li>
+                <li><span class="rn-tag">Fretboard</span>The piano keyboard ignored flat keys and swallowed the first click.</li>
+                <li><span class="rn-tag">Fretboard</span>Instrument dropdowns were added twice.</li>
+                <li><span class="rn-tag">Fretboard</span>Corrupt saved custom patterns crashed the app on start.</li>
+                <li><span class="rn-tag">Fretboard</span>Custom patterns containing invalid intervals crashed drawing.</li>
+                <li><span class="rn-tag">Fretboard</span>Corrupt saved collapsed-section state crashed the sidebar.</li>
+                <li><span class="rn-tag">Fretboard</span>The sidebar locked page scrolling on desktop; it now only does so on mobile.</li>
+                <li><span class="rn-tag">Audio</span>The synth started before any user gesture, triggering autoplay warnings and silence; it now starts on first use.</li>
+                <li><span class="rn-tag">Audio</span>Pressing Play repeatedly stacked overlapping playback.</li>
+                <li><span class="rn-tag">Audio</span>Ascending scales dropped back an octave part-way through.</li>
+                <li><span class="rn-tag">Audio</span>The Intervals page tried to play a non-existent file (C:/dummy.mp3); intervals now play melodically and harmonically with Web Audio.</li>
+                <li><span class="rn-tag">Slideshow</span>Calling a missing clearSlideshow function threw an error.</li>
+                <li><span class="rn-tag">Slideshow</span>Cloned thumbnails duplicated the #fretboard element id.</li>
+                <li><span class="rn-tag">Slideshow</span>A missing slideshow container crashed the player.</li>
+                <li><span class="rn-tag">Patterns</span>The pattern generator called scale and chord description functions that did not exist.</li>
+                <li><span class="rn-tag">Export</span>Image export hung forever because the theory engine was not passed to the exporter.</li>
+                <li><span class="rn-tag">Export</span>Image downloads silently failed in Firefox.</li>
+                <li><span class="rn-tag">Export</span>Pattern names with / : * ? characters produced invalid file names.</li>
+                <li><span class="rn-tag">Export</span>Exporter image load errors were uncaught, leaving exports stuck.</li>
+                <li><span class="rn-tag">Export</span>Exported canvases were mis-scaled and diagrams were clipped.</li>
+                <li><span class="rn-tag">Export</span>Long theory text overflowed exported images.</li>
+                <li><span class="rn-tag">Export</span>Exports crashed when an instrument tuning or pattern type was missing.</li>
+                <li><span class="rn-tag">Export</span>The Word exporters for intervals/circle and gamuts/circle of fifths were never loaded, so their menu items did nothing.</li>
+                <li><span class="rn-tag">Export</span>The Stop button was invisible during exports started from the dropdown.</li>
+                <li><span class="rn-tag">Export</span>"Export all diagrams only" left the side panels hidden afterwards.</li>
+                <li><span class="rn-tag">Export</span>The Export All button lost its label and width after running.</li>
+                <li><span class="rn-tag">Data page</span>Chord and scale tables never rendered (container id mismatch).</li>
+                <li><span class="rn-tag">Data page</span>Names were inserted as raw HTML.</li>
+                <li><span class="rn-tag">Data page</span>Corrupt saved data crashed the page.</li>
+                <li><span class="rn-tag">Data page</span>Excel import accepted malformed sheets and crashed.</li>
+                <li><span class="rn-tag">Data page</span>Edited formulas were not validated, allowing unknown intervals.</li>
+                <li><span class="rn-tag">Scales page</span>Corrupt favourites crashed the page.</li>
+                <li><span class="rn-tag">Scales page</span>The interval filter matched text instead of pitch (b3 did not find #2 scales).</li>
+                <li><span class="rn-tag">Scales page</span>Searching 1,066 scales re-computed every row on each keystroke; search is now instant.</li>
+                <li><span class="rn-tag">Chords page</span>Corrupt favourites crashed the page.</li>
+                <li><span class="rn-tag">Chords page</span>The Learn button did nothing.</li>
+                <li><span class="rn-tag">Chords page</span>The interval filter matched text instead of pitch.</li>
+                <li><span class="rn-tag">Intervals page</span>Enharmonic duplicates appeared and the list was not sorted by size.</li>
+                <li><span class="rn-tag">App links</span>?action=play and ?action=learn links from other pages were ignored.</li>
+                <li><span class="rn-tag">App links</span>Flat keys in links (key=Bb) were ignored.</li>
+                <li><span class="rn-tag">Settings</span>The default-key list did not match the app's keys.</li>
+                <li><span class="rn-tag">Settings</span>Backup only saved a few settings; it now backs up and restores all local data.</li>
+                <li><span class="rn-tag">Site</span>Every page requested a missing scales-data-advanced-9.js file.</li>
+                <li><span class="rn-tag">Site</span>Pages loaded libraries from CDNs and broke offline; all libraries are now bundled.</li>
+                <li><span class="rn-tag">Site</span>Several pages lacked a doctype, character set or mobile viewport.</li>
+                <li><span class="rn-tag">Site</span>Navigation differed from page to page and linked to placeholder pages.</li>
+                <li><span class="rn-tag">Progress</span>"Lessons explored" never counted lessons opened from the Lessons page.</li>
+                <li><span class="rn-tag">Lessons</span>The Edit Lesson button only showed a "coming soon" alert; it now opens a draft in Ideas &amp; Notes.</li>
+                <li><span class="rn-tag">Export</span>Exported image labels could not be configured and always showed every detail; empty labels are no longer drawn.</li>
+            </ol>
+        </details></section>
+    </main>
+    <script src="vendor/jszip.min.js" defer></script>
+    <script src="offline-package.js" defer></script>
+    <script src="release-notes.js" defer></script>
+</body>
+</html>

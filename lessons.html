@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Scales Thesaurus - Lessons</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <style>
+        /* Styles for the lessons page */
+        .lessons-container {
+            padding: 20px;
+            max-width: 1100px;
+            margin: 20px auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .lessons-container h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        #lesson-list.lesson-list { display: flex !important; flex-direction: column; margin-top: 20px; border-top: 1px solid var(--border-color); }
+
+        .lesson-item { display: flex; align-items: center; gap: 12px; padding: 14px 4px; border-bottom: 1px solid var(--border-color); cursor: pointer; }
+        .lesson-item:hover .lesson-details h3 { color: var(--primary-color); }
+        .lesson-details { flex: 1; min-width: 0; }
+        .lesson-details h3 { margin: 0 0 4px 0; font-size: 1.1em; color: var(--text-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .lesson-details p { margin: 0; font-size: 0.95em; color: var(--text-color); line-height: 1.4; }
+
+        .lesson-actions { display: flex; gap: 8px; flex-shrink: 0; align-items: center; }
+        .lesson-actions button { min-height: 36px; margin: 0; padding: 7px 12px; font-size: 0.9em; line-height: 1.2; white-space: nowrap; border-radius: 4px; cursor: pointer; }
+        .view-lesson-button { color: var(--button-text); background-color: var(--primary-color); border: none; transition: background-color 0.2s; }
+        .view-lesson-button:hover { background-color: var(--secondary-color); }
+        .lesson-pdf-button { color: var(--primary-color); background: transparent; border: 1px solid var(--border-color); }
+        .lesson-pdf-button:hover { border-color: var(--primary-color); }
+
+        @media (max-width: 768px) {
+            .lesson-item { flex-wrap: wrap; align-items: flex-start; gap: 10px; }
+            .lesson-details { flex-basis: 100%; }
+            .lesson-details h3 { white-space: normal; overflow: visible; text-overflow: clip; }
+        }
+
+        .return-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .return-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* Dropdown styles */
+        .header-nav-item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 12px 16px;
+            z-index: 1;
+        }
+
+        .header-nav-item:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+    <link rel="stylesheet" href="mini-fretboard.css">
+    <link rel="stylesheet" href="lessons.css">
+    <link rel="stylesheet" href="site.css">
+    <script src="site.js" defer></script>
+</head>
+<body>
+    <header class="top-header">
+        <div class="top-header-content">
+            <h1 class="main-title" style="margin-right: 15px;">Scales Thesaurus</h1>
+            <nav class="header-nav">
+                <a href="home.html" class="header-link">Home</a>
+                <a href="scales.html" class="header-link">Scales</a>
+                <a href="chords.html" class="header-link">Chords</a>
+                <a href="intervals.html" class="header-link">Intervals</a>
+                <a href="data.html" class="header-link">Data</a>
+                <a href="lessons.html" class="header-link">Lessons</a>
+                <a href="about.html" class="header-link">About</a>
+
+            </nav>
+            <div class="sidebar-toggle-container">
+                <button id="sidebar-toggle" aria-expanded="false" title="Back to Neck Diagram Explorer" onclick="window.location.href='fretboard.html'">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="sr-only">Go to App</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="lessons-container">
+        <h1>Music Lessons</h1>
+        <p style="text-align: center; margin-bottom: 20px; font-style: italic;">
+            Fifty guided lessons with explanations, practice steps and an interactive fretboard.
+        </p>
+
+        <section id="lesson-detail" class="lesson-detail" hidden></section>
+        <div class="lesson-list" id="lesson-list">
+            <!-- Lesson items will be populated by JavaScript -->
+        </div>
+
+         <div style="text-align: center; margin-top: 30px;">
+             <a href="fretboard.html" class="return-button">Explore the Neck Diagram Explorer</a>
+         </div>
+    </div>
+
+    <!-- Load music theory data (not strictly needed but good practice) -->
+    <script src="music-theory-data.js"></script>
+    <script src="scales-data-standard.js"></script>
+    <script src="scales-data-numeric.js"></script>
+    <script src="scales-data-advanced-1.js"></script>
+    <script src="scales-data-advanced-2.js"></script>
+    <script src="scales-data-advanced-3.js"></script>
+    <script src="scales-data-advanced-4.js"></script>
+    <script src="scales-data-advanced-5.js"></script>
+    <script src="scales-data-advanced-6.js"></script>
+    <script src="scales-data-advanced-7a.js"></script>
+    <script src="scales-data-advanced-7b.js"></script>
+    <script src="scales-data-advanced-8.js"></script>
+    <script src="scales-data-advanced-10.js"></script>
+    <script src="scales-data-advanced-11.js"></script>
+    <script src="music-theory.js"></script>
+    <script src="music-theory-logic.js"></script>
+    <script src="music-theory-chords.js"></script>
+    <script src="music-theory-descriptions.js"></script>
+    <script>var App = window.App || function () {};</script>
+    <script src="app-lessons-data.js"></script>
+    <script src="mini-fretboard.js"></script>
+    <script src="vendor/jspdf.umd.min.js"></script>
+    <script src="study-pdf.js"></script>
+    <script src="lessons-app.js"></script>
+</body>
+</html>

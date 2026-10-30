@@ -1,0 +1,48 @@
+.beta-preview { min-width:0; }
+.beta-preview-tools,.beta-preview-paging { display:flex; flex-wrap:wrap; gap:8px; align-items:end; margin-bottom:12px; }
+.beta-preview label { display:grid; gap:5px; font-size:.8rem; }
+.beta-preview button,.beta-preview input,.beta-preview select,.beta-preview textarea { padding:8px; min-height:36px; border:1px solid #c9c6bf; background:#fff; color:#20221f; font:inherit; }
+.beta-preview button { cursor:pointer; }
+.beta-preview button:disabled { opacity:.45; cursor:default; }
+.beta-preview input[type=number] { width:80px; }
+.beta-preview-workspace { display:grid; grid-template-columns:minmax(0,1fr) 240px; gap:18px; align-items:start; }
+.beta-preview-sheet { background:#d8d7d2; padding:12px; min-width:0; }
+.beta-preview-sheet>svg { display:block; width:100%; height:auto; box-shadow:0 3px 12px #0003; }
+.beta-preview-sheet [data-preview-id] { cursor:pointer; }
+.beta-preview-sheet [data-preview-id]:hover { filter:drop-shadow(0 0 1px #356b49); }
+.beta-preview-sheet .is-selected { outline:1px dashed #356b49; }
+.beta-preview-editor { display:grid; gap:12px; min-width:0; }
+.beta-preview-items { display:grid; max-height:220px; overflow:auto; gap:4px; }
+.beta-preview-items button { text-align:left; overflow-wrap:anywhere; font-size:.78rem; }
+.beta-preview-items .is-selected { background:#e3eee4; border-color:#356b49; }
+.beta-preview textarea { box-sizing:border-box; width:100%; resize:vertical; }
+.beta-field-reference dt { margin-top:14px; font-weight:bold; }
+.beta-field-reference dd { margin:4px 0 0; color:#50564e; line-height:1.6; overflow-wrap:anywhere; }
+.st-navigation-sections .st-nav-action { display:block; width:100%; text-align:left; padding:9px 12px; border:0; background:transparent; color:inherit; font:inherit; cursor:pointer; }
+.st-navigation-sections .st-nav-action:hover { background:var(--hover-bg,#e3eee4); }
+.st-navigation-sections #sidebar-toggle.st-nav-action { display:block; width:100%; height:auto; min-height:40px; padding:9px 12px; text-align:left; color:inherit; background:transparent; border:0; box-shadow:none; }
+.st-navigation-sections .st-nav-action:disabled { opacity:.4; cursor:default; }
+@media(max-width:760px) { .beta-preview-workspace { grid-template-columns:minmax(0,1fr); } .beta-preview-items { max-height:160px; } }
+
+/* Keep preview settings compact despite the app's full-width form defaults. */
+#fretboard-word-beta .beta-preview-settings { display:grid; grid-template-columns:repeat(auto-fit,minmax(145px,1fr)); gap:10px; }
+#fretboard-word-beta .beta-preview-settings label { min-width:0; }
+#fretboard-word-beta .beta-preview-settings label[hidden] { display:none; }
+#fretboard-word-beta .beta-preview-settings :is(input,select) { box-sizing:border-box; width:100%; min-width:0; }
+#fretboard-word-beta .beta-preview-tools button,
+#fretboard-word-beta .beta-preview-paging button { flex:0 0 auto; width:auto; min-width:0; }
+#fretboard-word-beta .beta-preview-paging label { flex:0 0 auto; }
+#fretboard-word-beta #beta-preview-page { width:76px; box-sizing:border-box; }
+#fretboard-word-beta #beta-preview-status { font-size:.8rem; line-height:1.5; margin:0 0 14px; color:#50564e; }
+#fretboard-word-beta .beta-preview-items button.is-selected { background:#e3eee4; color:#20452b; border-color:#356b49; }
+#fretboard-word-beta .beta-preview-sheet:empty { min-height:160px; }
+@media (max-width:440px) { #fretboard-word-beta .beta-preview-settings { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+
+#fretboard-word-beta .beta-preview-setting-group { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; min-width:0; margin:0; padding:10px; border:1px solid #d8d5cd; border-radius:8px; background:#fff; }
+#fretboard-word-beta .beta-preview-setting-group legend { padding:0 6px; color:#425e46; font-size:.76rem; font-weight:800; }
+#fretboard-word-beta .beta-preview-setting-group label { min-width:0; }
+#fretboard-word-beta .beta-preview-setting-group label[hidden] { display:none; }
+#fretboard-word-beta .beta-preview-setting-group :is(input,select) { box-sizing:border-box; width:100%; min-width:0; }
+#fretboard-word-beta .beta-preview-setting-actions { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:0 0 12px; }
+#fretboard-word-beta .beta-preview-setting-actions button { width:auto; min-width:0; }
+@media(max-width:440px) { #fretboard-word-beta .beta-preview-setting-group { grid-template-columns:repeat(2,minmax(0,1fr)); } }

@@ -1,0 +1,85 @@
+/* Visual revamp for the Fretboard app. Colors come from theme variables, so every theme still applies. */
+:root:not([class*="theme-"]){
+  --bg-color:#f4f5f7;
+  --text-color:#1e293b;
+  --primary-color:#1e293b;
+  --secondary-color:#475569;
+  --accent-color:#2563eb;
+  --card-bg:#ffffff;
+  --button-bg:#1e293b;
+  --button-text:#ffffff;
+  --border-color:#e2e8f0;
+  --fretboard-bg:#f7f0e2;
+}
+:root{
+  --rv-line:color-mix(in srgb,var(--border-color) 88%,transparent);
+  --rv-shadow:0 1px 2px rgba(15,23,42,.04),0 12px 32px rgba(15,23,42,.07);
+  --rv-focus:color-mix(in srgb,var(--accent-color) 45%,transparent);
+  --rv-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+body,body *{font-family:var(--rv-font)!important}
+body{-webkit-font-smoothing:antialiased;background:radial-gradient(1100px 480px at 50% -200px,color-mix(in srgb,var(--card-bg) 85%,#fff) 0,transparent 70%),var(--bg-color)}
+
+/* Shell */
+.app-container{border:0;border-radius:24px;background:var(--card-bg);box-shadow:var(--rv-shadow);padding:clamp(12px,2vw,26px)}
+.top-header{margin:0 0 18px;padding:6px 0;border-radius:16px;background:linear-gradient(180deg,color-mix(in srgb,var(--primary-color) 88%,#fff) 0,var(--primary-color) 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 8px 22px rgba(15,23,42,.18)}
+.top-header-content{min-height:54px}
+.header-tool-button,.st-view-toggle,.st-orientation-toggle{border-radius:10px!important;border-color:rgba(255,255,255,.16)!important;background:rgba(255,255,255,.08)!important;font-weight:650;letter-spacing:.01em}
+.header-tool-button:hover,.st-view-toggle:hover,.st-orientation-toggle:hover{background:rgba(255,255,255,.18)!important}
+.st-nav a,.st-nav .st-dd>button{border-radius:10px;font-weight:600}
+.st-nav a.active,.st-nav .st-dd.has-active>button{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.14)}
+
+/* Fretboard stage */
+.fretboard-container{margin:0 0 18px;padding:clamp(14px,2vw,24px);border:0;border-radius:20px;background:var(--card-bg);box-shadow:0 0 0 1px var(--rv-line),0 6px 20px rgba(15,23,42,.05)}
+:is(#fretboard,.additional-fretboard){border:0;border-radius:16px;background:linear-gradient(180deg,var(--fretboard-bg) 0,color-mix(in srgb,var(--fretboard-bg) 92%,var(--bg-color)) 100%);box-shadow:inset 0 0 0 1px var(--rv-line),inset 0 2px 10px rgba(15,23,42,.04)}
+.consolidated-selector-pill{border:1px solid var(--rv-line)!important;border-radius:16px!important;background:var(--bg-color)!important;box-shadow:none!important}
+.fretboard-stage-heading h2,.fretboard-controls-heading h2{font-weight:700;letter-spacing:-.02em;font-family:var(--rv-font)!important}
+.fretboard-stage-kicker,.fretboard-controls-heading p{letter-spacing:.12em}
+
+/* Cards and panels */
+#controls-bottom,#export-footer,#appearance-footer,#instrument-footer,.slideshow-container,.pattern-generator,.fretboard-controls-dock{border:1px solid var(--rv-line)!important;border-radius:18px!important;background:var(--card-bg)!important;box-shadow:none!important}
+fieldset{border:1px solid var(--rv-line);border-radius:16px;padding:14px 16px 16px;background:var(--card-bg)}
+legend{padding:0 8px;color:var(--primary-color);font-size:13px;font-weight:700;letter-spacing:.01em}
+label{color:var(--text-color);font-size:13px;font-weight:600}
+.fretboard-controls-dock [data-control-panel] .control-group{border-radius:14px;background:var(--bg-color);border-color:var(--rv-line)}
+.fretboard-control-tabs{border:0;border-radius:12px;background:var(--bg-color);box-shadow:inset 0 0 0 1px var(--rv-line);padding:4px}
+.fretboard-control-tabs [role=tab]{border-radius:9px;font-size:13px;font-weight:650;min-height:38px}
+.fretboard-control-tabs [role=tab][aria-selected=true]{box-shadow:0 2px 8px rgba(15,23,42,.09)}
+
+/* Form controls */
+body select,body input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]):not([type=hidden]),body textarea{min-height:40px;padding:8px 12px;border:1px solid color-mix(in srgb,var(--border-color) 65%,var(--text-color) 35%)!important;border-radius:10px!important;background:var(--card-bg);color:var(--text-color);font-size:14px;box-shadow:none;transition:border-color .15s,box-shadow .15s}
+body select:focus,body input:focus,body textarea:focus{outline:none;border-color:var(--accent-color)!important;box-shadow:0 0 0 3px var(--rv-focus)}
+body :is(button,select,input,textarea,[tabindex]):focus-visible{outline:3px solid var(--rv-focus);outline-offset:2px}
+
+/* Buttons */
+body button:not(.header-tool-button):not(.header-play-pattern):not(.header-stop-pattern):not(#sidebar-toggle):not(.st-nav-toggle):not(.st-nav-action):not(.st-view-toggle):not(.st-orientation-toggle):not(.current-pattern-favorite):not(.entry-button):not(.st-dd>button){border:1px solid transparent;border-radius:10px;min-height:36px;padding:8px 14px;background:var(--button-bg);color:var(--button-text);font-size:13px;font-weight:600;letter-spacing:.005em;box-shadow:0 1px 2px rgba(15,23,42,.12);transition:transform .12s ease,box-shadow .16s ease,filter .16s ease}
+body button:not(.header-tool-button):not(.header-play-pattern):not(.header-stop-pattern):not(#sidebar-toggle):not(.st-nav-toggle):not(.st-nav-action):not(.st-view-toggle):not(.st-orientation-toggle):not(.current-pattern-favorite):not(.entry-button):not(.st-dd>button):hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(15,23,42,.16);filter:brightness(1.12)}
+body button:not(.header-tool-button):not(.header-play-pattern):not(.header-stop-pattern):not(#sidebar-toggle):not(.st-nav-toggle):not(.st-nav-action):not(.st-view-toggle):not(.st-orientation-toggle):not(.current-pattern-favorite):not(.entry-button):not(.st-dd>button):active{transform:translateY(0);filter:none}
+body button:disabled{opacity:.45;cursor:not-allowed;transform:none;filter:none}
+
+/* Export Studio dialog */
+#fretboard-word-beta{border:0;border-radius:20px;box-shadow:0 24px 60px rgba(15,23,42,.25)}
+#fretboard-word-beta .beta-card{border-radius:14px}
+
+/* Entry screen */
+.entry-button{border-radius:999px;padding:10px 30px;min-width:0;font-size:15px;letter-spacing:.02em;box-shadow:0 8px 22px rgba(15,23,42,.18)}
+.entry-button:hover{transform:translateY(-2px);opacity:1}
+
+/* Fretboard drawing (SVG classes from fretboard-draw*.js) */
+#fretboard .fretboard-neck-svg>rect{fill:var(--fretboard-bg);rx:14px;ry:14px}
+#fretboard line.string{stroke:color-mix(in srgb,var(--text-color) 58%,transparent);stroke-width:1.4px}
+#fretboard line.fret{stroke:color-mix(in srgb,var(--text-color) 34%,transparent);stroke-width:1.6px}
+#fretboard circle.fret-marker{fill:color-mix(in srgb,var(--text-color) 30%,transparent)}
+#fretboard text.string-label,#fretboard text.fret-number{fill:color-mix(in srgb,var(--text-color) 58%,transparent);letter-spacing:.03em}
+
+/* Sidebar */
+.sidebar{background:var(--card-bg);border-right:1px solid var(--rv-line);box-shadow:var(--rv-shadow)}
+.sidebar section{padding:14px 0;border-bottom:1px solid var(--rv-line)}
+.sidebar-heading{margin:0 0 10px;color:var(--secondary-color);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+
+/* Phone header: tidy wrap */
+@media (max-width:768px){
+  .top-header{margin-bottom:12px}
+  .top-header-content{justify-content:center;gap:8px;padding:0 8px}
+  .header-tool-button,.st-view-toggle,.st-orientation-toggle{min-height:36px;font-size:12px}
+}

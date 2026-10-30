@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="../icons/favicon-32.png">
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f3a2c">
+<title>Fretboard</title>
+<link rel="stylesheet" href="../home.css">
+<link rel="stylesheet" href="fretboard.css">
+<script defer src="../offline-support.js"></script>
+<link rel="stylesheet" href="../mobile.css">
+<script defer src="../mobile-view.js"></script>
+</head>
+<body class="fretboard-page reference-page">
+<header class="site-header">
+  <a class="wordmark" href="../index.html">Theory Decks</a>
+  <nav aria-label="Main navigation"><a href="../index.html">Home</a><a href="../play.html" class="nav-play">Play</a><a href="../daw.html">DAW</a><a href="../reference.html">Reference</a><a href="../about.html">About</a><a href="../release-notes.html">Release Notes</a><a href="../settings.html">Settings</a><a href="../Fretboard%20Diagrams/index.html" aria-current="page">Fretboard</a><a href="../../fretboard.html">Scales Fretboard</a><a href="../author.html">From the Author</a></nav>
+</header>
+<main class="fb-shell">
+  <div class="fb-controls" role="toolbar" aria-label="Fretboard settings">
+    <label>Key<select id="fb-key"></select></label>
+    <label class="fb-shape-search">Find shape<input id="fb-shape-search" type="search" placeholder="Name or formula" autocomplete="off"></label>
+    <label>Show<select id="fb-shape"></select></label>
+    <span id="fb-shape-count" class="fb-shape-count" aria-live="polite"></span>
+    <label>Strings<select id="fb-strings"></select></label>
+    <label>Preset tuning<select id="fb-tuning"></select></label>
+    <label>Start fret<input id="fb-start" type="number" min="0" max="48" value="0" inputmode="numeric"></label>
+    <label>End fret<input id="fb-end" type="number" min="0" max="48" value="15" inputmode="numeric"></label>
+    <label>Capo fret<input id="fb-capo" type="number" min="0" max="48" value="0" inputmode="numeric"></label>
+    <label>Labels<select id="fb-labels"><option value="note">Notes</option><option value="deg">Degrees</option></select></label>
+    <button type="button" id="fb-play" class="fb-play">▶ Arpeggio</button>
+    <button type="button" id="fb-stop" class="fb-stop">■ Stop</button>
+    <button type="button" id="fb-export-button" class="fb-export-button" title="Export the current fretboard diagram">Export current</button>
+    <label class="fb-export-format">Format<select id="fb-export-format"><option value="png">PNG image</option><option value="jpg">JPG image</option><option value="pdf">PDF document</option><option value="pptx">PowerPoint</option><option value="docx">Word document</option><option value="mid">MIDI arpeggio</option></select></label>
+    <button type="button" id="fb-favorite" class="fb-favorite" aria-pressed="false">☆ Favorite</button>
+    <span id="fb-export-status" role="status" aria-live="polite"></span>
+  </div>
+  <details class="fb-string-editor">
+    <summary>Tune each string</summary>
+    <p class="fb-string-hint">Set each string’s concert-pitch note and octave. Strings 9–14 start as octave courses; presets refill values, and editing switches to Custom.</p>
+    <div id="fb-string-tunings" class="fb-string-tunings"></div>
+  </details>
+  <div class="fb-board" id="fb-board"></div>
+  <p class="fb-info" id="fb-info" aria-live="polite"></p>
+</main>
+<script defer src="../theory.js"></script>
+<script defer src="../tone.js"></script>
+<script defer src="fretboard.js"></script>
+<script defer src="export.js"></script>
+</body>
+</html>

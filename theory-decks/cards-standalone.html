@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1f3a2c">
+<title>Cards</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="daw.css">
+<link rel="stylesheet" href="mobile.css">
+<link rel="stylesheet" href="../square-edges.css">
+<script defer src="mobile-view.js"></script>
+<script defer src="../site.js" data-nav-only></script>
+<link rel="stylesheet" href="../standalone.css">
+<style>.practice-subheader,#selectors{display:none!important}</style>
+</head>
+<body class="play-page">
+<header class="top-header">
+  <div class="top-header-content">
+    <h1 class="main-title">Theory Decks</h1>
+    <nav class="header-nav" aria-label="Main navigation" data-no-view-toggle></nav>
+  </div>
+</header>
+<nav class="practice-subnav" aria-label="Theory Decks pages">
+  <a href="index.html">Home</a><a href="play.html" aria-current="page">Play</a><a href="daw.html">DAW</a><a href="reference.html">Reference</a><a href="about.html">About</a><a href="release-notes.html">Release Notes</a><a href="settings.html">Settings</a><a href="Fretboard%20Diagrams/index.html">Fretboard</a><a href="../fretboard.html">Scales Fretboard</a><a href="author.html">From the Author</a>
+</nav>
+<div class="practice-subheader daw-bar daw-live" role="toolbar" aria-label="Practice Deck controls">
+  <b class="daw-tag">Practice</b>
+  <nav id="selectors" aria-label="Cards and games">
+    <label class="picker daw-field">Cards<select id="card-deck" aria-label="Cards" title="Choose deck lists every deck and game"><option value="">Choose deck</option></select></label>
+    <label class="picker daw-field">Games<select id="game-deck" aria-label="Games" title="Choose game lists every deck and game"><option value="">Choose game</option></select></label>
+    <a class="contents-link" href="#contents">Browse all decks &amp; games <span aria-hidden="true">&rarr;</span></a>
+  </nav>
+  <div class="meta">
+    <select id="strings" aria-label="String count" hidden>
+      <option value="2">2 strings</option>
+      <option value="3">3 strings</option>
+      <option value="4">4 strings</option>
+      <option value="5">5 strings</option>
+      <option value="6" selected>6 strings</option>
+      <option value="7">7 strings</option>
+      <option value="8">8 strings</option>
+    </select>
+    <span id="count"></span>
+    <span id="favorite-status" class="sr-only" role="status" aria-live="polite"></span>
+    <select id="theme" title="Colour theme" aria-label="Colour theme"></select>
+    <select id="cardstyle" title="Card style" aria-label="Card style"></select>
+  </div>
+</div>
+<main id="grid"></main>
+<script defer src="offline-support.js"></script>
+<script defer src="theory.js"></script>
+<script defer src="data/scales.js"></script>
+<script defer src="data/modes.js"></script>
+<script defer src="data/keys.js"></script>
+<script defer src="data/intervals.js"></script>
+<script defer src="data/chords.js"></script>
+<script defer src="data/strings.js"></script>
+<script defer src="data/techniques.js"></script>
+<script defer src="data/andalusian.js"></script>
+<script defer src="data/progressions.js"></script>
+<script defer src="data/deceptive.js"></script>
+<script defer src="data/majorminor.js"></script>
+<script defer src="data/blues.js"></script>
+<script defer src="data/romannumerals.js"></script>
+<script defer src="data/melodicpatterns.js"></script>
+<script defer src="data/lefthand.js"></script>
+<script defer src="data/righthand.js"></script>
+<script defer src="decks.js"></script>
+<script defer src="active.js"></script>
+<script defer src="themes.js"></script>
+<script defer src="cardstyles.js"></script>
+<script defer src="sound.js"></script>
+<script defer src="game-midi.js"></script>
+<script defer src="deal.js"></script>
+<script defer src="game.js"></script>
+<script defer src="tone.js"></script>
+<script defer src="fibonacci.js"></script>
+<script defer src="fibcombos.js"></script>
+<script defer src="progressiongames.js"></script>
+<script defer src="games.js"></script>
+<script defer src="app.js"></script>
+</body>
+</html>

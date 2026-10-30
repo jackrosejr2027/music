@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Scales Thesaurus - Quizzes</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <style>
+        /* Styles for the quizzes page */
+        .quizzes-container {
+            padding: 20px;
+            max-width: 1100px;
+            margin: 20px auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .quizzes-container h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .quiz-list { display: flex; flex-direction: column; margin-top: 20px; border-top: 1px solid var(--border-color); }
+
+        .quiz-list .quiz-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+            padding: 14px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+        }
+
+        .quiz-list .quiz-item[hidden] { display: none; }
+
+        .quiz-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .quiz-details h3 {
+            margin: 0 0 4px 0;
+            font-size: 1.15em;
+            color: var(--primary-color);
+        }
+
+        .quiz-details p {
+            margin: 0 0 8px 0;
+            font-size: 0.95em;
+            color: var(--text-color);
+            line-height: 1.5;
+        }
+
+        .quiz-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            font-size: 0.85em;
+            color: var(--secondary-color);
+        }
+
+        .quiz-meta span {
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 3px 8px;
+            border-radius: 12px;
+        }
+
+        .quiz-list .take-quiz-button {
+            align-self: center;
+            flex-shrink: 0;
+            padding: 8px 14px;
+            font-size: 0.95em;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .quiz-meta .stq-level { background: var(--accent-color); color: #fff; font-weight: 700; }
+
+        .quiz-list .take-quiz-button:hover {
+            background-color: var(--secondary-color);
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-list .quiz-item { flex-direction: column; align-items: stretch; gap: 10px; }
+            .quiz-list .stq-item-actions { width: 100%; }
+            .quiz-list .take-quiz-button, .quiz-list .stq-pdf { flex: 1 1 auto; align-self: auto; min-height: 40px; }
+        }
+
+        .return-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .return-button:hover {
+            background-color: var(--secondary-color);
+        }
+    </style>
+    <link rel="stylesheet" href="site.css">
+    <script src="site.js" defer></script>
+    <link rel="stylesheet" href="quiz.css">
+    <link rel="stylesheet" href="mini-fretboard.css">
+</head>
+<body>
+    <header class="top-header">
+        <div class="top-header-content">
+            <a class="site-brand" href="index.html" aria-label="Scales Thesaurus home">Scales Thesaurus</a>
+            <nav class="header-nav" aria-label="Main navigation"></nav>
+            <div class="sidebar-toggle-container">
+                <a class="quizzes-app-link" href="fretboard.html">Open Fretboard</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="quizzes-container">
+        <h1>Music Theory Quizzes</h1>
+        <p style="text-align: center; margin-bottom: 30px; font-style: italic;">
+            Test your knowledge on various music theory concepts. Select a quiz below to begin.
+        </p>
+
+        <div class="quiz-list" id="quiz-list">
+            <!-- Quiz items will be populated by JavaScript -->
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="fretboard.html" class="return-button">Explore the Neck Diagram Explorer</a>
+        </div>
+    </div>
+
+        <script src="music-theory-data.js"></script>
+    <script src="scales-data-standard.js"></script>
+    <script src="scales-data-numeric.js"></script>
+    <script src="scales-data-advanced-1.js"></script>
+    <script src="scales-data-advanced-2.js"></script>
+    <script src="scales-data-advanced-3.js"></script>
+    <script src="scales-data-advanced-4.js"></script>
+    <script src="scales-data-advanced-5.js"></script>
+    <script src="scales-data-advanced-6.js"></script>
+    <script src="scales-data-advanced-7a.js"></script>
+    <script src="scales-data-advanced-7b.js"></script>
+    <script src="scales-data-advanced-8.js"></script>
+    <script src="scales-data-advanced-10.js"></script>
+    <script src="scales-data-advanced-11.js"></script>
+    <script src="music-theory.js"></script>
+    <script src="music-theory-logic.js"></script>
+    <script src="music-theory-chords.js"></script>
+    <script src="music-theory-descriptions.js"></script>
+    <script src="vendor/jspdf.umd.min.js"></script>
+    <script src="mini-fretboard.js"></script>
+    <script src="study-pdf.js"></script>
+    <script src="quiz-engine.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            QuizEngine.mountList(document.getElementById('quiz-list'), QuizEngine.QUIZZES, 'quiz');
+        });
+    </script>
+</body>
+</html>

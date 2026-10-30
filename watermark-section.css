@@ -1,0 +1,6 @@
+#fretboard-word-beta #beta-advanced-watermark .beta-field-sections { grid-template-columns:repeat(3,minmax(0,1fr)); }
+#fretboard-word-beta #beta-advanced-watermark .beta-field-section { min-width:0; }
+#fretboard-word-beta #beta-advanced-watermark .beta-advanced-scope { max-width:110ch; line-height:1.55; }
+#fretboard-word-beta .beta-watermark-preview-link { width:auto; min-height:30px; margin:5px 0 0; padding:5px 9px; border:1px solid #b9cbb9; border-radius:6px; background:#fff; color:#31543a; font-size:.74rem; font-weight:700; cursor:pointer; }
+@media(max-width:900px) { #fretboard-word-beta #beta-advanced-watermark .beta-field-sections { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:760px) { #fretboard-word-beta #beta-advanced-watermark .beta-field-sections { grid-template-columns:minmax(0,1fr); } }

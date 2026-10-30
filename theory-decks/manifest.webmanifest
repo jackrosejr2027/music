@@ -1,0 +1,50 @@
+{
+  "id": "./index.html",
+  "name": "Theory Decks",
+  "short_name": "Theory Decks",
+  "description": "Guitar theory cards, practice games, a DAW and fretboard diagrams — works 100% offline.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#1f3a2c",
+  "theme_color": "#1f3a2c",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Play",
+      "url": "./play.html"
+    },
+    {
+      "name": "DAW",
+      "url": "./daw.html"
+    },
+    {
+      "name": "Fretboard",
+      "url": "./Fretboard%20Diagrams/index.html"
+    },
+    {
+      "name": "Settings",
+      "url": "./settings.html"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+#fretboard-word-beta #beta-advanced-layers .beta-field-sections { grid-template-columns:repeat(2,minmax(0,1fr)); }
+#fretboard-word-beta #beta-advanced-layers .beta-field-section { min-width:0; }
+#fretboard-word-beta #beta-advanced-layers .beta-field-section:last-child { grid-column:1 / -1; }
+#fretboard-word-beta #beta-advanced-layers .beta-advanced-scope { max-width:100ch; }
+@media(max-width:760px) { #fretboard-word-beta #beta-advanced-layers .beta-field-sections { grid-template-columns:minmax(0,1fr); } #fretboard-word-beta #beta-advanced-layers .beta-field-section:last-child { grid-column:auto; } }

@@ -1,0 +1,22 @@
+.lesson-detail { margin: 0 0 28px; padding: 20px; border: 2px solid var(--accent-color); border-radius: 8px; background: var(--bg-color); scroll-margin-top: 70px; }
+.ld-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.ld-head h2 { flex: 1; margin: 0; color: var(--primary-color); }
+.ld-close { flex: 0 0 auto; width: auto; padding: 0 6px; background: none; border: none; font-size: 1.8em; line-height: 1; cursor: pointer; color: var(--text-color); }
+.ld-text { line-height: 1.7; white-space: pre-line; }
+.ld-coach { margin: 14px 0; padding: 14px; border-left: 3px solid var(--primary-color); background: var(--card-bg); border-radius: 8px; }
+.lesson-detail .ld-coach h3 { margin: 0 0 5px; font-size: 1rem; }
+.ld-coach p { margin: 0 0 12px; line-height: 1.6; }
+.ld-coach p:last-child { margin-bottom: 0; }
+.ld-facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 16px; }
+.ld-facts div { padding: 6px 12px; border-radius: 6px; background: var(--card-bg); border: 1px solid var(--border-color); display: flex; flex-direction: column; }
+.ld-facts span { font-size: 0.75em; opacity: 0.65; text-transform: uppercase; letter-spacing: 0.04em; }
+.lesson-detail h3 { margin: 18px 0 8px; color: var(--primary-color); font-size: 1.05em; }
+.ld-steps { line-height: 1.7; padding-left: 22px; }
+.ld-related { display: flex; flex-wrap: wrap; gap: 6px; }
+.ld-chip { padding: 5px 12px; border-radius: 14px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); cursor: pointer; font-size: 0.88em; }
+.ld-chip.on { background: var(--accent-color); color: #fff; border-color: transparent; }
+.ld-nav { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.ld-nav button { padding: 8px 14px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); cursor: pointer; }
+.ld-nav button:disabled { opacity: 0.4; cursor: default; }
+.ld-nav a { color: var(--accent-color); }
+.lesson-item.seen h3::after { content: ' ✓'; color: var(--accent-color); }

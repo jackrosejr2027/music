@@ -1,0 +1,5 @@
+DjVu.js Library 0.5.4
+Vendored from https://djvu.js.org/assets/dist/djvu.js
+Source: https://github.com/RussCoder/djvujs (library directory)
+License: GNU GPL version 2 or later. See djvu-LICENSE.txt and djvu-GPL-2.txt.
+Used locally for browser-side IW44 DjVu encoding; no conversion service receives exported content.

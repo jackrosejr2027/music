@@ -1,0 +1,76 @@
+/* Focused workspace navigation. */
+.header-nav.st-nav.st-nav-consolidated { display:flex!important; flex:1 1 auto; justify-content:flex-start; position:static; width:auto; margin:0 8px; padding:0; background:transparent; overflow:visible; }
+.st-nav-consolidated .st-dd { position:static; }
+.st-nav-consolidated .st-dd > button .st-nav-label { display:inline!important; }
+.st-nav-consolidated .st-navigation-sections { left:12px!important; right:12px!important; top:100%; width:auto; min-width:0; max-height:75dvh; overflow:auto; padding:16px; }
+.st-nav-consolidated .st-dd.open .st-navigation-sections { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+.st-navigation-sections section { min-width:0; }
+.st-navigation-sections h3 { margin:0 0 6px; padding:0 10px; color:#697069; font:700 12px/1.5 Arial,sans-serif; letter-spacing:.07em; text-transform:uppercase; }
+.st-nav-consolidated .st-navigation-sections a { box-sizing:border-box; justify-content:flex-start; width:100%; height:auto; min-height:40px; font-size:13px; }
+.st-nav-consolidated .st-navigation-sections .st-icon { display:block; }
+.diagram-instrument-controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin:-8px 0 22px; }
+.diagram-instrument-controls fieldset { min-width:0; margin:0; padding:14px; border:1px solid var(--border-color); border-radius:10px; background:var(--card-bg); }
+.diagram-instrument-controls legend { padding:0 6px; color:var(--text-color); font-size:.88rem; font-weight:700; }
+.diagram-instrument-controls .instrument-control-help { font-size:.78rem; line-height:1.5; color:var(--text-color); opacity:.75; margin:6px 0 12px; }
+.diagram-instrument-controls .control-group { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:0; padding:8px 0; min-width:0; }
+.diagram-instrument-controls .control-group > label { flex:1 1 145px; margin:0; font-size:.83rem; }
+.diagram-instrument-controls .control-group > div { display:flex; flex:1 1 100%; flex-wrap:wrap; gap:6px; min-width:0; }
+.diagram-instrument-controls select, .diagram-instrument-controls input { min-width:0; max-width:100%; box-sizing:border-box; min-height:40px; padding:7px 9px; border:1px solid var(--input-border); border-radius:6px; background:var(--input-bg); color:var(--text-color); }
+.diagram-instrument-controls button { width:auto; max-width:100%; min-height:40px; padding:7px 10px; white-space:normal; font-size:.8rem; }
+.diagram-instrument-controls #instrument-editor-summary { font-size:.8rem; font-weight:700; }
+.beta-advanced-scope { margin:0 0 18px; color:#62685f; font-size:.8rem; line-height:1.5; }
+.beta-advanced-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.beta-advanced-grid label { display:flex; flex-direction:column; min-width:0; gap:7px; color:#30382f; font-size:.8rem; font-weight:600; }
+.beta-advanced-grid input, .beta-advanced-grid select, .beta-advanced-grid textarea { box-sizing:border-box; min-width:0; width:100%; min-height:40px; border:1px solid #c9c6bf; padding:8px; background:#fff; color:#20221f; font:400 .85rem Arial,sans-serif; }
+.beta-advanced-grid .beta-advanced-check { flex-direction:row-reverse; justify-content:flex-end; align-items:center; padding:10px; border:1px solid #e4e2dc; background:#fafbf8; }
+.beta-advanced-check input { width:18px; height:18px; min-height:18px; flex:0 0 18px; accent-color:#355c3d; }
+@media(max-width:760px) { .beta-advanced-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:440px) { .beta-advanced-grid { grid-template-columns:minmax(0,1fr); } .beta-studio-tabs button { font-size:.74rem; } }
+.beta-about { max-width:880px; margin:0 auto; color:#30382f; line-height:1.65; }
+.beta-about h3 { margin:0 0 12px; font-size:1.15rem; }
+.beta-about h4 { margin:22px 0 6px; font-size:.92rem; color:#355c3d; }
+.beta-about p { margin:0; font-size:.88rem; }
+.beta-about > button { width:auto; min-height:36px; padding:7px 12px; background:#355c3d; color:white; font-size:.8rem; }
+/* Export settings use one task per view, retaining every existing option. */
+#fretboard-word-beta { width:min(1180px,calc(100vw - 32px)); height:min(92dvh,940px); overflow:hidden; border-radius:12px; }
+#fretboard-word-beta .beta-shell { height:100%; max-height:100%; min-height:0; overflow:hidden; }
+#fretboard-word-beta .beta-header h2 { color:#20221f; font-family:Arial,sans-serif; font-size:1.3rem; letter-spacing:-.025em; }
+.beta-studio-tabs { display:flex; flex-wrap:nowrap; align-items:center; gap:3px; flex:0 0 auto; min-width:0; padding:5px 12px; border-bottom:1px solid #d8d5cd; background:#fff; overflow-x:auto; overflow-y:hidden; scrollbar-width:thin; }
+.beta-studio-tabs button { flex:0 0 auto; width:auto; min-height:34px; padding:6px 10px; border:1px solid transparent; border-radius:6px; background:transparent; color:#60665f; font:600 .76rem/1.2 Arial,sans-serif; white-space:nowrap; cursor:pointer; }
+.beta-studio-tabs button[aria-selected=true] { background:#e9f0e9; border-color:#b8cbb9; color:#284e30; }
+#fretboard-word-beta .beta-body { display:block; flex:1 1 0; min-height:0; overflow:auto; overscroll-behavior:contain; padding:16px 22px; }
+.beta-studio-panel { min-width:0; }
+.beta-studio-panel[hidden], #fretboard-word-beta label[hidden] { display:none!important; }
+.beta-panel-selection { display:grid; grid-template-columns:minmax(0,1fr) 260px; gap:16px; align-items:start; }
+.beta-panel-selection .beta-order-card { grid-column:1 / -1; }
+.beta-panel-selection .beta-main { grid-row:span 2; }
+.beta-panel-selection .beta-pattern-list { max-height:340px; }
+.beta-field-sections { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; gap:16px; }
+.beta-field-section { min-width:0; margin:0; padding:14px; border:1px solid #dddcd5; border-radius:8px; }
+.beta-field-section > summary { cursor:pointer; font-size:.83rem; font-weight:700; color:#3f5842; }
+.beta-field-section[open] > .beta-option-grid { margin-top:14px; }
+.beta-field-section:not([open]) > :not(summary) { display:none; }
+.beta-options .beta-option-wide, .beta-field-section .beta-option-wide { grid-column:1 / -1; }
+.beta-format-note { margin:2px 0 0; color:#646b62; font-size:.72rem; line-height:1.4; font-weight:400; }
+.beta-export-actions { flex:1 1 460px; max-width:630px; }
+.beta-export-actions .beta-format-label { flex:1 1 270px; }
+.beta-footer #beta-export { min-width:125px; }
+#fretboard-word-beta :focus-visible, .diagram-instrument-controls :focus-visible { outline:3px solid #56865e; outline-offset:2px; }
+@media(max-width:760px) {
+    .st-nav-consolidated .st-dd.open .st-navigation-sections { grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; padding:12px; }
+    .diagram-instrument-controls, .beta-field-sections, .beta-panel-selection { grid-template-columns:minmax(0,1fr); }
+    .beta-panel-selection .beta-main { grid-row:auto; }
+    #fretboard-word-beta { width:calc(100vw - 12px); height:96dvh; }
+    #fretboard-word-beta .beta-header, #fretboard-word-beta .beta-footer { padding:10px 12px; gap:8px; }
+    #fretboard-word-beta .beta-body { padding:12px; }
+    .beta-studio-tabs { padding:4px 8px; }
+    .beta-studio-tabs button { min-height:36px; padding:6px 9px; }
+    .beta-export-actions { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:end; max-width:none; }
+    .beta-export-actions .beta-format-label { grid-column:1; grid-row:1; }
+    .beta-footer #beta-export { grid-column:2; grid-row:1; min-width:80px; width:auto; }
+    .beta-export-actions .beta-cancel.is-visible { grid-column:1 / -1; grid-row:2; }
+}
+@media(max-width:420px) {
+    .st-nav-consolidated .st-dd.open .st-navigation-sections { grid-template-columns:minmax(0,1fr); }
+    .beta-option-grid { grid-template-columns:minmax(0,1fr); }
+}

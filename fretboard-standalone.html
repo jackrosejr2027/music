@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <title>Neck Diagram Explorer Standalone</title>
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fretboard.css">
+    <link rel="stylesheet" href="effects.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="themes.css">
+    <script src="theme-init.js"></script>
+    <script>
+        // Standalone view: opens with no pattern (empty diagram), unless the URL already sets one.
+        if (!location.search) history.replaceState(null, '', location.pathname + '?patternType=none&key=C');
+    </script>
+    <!-- Add JSZip library for ZIP file creation -->
+    <script src="vendor/jszip.min.js"></script>
+    <link rel="stylesheet" href="site.css">
+    <link rel="stylesheet" href="fretboard-page.css">
+    <link rel="stylesheet" href="fretboard-standalone-new-ui.css">
+    <link rel="stylesheet" href="app-export-package.css">
+    <style>
+        /* Standalone: show only the fretboard. Controls stay in the DOM so the app still runs. */
+        body.fb-standalone > :not(.app-container):not(script) { display: none !important; }
+        body.fb-standalone .app-container > :not(.main-content) { display: none !important; }
+        body.fb-standalone .app-container { display: block !important; }
+        body.fb-standalone .main-content { margin: 0 !important; padding: 0 !important; width: 100% !important; max-width: none !important; min-height: 100vh; }
+        body.fb-standalone .main-content > :not(.fretboard-container) { display: none !important; }
+        body.fb-standalone .fretboard-container { margin: 0 !important; padding: 12px !important; }
+        body.fb-standalone .fretboard-container > :not(#fretboard):not(.additional-fretboard):not(.diagram-heading):not(.fb-setup):not(#fb-lesson) { display: none !important; }
+        body.fb-standalone #fb-controls .diagram-title-input:not([hidden]) { display: block; flex: 0 0 100%; width: 100%; min-width: 0; margin: 0; padding: 2px 4px; border: 1px solid transparent; border-radius: 6px; background: transparent; color: #222; font: 700 14px Arial, sans-serif; box-sizing: border-box; }
+        #fb-controls .diagram-title-input:hover { border-color: #ccc; }
+        #fb-controls .diagram-title-input:focus-visible { outline: 2px solid #222; outline-offset: 1px; background: #fff; }
+        #fb-lesson { margin: 0 0 16px; padding: 14px 16px; border: 1px solid #ddd; border-radius: 10px; background: #fff; color: #222; font: 14px/1.45 Arial, sans-serif; }
+        #fb-lesson[hidden] { display: none !important; }
+        #fb-lesson h2 { margin: 0 0 6px; font: 600 18px Arial, sans-serif; }
+        #fb-lesson h3 { margin: 14px 0 4px; font: 600 14px Arial, sans-serif; }
+        #fb-lesson p, #fb-lesson li { margin: 4px 0; }
+        #fb-lesson ol, #fb-lesson ul { margin: 4px 0; padding-left: 20px; }
+        #fb-lesson table { width: 100%; border-collapse: collapse; }
+        #fb-lesson th, #fb-lesson td { padding: 6px; border-top: 1px solid #eee; text-align: left; vertical-align: top; }
+        #fb-lesson th { width: 32%; font-weight: 600; white-space: nowrap; }
+        #fb-lesson th span { font-weight: normal; color: #666; }
+        #fb-lesson .fb-lesson-hit { display: inline-block; margin: 0 12px 4px 0; }
+        #fb-lesson .fb-lesson-hit small { color: #666; }
+        .fb-setup { margin-top: 0.5in; }
+        .fb-advanced { margin-top: 16px; }
+        /* Advanced: one stack of collapsible cards, like Setup. The tab row is hidden and every control panel shows; each panel and each section in it is a card. */
+        #fb-advanced .fretboard-controls-heading, #fb-advanced .fretboard-control-tabs { display: none !important; }
+        #fb-advanced > #fretboard-controls-dock { display: block !important; margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; }
+        #fb-advanced [data-control-panel] { display: block !important; grid-template-columns: minmax(0, 1fr) !important; gap: 0 !important; margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; }
+        #fb-advanced > .fb-expand-all { height: 40px; margin: 0 0 12px; padding: 0 12px; border: 1px solid #bbb; border-radius: 6px; background: #fff; color: #222; font: 14px Arial, sans-serif; cursor: pointer; }
+        #fb-advanced details.fb-card > fieldset { display: block; padding: 10px 0 0; }
+        #fb-advanced [data-control-panel] fieldset { min-width: 0; margin: 0 0 14px; padding: 0; border: 0; border-radius: 0; background: transparent; }
+        #fb-advanced #board-display, #fb-advanced #board-page-style { display: block; grid-template-columns: none; }
+        #fb-advanced [data-control-panel] legend { float: none; width: 100%; padding: 6px 0; border-bottom: 1px solid #ccc; font: 700 14px Arial, sans-serif; color: #222; }
+        #fb-advanced [data-control-panel] p.board-control-help, #fb-advanced [data-control-panel] p.instrument-control-help, #fb-advanced [data-control-panel] p.appearance-control-help, #fb-advanced [data-control-panel] p.export-control-help { display: none; }
+        #fb-advanced [data-control-panel] .control-group { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; min-width: 0; max-width: 100%; margin: 0; padding: 8px 0; border: 0; border-bottom: 1px solid #e3e3e3; border-radius: 0; background: transparent; }
+        #fb-advanced [data-control-panel] .control-group > label { flex: 1 1 160px; min-width: 0; margin: 0; font: 14px Arial, sans-serif; color: #222; }
+        #fb-advanced [data-control-panel] .control-group > select, #fb-advanced [data-control-panel] .control-group > input:not([type=checkbox]):not([type=range]) { flex: 0 1 200px; min-width: 0; max-width: 100%; }
+        #fb-advanced [data-control-panel] .control-group > button { flex: 0 0 auto; }
+        .fb-setup > summary, .fb-advanced > summary { cursor: pointer; font: 600 14px Arial, sans-serif; color: #222; margin-bottom: 8px; }
+        #fb-controls { margin-top: 4px; }
+        /* Setup cards: each box is a collapsed <details>. Its legend becomes the summary, so the legend is hidden. */
+        #fb-controls details.fb-card { min-width: 0; margin: 0 0 16px; }
+        #fb-controls #instrument-footer > details.fb-card { margin: 0; }
+        #fb-controls details.fb-card:has(> fieldset[hidden]) { display: none; }
+        #fb-controls details.fb-card > summary { cursor: pointer; padding: 10px 12px; border: 1px solid #ddd; border-radius: 10px; background: #fff; font: 600 14px Arial, sans-serif; color: #222; }
+        #fb-controls details.fb-card[open] > summary { margin-bottom: 8px; }
+        #fb-controls details.fb-card > fieldset { margin: 0 !important; }
+        #fb-controls details.fb-card > fieldset > legend { display: none; }
+        #fb-controls details.fb-card > .diagram-pattern-controls { box-sizing: border-box; padding: 12px; border: 1px solid #ddd; border-radius: 10px; background: #fff; }
+        body.fb-standalone .fretboard-controls-heading { display: none !important; }
+        #fb-controls #instrument-diagrams { display: flex; flex-wrap: wrap; gap: 12px; min-width: 0; margin: 0 0 22px; padding: 12px; border: 1px solid #ddd; border-radius: 10px; background: #fff; }
+        #fb-controls #instrument-diagrams legend { padding: 0 6px; font: 600 14px Arial, sans-serif; color: #222; }
+        #fb-controls #instrument-diagrams .instrument-control-help { display: none; }
+        #fb-controls #instrument-diagrams .control-group { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; flex: 1 1 160px; min-width: 0; margin: 0; padding: 0; border: 0; background: transparent; }
+        #fb-controls #instrument-diagrams label { font: 14px Arial, sans-serif; color: #222; }
+        #fb-controls #instrument-diagrams select { width: 100%; min-width: 0; min-height: 40px; padding: 7px 9px; border: 1px solid #bbb; border-radius: 6px; background: #fff; color: #222; font: 14px Arial, sans-serif; box-sizing: border-box; }
+        #fb-controls #instrument-diagrams [hidden] { display: none !important; }
+        /* Instrument settings (moved from the Instrument tab) sit at the top of Setup as cards in the same style. */
+        #fb-controls #instrument-footer { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); align-items: start; gap: 12px; width: 100%; min-width: 0; margin: 0 0 16px; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; box-sizing: border-box; }
+        #fb-controls #instrument-footer .instrument-control-section { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; align-items: end; min-width: 0; margin: 0; padding: 12px; border: 1px solid #ddd; border-radius: 10px; background: #fff; box-sizing: border-box; }
+        #fb-controls #instrument-footer .instrument-control-section[hidden] { display: none !important; }
+        #fb-controls #instrument-footer .instrument-control-section > legend { padding: 0 6px; font: 600 14px Arial, sans-serif; color: #222; }
+        #fb-controls #instrument-footer .instrument-control-section > .instrument-control-help { display: none; }
+        #fb-controls #instrument-footer .instrument-control-section > :not(legend):not(.control-group) { grid-column: 1 / -1; min-width: 0; margin: 0; }
+        #fb-controls #instrument-footer .control-group { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; max-width: 100%; margin: 0; padding: 0; border: 0; background: transparent; }
+        #fb-controls #instrument-footer .control-group > label { flex: 0 0 100%; margin: 0; font: 14px Arial, sans-serif; color: #222; }
+        #fb-controls #instrument-footer select, #fb-controls #instrument-footer input:not([type=checkbox]):not([type=range]) { min-height: 40px; min-width: 0; max-width: 100%; padding: 7px 9px; border: 1px solid #bbb; border-radius: 6px; background: #fff; color: #222; font: 14px Arial, sans-serif; box-sizing: border-box; }
+        #fb-controls #instrument-footer button { height: 40px !important; min-height: 40px; min-width: 0; width: auto; max-width: 100%; padding: 0 12px; margin: 0; border: 1px solid #bbb !important; border-radius: 6px !important; background: #fff !important; color: #222 !important; font: 600 14px Arial, sans-serif; line-height: 1.2; white-space: nowrap; cursor: pointer; box-sizing: border-box; }
+        #fb-controls #instrument-footer [hidden] { display: none !important; }
+        #fb-controls #instrument-footer .tuning-input[hidden] { display: none !important; }
+        #fb-controls #instrument-footer .fb-string-picker { grid-column: 1 / -1; }
+        /* Setup sections (Diagram set, Export, Play through keys, Slideshow playback, Slideshow files) share one card style. */
+        #fb-controls #instrument-diagrams, #fb-controls #fb-export, #fb-controls #board-key-loops, #fb-controls #board-slideshow, #fb-controls #board-slideshow-files { margin: 0 0 16px; }
+        #fb-controls #fb-export, #fb-controls #board-key-loops, #fb-controls #board-slideshow, #fb-controls #board-slideshow-files { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; align-items: end; min-width: 0; padding: 12px; border: 1px solid #ddd; border-radius: 10px; background: #fff; }
+        #fb-controls #fb-export { grid-template-columns: minmax(0, 1fr) auto; }
+#fb-controls #fb-export-output { display: grid; gap: 10px; min-width: 0; margin: 0 0 16px; padding: 12px; border: 1px solid #ddd; border-radius: 10px; background: #fff; }
+#fb-controls #fb-export-output legend { padding: 0 6px; font: 600 14px Arial, sans-serif; color: #222; }
+#fb-controls #fb-export-output .fb-output-checks { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+#fb-controls #fb-export-output .fb-output-check { display: flex; flex-direction: row; align-items: center; gap: 6px; margin: 0; font: 14px Arial, sans-serif; color: #222; }
+#fb-controls #fb-export-output .fb-output-check input { width: auto; min-height: 0; margin: 0; }
+#fb-controls #fb-export-output .fb-output-texts { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+#fb-controls #fb-export-output .fb-output-texts label { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; margin: 0; font: 14px Arial, sans-serif; color: #222; }
+#fb-controls #fb-export-output .fb-output-texts input { width: 100%; min-width: 0; min-height: 40px; padding: 7px 9px; border: 1px solid #bbb; border-radius: 6px; background: #fff; color: #222; font: 14px Arial, sans-serif; box-sizing: border-box; }
+        #fb-controls #fb-export legend, #fb-controls #board-key-loops legend, #fb-controls #board-slideshow legend, #fb-controls #board-slideshow-files legend { padding: 0 6px; font: 600 14px Arial, sans-serif; color: #222; }
+        #fb-controls #board-key-loops > .board-control-help, #fb-controls #board-slideshow > .board-control-help, #fb-controls #board-slideshow-files > .board-control-help { display: none; }
+        #fb-controls #board-key-loops > .control-group { grid-column: 1 / -1; }
+        #fb-controls #board-key-loops .control-group, #fb-controls #board-slideshow .control-group { display: flex !important; flex-wrap: wrap; align-items: flex-end; gap: 8px; min-width: 0; margin: 0; padding: 0; border: 0; background: transparent; }
+        #fb-controls #board-key-loops .control-group > label, #fb-controls #board-slideshow .control-group > label { flex: 0 0 100%; margin: 0; font: 14px Arial, sans-serif; color: #222; }
+        #fb-controls #board-key-loops input[type=number], #fb-controls #board-slideshow input[type=number] { min-height: 40px; padding: 7px 9px; border: 1px solid #bbb; border-radius: 6px; background: #fff; color: #222; font: 14px Arial, sans-serif; box-sizing: border-box; }
+        #fb-controls #fb-export label { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; min-width: 0; margin: 0; font: 14px Arial, sans-serif; color: #222; }
+        #fb-controls #fb-export select { width: 100%; min-width: 0; min-height: 40px; padding: 7px 9px; border: 1px solid #bbb; border-radius: 6px; background: #fff; color: #222; font: 14px Arial, sans-serif; box-sizing: border-box; }
+        #fb-controls #fb-export button, #fb-controls #board-key-loops button, #fb-controls #board-slideshow button, #fb-controls #board-slideshow-files button, #fb-controls #board-slideshow-files .board-file-button { height: 40px !important; min-width: 0 !important; padding: 0 12px !important; margin: 0; border: 1px solid #bbb !important; border-radius: 6px !important; background: #fff !important; color: #222 !important; font: 600 14px Arial, sans-serif; white-space: nowrap; cursor: pointer; box-sizing: border-box; }
+        #fb-controls #fb-export button { background: #222 !important; border-color: #222 !important; color: #fff !important; }
+        #fb-controls #board-key-loops button, #fb-controls #board-slideshow button { width: auto !important; }
+        #fb-controls #board-slideshow-files { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+        #fb-controls #board-slideshow-files .control-group { display: contents !important; }
+        #fb-controls #board-slideshow-files button, #fb-controls #board-slideshow-files .board-file-button { width: 100% !important; display: inline-flex; align-items: center; justify-content: center; }
+        #fb-controls .diagram-pattern-controls { margin: 0; }
+        body.fb-standalone .app-container, body.fb-standalone .fretboard-container, body.fb-standalone #fretboard, body.fb-standalone .additional-fretboard { border: 0 !important; border-radius: 0 !important; box-shadow: none !important; outline: 0 !important; background: #fff !important; }
+        html, body.fb-standalone, body.fb-standalone .main-content { background: #fff !important; }
+    </style>
+    <script src="site.js" defer></script>
+</head>
+<body class="square-ui fb-standalone">
+    <div class="app-container">
+        <aside class="sidebar">
+            <!-- removed static sidebar sections content (moved to app-ui-sidebar.js) -->
+        </aside>
+        
+        <main class="main-content">
+            <header class="top-header">
+                <div class="top-header-content">
+                    <!-- Reset button removed from absolute position; moved into header content -->
+                    <h1 class="sr-only">Neck Diagram Explorer</h1>
+                    <button id="reset-settings" class="header-tool-button reset-settings-button" type="button" title="Reset all settings" aria-label="Reset settings">
+                        ⟳
+                    </button>
+                    <nav class="header-nav">
+                        <a href="home.html" class="header-link">Home</a>
+                        <a href="scales.html" class="header-link">Scales</a>
+                        <a href="chords.html" class="header-link">Chords</a>
+                        <a href="intervals.html" class="header-link">Intervals</a>
+                        <a href="data.html" class="header-link">Data</a>
+                        <a href="lessons.html" class="header-link">Lessons</a>
+                        <a href="about.html" class="header-link">About</a>
+                    </nav>
+                    <div class="sidebar-toggle-container" style="display:flex; gap:8px; align-items:center;">
+                        <button id="header-play-pattern" type="button" class="header-play-pattern" title="Play selected pattern" aria-label="Play selected pattern">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M7 4.5a1 1 0 0 1 1.5-.86l11 7.5a1 1 0 0 1 0 1.72l-11 7.5A1 1 0 0 1 7 19.5z"/></svg>
+                        </button>
+                        <button id="header-stop-pattern" type="button" class="header-stop-pattern" title="Stop fretboard playback" aria-label="Stop fretboard playback" disabled>
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+                        </button>
+                        <button id="sidebar-toggle" aria-expanded="false">
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                            <span class="sr-only">Toggle Sidebar</span>
+                        </button>
+                        <button id="toggle-bottom" class="header-tool-button controls-toggle" type="button" title="Show bottom controls" aria-label="Show bottom controls" aria-pressed="false">
+                            Controls
+                        </button>
+                    </div>
+                </div>
+            </header>
+            
+            <section class="fretboard-container" aria-label="Fretboard diagrams">
+                <div id="fretboard" role="region" aria-label="Interactive fretboard, strings ordered lowest to highest" tabindex="0"></div>
+                <div id="current-pattern-display" class="current-pattern-display" aria-label="Selected diagram actions"></div>
+                <details class="fb-setup" id="fb-setup">
+                    <summary>Setup</summary>
+                    <div id="fb-controls"></div>
+                </details>
+                <script>
+                    (function () {
+                        // The app builds its controls after load. Move the existing nodes (not copies) so their listeners stay attached.
+                        const dock = document.getElementById('fb-controls');
+                        // Format and scope select plus Create export. It forwards to the Export tab's own select and button, so those handlers run unchanged.
+                        const createExportGroup = (source, sourceButton) => {
+                            const group = document.createElement('fieldset');
+                            group.id = 'fb-export';
+                            const legend = document.createElement('legend');
+                            legend.textContent = 'Export';
+                            const label = document.createElement('label');
+                            label.textContent = 'Format and scope:';
+                            const select = source.cloneNode(true);
+                            select.removeAttribute('id');
+                            select.removeAttribute('style');
+                            select.removeAttribute('aria-describedby');
+                            select.value = source.value;
+                            label.appendChild(select);
+                            const button = document.createElement('button');
+                            button.type = 'button';
+                            button.textContent = 'Create export';
+                            button.addEventListener('click', () => {
+                                source.value = select.value;
+                                sourceButton.click();
+                            });
+                            group.append(legend, label, button);
+                            return group;
+                        };
+                        // Standalone only: one string row at a time in Selected diagram, chosen by a String picker. All rows stay in the DOM, so the app's per-string reads and writes are unchanged.
+                        const syncStringPicker = () => {
+                            const strings = document.getElementById('instrument-strings');
+                            const container = document.getElementById('tuning-container');
+                            if (!strings || !container) return;
+                            let group = document.getElementById('fb-string-picker-group');
+                            if (!group) {
+                                group = document.createElement('div');
+                                group.id = 'fb-string-picker-group';
+                                group.className = 'control-group fb-string-picker';
+                                const label = document.createElement('label');
+                                label.htmlFor = 'fb-string-picker';
+                                label.textContent = 'String:';
+                                const select = document.createElement('select');
+                                select.id = 'fb-string-picker';
+                                select.addEventListener('change', () => syncStringPicker());
+                                group.append(label, select);
+                            }
+                            const select = group.querySelector('select');
+                            const rows = Array.from(container.querySelectorAll(':scope > .tuning-input'));
+                            const labels = rows.map(row => (row.querySelector('label')?.textContent || '').replace(/:\s*$/, ''));
+                            const key = labels.join('|');
+                            if (select.dataset.labels !== key) {
+                                const previous = Number(select.value) || 0;
+                                select.dataset.labels = key;
+                                select.replaceChildren(...labels.map((text, i) => new Option(text, String(i))));
+                                select.value = String(Math.min(previous, Math.max(0, labels.length - 1)));
+                            }
+                            group.hidden = rows.length === 0;
+                            if (group.parentElement !== strings || container.previousElementSibling !== group) strings.insertBefore(group, container);
+                            const shown = Math.min(Number(select.value) || 0, Math.max(0, rows.length - 1));
+                            rows.forEach((row, i) => { row.hidden = i !== shown; });
+                        };
+                        // Output: which details the exported image shows, plus optional header and footer text. Checkboxes forward to the Export and Appearance controls, and text is saved by Exporter, so the export code is unchanged.
+                        const createOutputGroup = () => {
+                            const exportText = () => (window.Exporter && Exporter.exportText) ? Exporter.exportText() : {};
+                            const group = document.createElement('fieldset');
+                            group.id = 'fb-export-output';
+                            const legend = document.createElement('legend');
+                            legend.textContent = 'Output';
+                            const checkRow = document.createElement('div');
+                            checkRow.className = 'fb-output-checks';
+                            const checks = [
+                                ['Info label', '#export-include-info'],
+                                ['Key and pattern only', '#export-simple-info'],
+                                ['Instrument', '[data-label-field="instrument"]'],
+                                ['Tuning', '[data-label-field="tuning"]'],
+                                ['Key', '[data-label-field="key"]'],
+                                ['Type', '[data-label-field="type"]'],
+                                ['Name', '[data-label-field="name"]'],
+                                ['Formula', '[data-label-field="formula"]']
+                            ];
+                            const boxes = checks.map(([text, selector]) => {
+                                const label = document.createElement('label');
+                                label.className = 'fb-output-check';
+                                const box = document.createElement('input');
+                                box.type = 'checkbox';
+                                box.addEventListener('change', () => {
+                                    const source = document.querySelector(selector);
+                                    if (!source) return;
+                                    source.checked = box.checked;
+                                    source.dispatchEvent(new Event('change', { bubbles: true }));
+                                });
+                                label.append(box, document.createTextNode(text));
+                                checkRow.append(label);
+                                return { box, selector };
+                            });
+                            const textRow = document.createElement('div');
+                            textRow.className = 'fb-output-texts';
+                            const texts = [['Header text', 'header'], ['Footer text', 'footer']].map(([text, field]) => {
+                                const label = document.createElement('label');
+                                label.textContent = text;
+                                const input = document.createElement('input');
+                                input.type = 'text';
+                                input.maxLength = 80;
+                                input.addEventListener('input', () => { if (window.Exporter && Exporter.setExportText) Exporter.setExportText(field, input.value); });
+                                label.append(input);
+                                textRow.append(label);
+                                return { input, field };
+                            });
+                            group.refresh = () => {
+                                const saved = exportText();
+                                boxes.forEach(({ box, selector }) => { const source = document.querySelector(selector); if (source) box.checked = source.checked; });
+                                texts.forEach(({ input, field }) => { if (document.activeElement !== input) input.value = saved[field] || ''; });
+                            };
+                            group.addEventListener('pointerover', () => group.refresh());
+                            group.append(legend, checkRow, textRow);
+                            group.refresh();
+                            return group;
+                        };
+                        // Standalone only: each Setup card is a collapsed <details>. The card element itself moves unchanged, so its listeners stay attached.
+                        const card = (el, title) => {
+                            let wrap = el.parentElement;
+                            if (!wrap || !wrap.classList.contains('fb-card')) {
+                                wrap = document.createElement('details');
+                                wrap.className = 'fb-card';
+                                wrap.append(document.createElement('summary'));
+                                el.before(wrap);
+                                wrap.append(el);
+                            }
+                            const summary = wrap.querySelector(':scope > summary');
+                            const text = title || el.querySelector(':scope > legend')?.textContent.trim() || '';
+                            if (summary.textContent !== text) summary.textContent = text;
+                            return wrap;
+                        };
+                        const moveControls = () => {
+                            // Setup order: Instrument settings, Key/Type/Selection rows (kept in diagram order), Diagram set, Export, Play through keys, Slideshow playback, Slideshow files.
+                            const order = [];
+                            const instrumentFooter = document.getElementById('instrument-footer');
+                            if (instrumentFooter) order.push(instrumentFooter);
+                            if (instrumentFooter) instrumentFooter.querySelectorAll(':scope > fieldset.instrument-control-section').forEach(el => card(el));
+                            document.querySelectorAll('#additional-diagram-strings > .diagram-string-options').forEach(el => card(el));
+                            const patternControls = Array.from(document.querySelectorAll('.diagram-pattern-controls'));
+                            patternControls.forEach((el, i) => order.push(card(el, patternControls.length > 1 ? 'Diagram ' + (i + 1) + ' - Key, type and selection' : 'Key, type and selection')));
+                            const diagramSet = document.getElementById('instrument-diagrams');
+                            if (diagramSet) order.push(card(diagramSet));
+                            // Format and scope select plus Create export. It forwards to the Export tab's own select and button, so those handlers run unchanged.
+                            let exportGroup = document.getElementById('fb-export');
+                            const exportSource = document.getElementById('export-action-select');
+                            const exportButton = document.getElementById('export-play-button');
+                            if (!exportGroup && exportSource && exportButton) exportGroup = createExportGroup(exportSource, exportButton);
+                            if (exportGroup) order.push(card(exportGroup));
+                            let outputGroup = document.getElementById('fb-export-output');
+                            if (!outputGroup && exportSource && document.getElementById('export-include-info')) outputGroup = createOutputGroup();
+                            if (outputGroup) { order.push(card(outputGroup)); outputGroup.refresh(); }
+                            ['board-key-loops', 'board-slideshow', 'board-slideshow-files'].forEach(id => {
+                                const section = document.getElementById(id);
+                                if (section) order.push(card(section));
+                            });
+                            let previous = null;
+                            order.forEach(el => {
+                                const expected = previous ? previous.nextElementSibling : dock.firstElementChild;
+                                if (el.parentElement !== dock || el !== expected) { if (previous) previous.after(el); else dock.prepend(el); }
+                                previous = el;
+                            });
+                            const panel = document.getElementById('fretboard-controls-dock');
+                            if (panel) {
+                                // Advanced is the last item in Setup, collapsed by default. It holds the full control panel (Board & Playback, Appearance, Export, New UI).
+                                let advanced = document.getElementById('fb-advanced');
+                                if (!advanced) {
+                                    advanced = document.createElement('details');
+                                    advanced.id = 'fb-advanced';
+                                    advanced.className = 'fb-advanced';
+                                    const summary = document.createElement('summary');
+                                    summary.textContent = 'Advanced';
+                                    advanced.append(summary);
+                                }
+                                if (dock.lastElementChild !== advanced) dock.appendChild(advanced);
+                                if (panel.parentElement !== advanced) {
+                                    advanced.appendChild(panel);
+                                    panel.style.display = '';
+                                    document.getElementById('fretboard-tab-board')?.click();
+                                }
+                            }
+                        };
+                        // Advanced: each control panel is a collapsed card, and each section in it is a collapsed card too (the same pattern as Setup).
+                        const wrapAdvanced = () => {
+                            const advanced = document.getElementById('fb-advanced');
+                            if (!advanced) return;
+                            [['controls-bottom', 'Board & Playback'], ['appearance-footer', 'Appearance'], ['export-footer', 'Export'], ['new-ui-footer', 'New UI']].forEach(([id, title]) => {
+                                const pane = document.getElementById(id);
+                                if (!pane || !advanced.contains(pane)) return;
+                                card(pane, title);
+                                pane.querySelectorAll(':scope > fieldset').forEach(el => card(el));
+                            });
+                            // New UI card sits directly under Appearance.
+                            const appearanceCard = document.getElementById('appearance-footer')?.parentElement;
+                            const newUiCard = document.getElementById('new-ui-footer')?.parentElement;
+                            if (appearanceCard?.classList.contains('fb-card') && newUiCard?.classList.contains('fb-card') && appearanceCard.nextElementSibling !== newUiCard) appearanceCard.after(newUiCard);
+                            // Expand all / Collapse all under the Advanced summary. Opens every card if any is closed, otherwise closes them all.
+                            const cardsIn = () => Array.from(advanced.querySelectorAll('details.fb-card'));
+                            let toggle = advanced.querySelector(':scope > button.fb-expand-all');
+                            if (!toggle) {
+                                toggle = document.createElement('button');
+                                toggle.type = 'button';
+                                toggle.className = 'fb-expand-all';
+                                toggle.addEventListener('click', () => {
+                                    const cards = cardsIn();
+                                    const openAll = cards.some(c => !c.open);
+                                    cards.forEach(c => { c.open = openAll; });
+                                    wrapAdvanced();
+                                });
+                                advanced.querySelector(':scope > summary').after(toggle);
+                            }
+                            const label = cardsIn().length && cardsIn().every(c => c.open) ? 'Collapse all' : 'Expand all';
+                            if (toggle.textContent !== label) toggle.textContent = label;
+                        };
+                        const runControls = () => { moveControls(); wrapAdvanced(); syncStringPicker(); };
+                        new MutationObserver(runControls).observe(document.body, { childList: true, subtree: true });
+                        runControls();
+                    })();
+                </script>
+            </section>
+            
+            <div class="slideshow-container">
+                <div id="slideshow-items"></div>
+            </div>
+            
+            <div class="pattern-generator">
+                <div id="generated-patterns"></div>
+            </div>
+            
+
+
+            <!-- removed footers controls-bottom and export-footer -> injected by app-ui-bottom.js -->
+        </main>
+    </div>
+    
+    <script src="vendor/tone.js"></script>
+    <script src="vendor/html2canvas.min.js"></script>
+    <script src="vendor/docx.js"></script>
+    <script src="vendor/xlsx.full.min.js"></script>
+    <script src="themes-data.js"></script>
+    <script src="themes-data-wood.js"></script>
+    <script src="themes-data-exotic.js"></script>
+    <script src="themes-data-mono.js"></script>
+    <script src="themes-data-retro.js"></script>
+    <script src="music-theory-data.js"></script>
+    <script src="scales-data-standard.js"></script>
+    <script src="scales-data-numeric.js"></script>
+    <script src="scales-data-advanced-1.js"></script>
+    <script src="scales-data-advanced-2.js"></script>
+    <script src="scales-data-advanced-3.js"></script>
+    <script src="scales-data-advanced-4.js"></script>
+    <script src="scales-data-advanced-5.js"></script>
+    <script src="scales-data-advanced-6.js"></script>
+    <script src="scales-data-advanced-7a.js"></script>
+    <script src="scales-data-advanced-7b.js"></script>
+    <script src="scales-data-advanced-8.js"></script>
+    <script src="scales-data-advanced-10.js"></script>
+    <script src="scales-data-advanced-11.js"></script>
+    <script src="music-theory.js"></script>
+    <script src="daw-midi.js"></script>
+    <script src="music-theory-logic.js"></script>
+    <script src="music-theory-chords.js"></script>
+    <script src="music-theory-descriptions.js"></script>
+    <script src="fretboard-styles.js"></script>
+    <script src="fretboard-styles-extended.js"></script>
+    <script src="fretboard-marker.js"></script>
+    <script src="fretboard-number-shapes.js"></script>
+    <script src="fretboard-capo-styles.js"></script>
+    <script src="fretboard-effects.js"></script>
+    <script src="instrument-presets.js"></script>
+    <script src="themes-data-extra.js"></script>
+    <script src="themes-data-colors.js"></script>
+    <script src="themes-data-nature.js"></script>
+    <script src="themes-data-misc.js"></script>
+    <script src="themes-data-extended.js"></script>
+    <script src="exporter.js"></script>
+    <script src="exporter-scales.js"></script>
+    <script src="exporter-chords.js"></script>
+    <script src="exporter-intervals.js"></script>
+    <script src="exporter-gamuts.js"></script>
+    <script src="exporter-bulk.js"></script>
+    <script src="exporter-word-v1.js"></script>
+    <script src="exporter-word-v2.js"></script>
+    <script src="exporter-word-v3.js"></script>
+    <script src="exporter-word-v4.js"></script>
+    <script src="exporter-word-v5.js"></script>
+    <script src="exporter-word-v6.js"></script>
+    <script src="exporter-word-extended.js"></script>
+    <script src="exporter-word-custom.js"></script>
+    <script src="exporter-word-patterns.js"></script>
+    <script src="exporter-word-chords-cof.js"></script>
+    <script src="exporter-word-intervals-circle.js"></script>
+    <script src="exporter-word-gamuts-cof.js"></script>
+    <script src="exporter-info-pages.js"></script>
+    <script src="exporter-cof.js"></script>
+    <script src="vendor/jspdf.umd.min.js"></script>
+    <script src="exporter-pdf.js"></script>
+    <script src="exporter-pdf-diagrams.js"></script>
+    <script src="fretboard.js"></script>
+    <script src="fretboard-draw.js"></script>
+    <script src="fretboard-draw-grid.js"></script>
+    <script src="fretboard-draw-notes.js"></script>
+    <script src="fretboard-menu.js"></script>
+    <script src="fretboard-menu-multi.js"></script>
+    <script src="piano.js"></script>
+    <!-- removed inline theme handler script -> moved to theme-init.js -->
+    <script src="diagnostics-tests.js"></script>
+    <script src="diagnostics-tests-ui.js"></script>
+    <script src="diagnostics-tests-logic.js"></script>
+    <script src="diagnostics-tests-release.js"></script>
+    <script src="diagnostics-tests-mobile.js"></script>
+    <script src="diagnostics.js"></script>
+    <!-- Core App Engine and Extensions -->
+    <script src="app.js"></script>
+    <script src="app-events-main.js"></script>
+    <script src="app-events-core.js"></script>
+    <script src="app-events-playback.js"></script>
+    <script src="app-events-export-basic.js"></script>
+    <script src="app-events-export-batch.js"></script>
+    <script src="app-events-export-custom.js"></script>
+    <script src="app-events-export.js"></script>
+    <script src="app-state.js"></script>
+    <script src="app-lessons-data.js"></script>
+    <script src="app-ui-layout.js"></script>
+    <script src="app-playback.js"></script>
+    <script src="app-playback-cof.js"></script>
+    <script src="app-settings.js"></script>
+    <script src="app-media.js"></script>
+    <script src="app-ui.js"></script>
+    <script src="app-ui-bottom-controls.js"></script>
+    <script src="app-ui-bottom-instrument.js"></script>
+    <script src="app-ui-bottom-appearance.js"></script>
+    <script src="app-ui-bottom-export.js"></script>
+    <script src="app-ui-bottom.js"></script>
+    <script src="app-ui-appearance.js"></script>
+    <script src="app-instrument.js"></script>
+    <script src="app-instrument-multi.js"></script>
+    <script src="app-instrument-ui.js"></script>
+    <script src="app-instrument-tuning.js"></script>
+    <script src="app-instrument-fretspan.js"></script>
+    <script src="app-theory-info.js"></script>
+    <script src="app-theory-renderers.js"></script>
+    <script src="app-theory-panel.js"></script>
+    <script src="app-theory-lessons.js"></script>
+    <script src="app-export.js"></script>
+    <script src="app-ui-pattern-pill.js"></script>
+    <script src="app-ui-pattern-selectors.js"></script>
+    <script src="app-ui-pattern-actions.js"></script>
+    <script src="pattern-generator.js"></script>
+    <script src="pattern-generator-export.js"></script>
+    <script src="slideshow.js"></script>
+    <script src="slideshow-player.js"></script>
+    <script src="slideshow-cycle.js"></script>
+    <script src="slideshow-csv.js"></script>
+    <script src="melodic-patterns-data.js"></script>
+    <script src="melodic-patterns.js"></script>
+    <script src="melodic-patterns-ui.js"></script>
+    <script src="melodic-patterns-player.js"></script>
+    <script src="melodic-patterns-midi.js"></script>
+
+    <!-- UI Component Builders (These create elements App needs) -->
+    <script src="app-ui-sidebar.js"></script>
+    
+    <!-- Application Initialization -->
+    <script src="fretboard-standalone-lesson.js"></script>
+    <script src="app-init.js"></script>
+    <script src="fretboard-standalone-new-ui-more.js"></script>
+    <script src="fretboard-standalone-new-ui-studio.js"></script>
+    <script src="fretboard-standalone-new-ui-lab.js"></script>
+    <script src="fretboard-standalone-new-ui-extras.js"></script>
+    <script src="fretboard-standalone-new-ui.js"></script>
+    <script src="app-export-package.js"></script>
+</body>
+</html>

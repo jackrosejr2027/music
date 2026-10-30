@@ -1,0 +1,362 @@
+/* Theme definitions extracted from styles.css */
+.theme-dark-mode {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --primary-color: #bb86fc;
+    --secondary-color: #3700b3;
+    --accent-color: #03dac6;
+    --sidebar-bg: #1e1e1e;
+    --sidebar-text: #e0e0e0;
+    --card-bg: #2d2d2d;
+    --button-bg: #bb86fc;
+    --button-text: #121212;
+    --border-color: #333;
+    --header-bg: #1e1e1e;
+    --input-bg: #2d2d2d;
+    --input-border: #444;
+    --marker-color: #bb86fc;
+    --fretboard-bg: #2d2d2d;
+}
+
+.theme-light-mode {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --primary-color: #4285f4;
+    --secondary-color: #34a853;
+    --accent-color: #ea4335;
+    --sidebar-bg: #f8f9fa;
+    --sidebar-text: #333333;
+    --card-bg: #ffffff;
+    --button-bg: #4285f4;
+    --button-text: white;
+    --border-color: #dadce0;
+    --header-bg: #f8f9fa;
+    --input-bg: #ffffff;
+    --input-border: #dadce0;
+    --marker-color: #333333;
+    --fretboard-bg: #ffffff;
+}
+
+.theme-night-owl {
+    --bg-color: #011627;
+    --text-color: #d6deeb;
+    --primary-color: #82aaff;
+    --secondary-color: #c792ea;
+    --accent-color: #7fdbca;
+    --sidebar-bg: #01111d;
+    --sidebar-text: #d6deeb;
+    --card-bg: #0e2a3f;
+    --button-bg: #82aaff;
+    --button-text: #011627;
+    --border-color: #1d3b53;
+    --header-bg: #01111d;
+    --input-bg: #0e2a3f;
+    --input-border: #1d3b53;
+    --marker-color: #7fdbca;
+    --fretboard-bg: #0e2a3f;
+}
+
+.theme-sepia {
+    --bg-color: #f4f0e4;
+    --text-color: #5b4636;
+    --primary-color: #a67c52;
+    --secondary-color: #7d5d3b;
+    --accent-color: #c17e61;
+    --sidebar-bg: #eae0cc;
+    --sidebar-text: #5b4636;
+    --card-bg: #faf6e9;
+    --button-bg: #a67c52;
+    --button-text: #fff;
+    --border-color: #d3c6a6;
+    --header-bg: #eae0cc;
+    --input-bg: #faf6e9;
+    --input-border: #d3c6a6;
+    --marker-color: #8b5a2b;
+    --fretboard-bg: #faf6e9;
+}
+
+.theme-forest {
+    --bg-color: #2c3e50;
+    --text-color: #ecf0f1;
+    --primary-color: #27ae60;
+    --secondary-color: #16a085;
+    --accent-color: #f1c40f;
+    --sidebar-bg: #1e2b38;
+    --sidebar-text: #ecf0f1;
+    --card-bg: #34495e;
+    --button-bg: #27ae60;
+    --button-text: #ecf0f1;
+    --border-color: #1e2b38;
+    --header-bg: #1e2b38;
+    --input-bg: #34495e;
+    --input-border: #1e2b38;
+    --marker-color: #f1c40f;
+    --fretboard-bg: #34495e;
+}
+
+.theme-ocean {
+    --bg-color: #e0f7fa;
+    --text-color: #006064;
+    --primary-color: #00acc1;
+    --secondary-color: #0097a7;
+    --accent-color: #ffc107;
+    --sidebar-bg: #b2ebf2;
+    --sidebar-text: #006064;
+    --card-bg: #e0f7fa;
+    --button-bg: #00acc1;
+    --button-text: white;
+    --border-color: #80deea;
+    --header-bg: #b2ebf2;
+    --input-bg: #e0f7fa;
+    --input-border: #80deea;
+    --marker-color: #006064;
+    --fretboard-bg: #e0f7fa;
+}
+
+.theme-sunset {
+    --bg-color: #ff7e5f;
+    --text-color: #fff;
+    --primary-color: #feb47b;
+    --secondary-color: #ff6b6b;
+    --accent-color: #ffd166;
+    --sidebar-bg: #dd6850;
+    --sidebar-text: #fff;
+    --card-bg: #ff8c70;
+    --button-bg: #feb47b;
+    --button-text: #7d3e35;
+    --border-color: #dd6850;
+    --header-bg: #dd6850;
+    --input-bg: #ff8c70;
+    --input-border: #dd6850;
+    --marker-color: #ffd166;
+    --fretboard-bg: #ff8c70;
+}
+
+.theme-monochrome {
+    --bg-color: #f5f5f5;
+    --text-color: #333;
+    --primary-color: #666;
+    --secondary-color: #888;
+    --accent-color: #aaa;
+    --sidebar-bg: #e0e0e0;
+    --sidebar-text: #333;
+    --card-bg: #f5f5f5;
+    --button-bg: #666;
+    --button-text: white;
+    --border-color: #ddd;
+    --header-bg: #e0e0e0;
+    --input-bg: #f5f5f5;
+    --input-border: #ddd;
+    --marker-color: #333;
+    --fretboard-bg: #f5f5f5;
+}
+
+.theme-high-contrast {
+    --bg-color: #000;
+    --text-color: #fff;
+    --primary-color: #ff0;
+    --secondary-color: #0ff;
+    --accent-color: #f0f;
+    --sidebar-bg: #000;
+    --sidebar-text: #fff;
+    --card-bg: #222;
+    --button-bg: #ff0;
+    --button-text: #000;
+    --border-color: #fff;
+    --header-bg: #000;
+    --input-bg: #222;
+    --input-border: #fff;
+    --marker-color: #ff0;
+    --fretboard-bg: #222;
+}
+
+.theme-pastel {
+    --bg-color: #F8F9FA;
+    --text-color: #5D5C61;
+    --primary-color: #B0C4DE;
+    --secondary-color: #D8BFD8;
+    --accent-color: #FFB6C1;
+    --sidebar-bg: #E9ECEF;
+    --sidebar-text: #5D5C61;
+    --card-bg: #F8F9FA;
+    --button-bg: #B0C4DE;
+    --button-text: #5D5C61;
+    --border-color: #DEE2E6;
+    --header-bg: #E9ECEF;
+    --input-bg: #F8F9FA;
+    --input-border: #DEE2E6;
+    --marker-color: #5D5C61;
+    --fretboard-bg: #F8F9FA;
+}
+
+.theme-neon {
+    --bg-color: #151515;
+    --text-color: #fff;
+    --primary-color: #0ff;
+    --secondary-color: #f0f;
+    --accent-color: #0f0;
+    --sidebar-bg: #0d0d0d;
+    --sidebar-text: #fff;
+    --card-bg: #1a1a1a;
+    --button-bg: #0ff;
+    --button-text: #000;
+    --border-color: #333;
+    --header-bg: #0d0d0d;
+    --input-bg: #1a1a1a;
+    --input-border: #333;
+    --marker-color: #0ff;
+    --fretboard-bg: #1a1a1a;
+}
+
+.theme-cyberpunk {
+    --bg-color: #0a0a16;
+    --text-color: #fdfdfd;
+    --primary-color: #f706cf;
+    --secondary-color: #04d9ff;
+    --accent-color: #fe5e41;
+    --sidebar-bg: #020210;
+    --sidebar-text: #fdfdfd;
+    --card-bg: #12121e;
+    --button-bg: #f706cf;
+    --button-text: #fdfdfd;
+    --border-color: #04d9ff;
+    --header-bg: #020210;
+    --input-bg: #12121e;
+    --input-border: #04d9ff;
+    --marker-color: #04d9ff;
+    --fretboard-bg: #12121e;
+}
+
+.theme-retro {
+    --bg-color: #fdf6e3;
+    --text-color: #657b83;
+    --primary-color: #d33682;
+    --secondary-color: #6c71c4;
+    --accent-color: #cb4b16;
+    --sidebar-bg: #eee8d5;
+    --sidebar-text: #657b83;
+    --card-bg: #fdf6e3;
+    --button-bg: #d33682;
+    --button-text: #fdf6e3;
+    --border-color: #93a1a1;
+    --header-bg: #eee8d5;
+    --input-bg: #fdf6e3;
+    --input-border: #93a1a1;
+    --marker-color: #b58900;
+    --fretboard-bg: #fdf6e3;
+}
+
+.theme-minimal {
+    --bg-color: #ffffff;
+    --text-color: #212121;
+    --primary-color: #212121;
+    --secondary-color: #757575;
+    --accent-color: #bdbdbd;
+    --sidebar-bg: #f5f5f5;
+    --sidebar-text: #212121;
+    --card-bg: #ffffff;
+    --button-bg: #212121;
+    --button-text: #ffffff;
+    --border-color: #e0e0e0;
+    --header-bg: #f5f5f5;
+    --input-bg: #ffffff;
+    --input-border: #e0e0e0;
+    --marker-color: #212121;
+    --fretboard-bg: #ffffff;
+}
+
+.theme-vintage {
+    --bg-color: #f2e9e4;
+    --text-color: #5e503f;
+    --primary-color: #a98467;
+    --secondary-color: #6c584c;
+    --accent-color: #9a8c98;
+    --sidebar-bg: #ddd5ca;
+    --sidebar-text: #5e503f;
+    --card-bg: #f2e9e4;
+    --button-bg: #a98467;
+    --button-text: #fff;
+    --border-color: #c9ada7;
+    --header-bg: #ddd5ca;
+    --input-bg: #f2e9e4;
+    --input-border: #c9ada7;
+    --marker-color: #5e503f;
+    --fretboard-bg: #f2e9e4;
+}
+
+/* Keep every selectable page theme in the requested neutral palette. */
+:root[class*="theme-"] {
+    color-scheme: light;
+    --bg-color: #f3f3f3;
+    --text-color: #222;
+    --primary-color: #222;
+    --secondary-color: #5d5d5d;
+    --accent-color: #666;
+    --sidebar-bg: #e5e5e5;
+    --sidebar-text: #222;
+    --card-bg: #fff;
+    --button-bg: #333;
+    --button-text: #fff;
+    --border-color: #c8c8c8;
+    --header-bg: #e5e5e5;
+    --input-bg: #fff;
+    --input-border: #aaa;
+    --marker-color: #333;
+    --fretboard-bg: #fff;
+    --paper: #f3f3f3;
+    --ink: #222;
+    --muted: #666;
+    --line: #ccc;
+    --accent: #555;
+    --green: #333;
+}
+:root.theme-dark-mode, :root.theme-night-owl, :root.theme-forest, :root.theme-sunset, :root.theme-neon, :root.theme-cyberpunk {
+    color-scheme: dark;
+    --bg-color: #111;
+    --text-color: #eee;
+    --primary-color: #f2f2f2;
+    --secondary-color: #bbb;
+    --accent-color: #aaa;
+    --sidebar-bg: #191919;
+    --sidebar-text: #eee;
+    --card-bg: #222;
+    --button-bg: #ddd;
+    --button-text: #111;
+    --border-color: #444;
+    --header-bg: #191919;
+    --input-bg: #222;
+    --input-border: #555;
+    --marker-color: #eee;
+    --fretboard-bg: #222;
+    --paper: #111;
+    --ink: #eee;
+    --muted: #bbb;
+    --line: #444;
+    --accent: #ccc;
+    --green: #ddd;
+}
+:root.theme-high-contrast {
+    color-scheme: dark;
+    --bg-color: #000;
+    --text-color: #fff;
+    --primary-color: #fff;
+    --secondary-color: #ddd;
+    --accent-color: #fff;
+    --sidebar-bg: #000;
+    --sidebar-text: #fff;
+    --card-bg: #111;
+    --button-bg: #fff;
+    --button-text: #000;
+    --border-color: #fff;
+    --header-bg: #000;
+    --input-bg: #111;
+    --input-border: #fff;
+    --marker-color: #fff;
+    --fretboard-bg: #111;
+    --paper: #000;
+    --ink: #fff;
+    --muted: #ddd;
+    --line: #fff;
+    --accent: #fff;
+    --green: #fff;
+}

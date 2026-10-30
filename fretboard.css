@@ -1,0 +1,52 @@
+/* Fretboard specific styles extracted from styles.css */
+:is(#fretboard, .additional-fretboard) {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    padding: 20px;
+    background-color: var(--fretboard-bg);
+}
+
+.fretboard-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.string {
+    stroke: #888;
+    stroke-linecap: round;
+}
+
+.fret {
+    stroke: #444;
+    stroke-linecap: butt;
+}
+
+.fret-marker {
+    fill: #333;
+}
+
+.note-marker {
+    cursor: pointer;
+    stroke: var(--marker-color);
+    stroke-width: 1;
+}
+
+.note-marker[points] {
+    stroke-linejoin: round;
+}
+
+.fret-number {
+    font-size: 12px;
+    text-anchor: middle;
+    fill: #666;
+}
+
+.string-label {
+    font-size: 12px;
+    text-anchor: end;
+    fill: #666;
+}
